@@ -1,0 +1,67 @@
+﻿@page
+@using colafix_pwa.Model
+@model colafix_pwa.Pages.MenuModel
+@{
+    var menu = (List<ProductGroup>)ViewData["Menu"];
+}
+@section Style{
+    <style>
+
+    </style>
+}
+<div class="row pt-6">
+    @foreach (var productGroup in menu)
+    {
+        <div class="col-sm-12">
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>@productGroup.Name&nbsp;<span>@($"({productGroup.Products.Count} produtos)")</span></div>
+                    @foreach (var product in productGroup.Products)
+                    {
+                        <div class="collapsible-body"><span onclick="AddCart(@product.CodProd)">@product.NomeProd</span><label style="float: right">@product.CodProd</label></div>
+                    }
+                </li>
+            </ul>
+        </div>
+    }
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function(){
+            $('.collapsible').collapsible();
+        });
+
+        function AddCart(id) {
+            window.location.href = "/AddProdCart/?id=".concat(id);
+        }
+
+        //$.ajax({
+        //    context: this,
+        //    url: '/Main/GetMenu',
+        //    type: 'POST',
+        //    data: BuildData(),
+        //    contentType: 'application/json; charset=utf-8',
+        //    dataType: 'json',
+        //    beforeSend: function() {
+        //        //Notiflix.Loading.Dots('Aguarde...');
+        //    },
+        //    success: function(data) {
+        //        Notiflix.Loading.Remove();
+        //        const returnData = JSON.parse(data);
+
+        //        if (returnData.MessageType !== 0) {
+        //            ShowMessage(data);
+        //            return;
+        //        }
+
+        //        console.log(returnData.EmbeddedData);
+        //    },
+        //    error: function(data) {
+        //        Notiflix.Loading.Remove();
+        //        ShowError(data);
+        //    }
+        //});
+    </script>
+}

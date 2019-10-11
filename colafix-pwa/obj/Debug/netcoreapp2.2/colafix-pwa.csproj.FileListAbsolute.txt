@@ -26,3 +26,34 @@ C:\workspace\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.Views.p
 C:\workspace\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.dll
 C:\workspace\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.pdb
 C:\workspace\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.csproj.CopyComplete
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\bin\Debug\netcoreapp2.2\appsettings.Development.json
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\bin\Debug\netcoreapp2.2\appsettings.json
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\bin\Debug\netcoreapp2.2\colafix-pwa.deps.json
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\bin\Debug\netcoreapp2.2\colafix-pwa.runtimeconfig.json
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\bin\Debug\netcoreapp2.2\colafix-pwa.runtimeconfig.dev.json
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\bin\Debug\netcoreapp2.2\colafix-pwa.dll
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\bin\Debug\netcoreapp2.2\colafix-pwa.pdb
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\bin\Debug\netcoreapp2.2\colafix-pwa.Views.dll
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\bin\Debug\netcoreapp2.2\colafix-pwa.Views.pdb
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.csprojAssemblyReference.cache
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.RazorAssemblyInfo.cache
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.RazorAssemblyInfo.cs
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.AssemblyInfoInputs.cache
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.AssemblyInfo.cs
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.TagHelpers.input.cache
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.TagHelpers.output.cache
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.RazorCoreGenerate.cache
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Index.cshtml.g.cs
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Shared\_Layout.cshtml.g.cs
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\_ViewImports.cshtml.g.cs
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\_ViewStart.cshtml.g.cs
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.RazorTargetAssemblyInfo.cache
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.RazorTargetAssemblyInfo.cs
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.Views.pdb
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.dll
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.pdb
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.csproj.CopyComplete
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Menu.cshtml.g.cs
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Login.cshtml.g.cs
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\AddProdCart.cshtml.g.cs

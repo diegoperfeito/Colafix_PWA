@@ -1,0 +1,165 @@
+﻿@page
+@model colafix_pwa.Pages.LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bem-vindo ao Colafix </title>
+
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="background_color" content="#ffffff" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff">
+    <meta name="application-name" content="#ffffff" />
+
+    <meta name="description" content="Colafix" />
+    <meta name="keywords" content="Colafix" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="shortcut icon" href="~/favicon.ico">
+    <link rel="manifest" href="~/manifest.json">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="~/images/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/images/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/images/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/images/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/images/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/images/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/images/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/images/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/images/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/images/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/images/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/images/icons/favicon-16x16.png">
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/lib/notiflix/notiflix-1.9.1.min.css" rel="stylesheet" />
+    <link href="~/css/animate.min.css" rel="stylesheet" />
+    <link href="~/css/materialize.css" type="text/css" rel="stylesheet" media="screen, projection" />
+    <link href="~/css/app.css" rel="stylesheet" />
+    
+    <style>
+        label {
+            color: black;
+        }
+
+        #container {
+            position: absolute;
+            color: white;
+            background-color: #ffbd17;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+        }
+
+        #content {
+            position: relative;
+            float: left;
+            top: 50%;
+            left: 50%;
+            padding: 20px 20px 40px;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    
+<div id="container">
+    <div id="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <label for="loginMail">Usuário de login</label>
+                <input id="loginMail" class="form-control"/>
+            </div>
+            <div class="col-sm-12">
+                <label for="loginPassword">Senha</label>
+                <input id="loginPassword" class="form-control"/>
+            </div>
+            <div class="col-sm-12" align="right">
+                <button class="btn btn-info waves-effect waves-light" onclick="Logar()">ENTRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/notiflix/notiflix-1.9.1.min.js"></script>
+<script src="~/js/wow.min.js"></script>
+<script src="~/js/materialize.js"></script>
+<script src="~/js/init.js"></script>
+<script src="~/js/app.js" type="text/javascript"></script>
+<script>
+    function Logar() {
+        const email = document.getElementById("loginMail").value;
+        const password = document.getElementById("loginPassword").value;
+        if (email.length === 0) {
+            window.Notiflix.Report.Warning(
+                'Falta informar',
+                'Necessário informar seu email',
+                'Ok',
+                function() {
+                    $("#loginMail").focus();
+                }
+            );
+            return;
+        }
+        if (password.length === 0) {
+            window.Notiflix.Report.Warning(
+                'Falta informar',
+                'Necessário informar sua senha',
+                'Ok',
+                function() {
+                    $("#loginPassword").focus();
+                }
+            );
+            return;
+        }
+
+        const o = new Object();
+        o.Usuario = email;
+        o.Senha = password;
+
+        $.ajax({
+            context: this,
+            url: '/Main/Login',
+            type: 'POST',
+            data: JSON.stringify(o),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            beforeSend: function() {
+                Notiflix.Loading.Dots('Aguarde...');
+            },
+            success: function(data) {
+                Notiflix.Loading.Remove();
+                const returnData = JSON.parse(data);
+
+                if (returnData.MessageType !== 0) {
+                    ShowMessage(data);
+                    return;
+                }
+
+                localStorage.setItem('USER', JSON.stringify(returnData.EmbeddedData));
+                RedirectAction("Menu");
+            },
+            error: function(data) {
+                Notiflix.Loading.Remove();
+                ShowError(data);
+            }
+        });
+    }
+</script>
+</body>
+</html>

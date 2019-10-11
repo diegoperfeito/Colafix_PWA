@@ -5529,7 +5529,6 @@ $jscomp.polyfill = function (e, r, p, m) {
         this.dragTarget.parentNode.removeChild(this.dragTarget);
         this.el.M_Sidenav = undefined;
         this.el.style.transform = '';
-
         var index = Sidenav._sidenavs.indexOf(this);
         if (index >= 0) {
           Sidenav._sidenavs.splice(index, 1);
@@ -5540,7 +5539,7 @@ $jscomp.polyfill = function (e, r, p, m) {
       value: function _createOverlay() {
         var overlay = document.createElement('div');
         this._closeBound = this.close.bind(this);
-        overlay.classList.add('sidenav-overlay');
+        //overlay.classList.add('sidenav-overlay');
 
         overlay.addEventListener('click', this._closeBound);
 
