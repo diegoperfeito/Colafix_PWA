@@ -57,3 +57,4 @@ D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netco
 D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Menu.cshtml.g.cs
 D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Login.cshtml.g.cs
 D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\AddProdCart.cshtml.g.cs
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Clientes.cshtml.g.cs

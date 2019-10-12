@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -80,6 +81,34 @@ namespace colafix_pwa.Services
                     }
 
                     return apiResult.GetMenuResultData.ProductGroup;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+        public static List<Cli> GetCliForLista(int codRepresentante)
+        {
+            try
+            {
+                dynamic obj = new ExpandoObject();
+                obj.codRepresentante = codRepresentante;
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "GetCliForLista");
+                    var apiResult = 
+                        JsonConvert.DeserializeObject<GetCliForListaResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetCliForListaResultGetCliForListaResult.State != 1)
+                    {
+                        throw new Exception(apiResult.GetCliForListaResultGetCliForListaResult.Message);
+                    }
+
+                    return apiResult.GetCliForListaResultGetCliForListaResult.Clientes;
                 }
             }
             catch (Exception exception)

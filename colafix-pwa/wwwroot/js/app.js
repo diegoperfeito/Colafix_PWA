@@ -53,6 +53,12 @@ function RedirectAction(action) {
     window.location.href = action;
 }
 
+function OpenMenu(action) {
+    if (action.toLowerCase() === "clientes") {
+        RedirectAction("/Clientes/?id=".concat(currentUser.id));
+    }
+}
+
 function Sair() {
     Notiflix.Confirm.Show(
         'Confirma sair?',
@@ -60,7 +66,7 @@ function Sair() {
         'Sair',
         'Ficar',
         function () {
-            localStorage.removeItem('USER');;
+            localStorage.removeItem('USER');
             RedirectAction("/Login");
         }, function () {
 
