@@ -89,6 +89,36 @@ namespace colafix_pwa.Services
             }
         }
 
+        public static Product GetProduto(string codProd)
+        {
+            try
+            {
+                dynamic obj = new ExpandoObject();
+                obj.codProduto = codProd;
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "getProduto");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetProdutoResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetProdutoResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetProdutoResultData.Message);
+                    }
+
+                    return apiResult.GetProdutoResultData.Product;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+
+
         public static List<Cli> GetCliForLista(int codRepresentante)
         {
             try

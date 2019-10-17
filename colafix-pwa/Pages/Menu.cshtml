@@ -18,7 +18,7 @@
                     <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>@productGroup.Name&nbsp;<span>@($"({productGroup.Products.Count} produtos)")</span></div>
                     @foreach (var product in productGroup.Products)
                     {
-                        <div class="collapsible-body"><span onclick="AddCart(@product.CodProd)">@product.NomeProd</span><label style="float: right">@product.CodProd</label></div>
+                        <div class="collapsible-body"><span onclick="AddCart('@product.CodProd')">@product.NomeProd</span><label style="float: right">@product.CodProd</label></div>
                     }
                 </li>
             </ul>

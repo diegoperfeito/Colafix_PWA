@@ -2,18 +2,102 @@
 @using colafix_pwa.Model
 @model colafix_pwa.Pages.AddProdCartModel
 @{
-    var produto = (Product) ViewData["Produto"];
+    var produto = (Product)ViewData["Produto"];
 }
 
 <div class="row pt-6">
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                Header
+            <div class="card-header" align="center">
+                @produto.CodProd - @produto.NomeProd
             </div>
-            <div class="card-body">
-                Body.. bla
+            <div class="card-tabs">
+                <ul class="tabs tabs-fixed-width">
+                    <li class="tab"><a class="active" href="#item">Item do Pedido</a></li>
+                    <li class="tab"><a href="#info">Última Compra</a></li>
+                </ul>
+            </div>
+            <div class="card-content grey lighten-4">
+                <div id="item">
+                    <div class="row">
+                        <div class="col-6" align="center">
+                            <label class="pt-10">Quantidade</label>
+                        </div>
+                        <div class="col-6" align="left">
+                            <input type="text" id="qtdItem"  onkeyup="calculaItem()" class="form-control weight" value="0" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6" align="center">
+                            <label class="pt-10">Preço Unitário</label>
+                        </div>
+                        <div class="col-6" align="left">
+                            <input type="text" id="valorItem" onkeyup="calculaItem()" class="form-control money" value="@produto.CustoRep" />
+                        </div>
+                    </div>
+                </div>
+                <div id="info">
+                    <div class="row">
+                        <div class="col s8">Embalagem</div>
+                        <div class="col s4">@produto.Embalagem</div>
+                    </div>
+                    <div class="row">
+                        <div class="col s8">Pedido</div>
+                        <div class="col s4">@produto.CodProd</div>
+                    </div>
+                    <div class="row">
+                        <div class="col s8"> Data</div>
+                        <div class="col s4">@produto.CodProd</div>
+                    </div>
+                    <div class="row">
+                        <div class="col s8">Quantidade </div>
+                        <div class="col s4">@produto.CodProd</div>
+                    </div>
+                    <div class="row">
+                        <div class="col s8"> Valor Unitário</div>
+                        <div class="col s4">@produto.CodProd</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header" align="center">
+                Total do Item
+                <div class="row">
+                    <div class="col s12" align="center">
+                        <input type="text" id="totalItem" style="text-align:center" class="form-control money" disabled="disabled" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12" align="center">
+        <button class="btn waves-effect waves-light" type="button" onclick="calculaItem()" name="action">
+            Salvar Item
+        </button>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+        <script type="text/javascript">
+            var valorItem;
+            var totalAmount = 0;
+
+        function calculaItem() {
+            valorItem = document.getElementById("valorItem").value;
+            valorItem = valorItem.replace(",", ".");
+        
+            totalAmount = document.getElementById("qtdItem").value * valorItem;
+            document.getElementById("totalItem").value = totalAmount.toString().replace(".", ",");
+         }
+        </script>
+    }   
+

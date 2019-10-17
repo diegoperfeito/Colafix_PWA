@@ -6,6 +6,19 @@
  * Made By MaterializeCSS.com
  */
 
+body {
+    /*background-color:red !important;*/
+}
+
+label {
+    font-size: 1rem !important;
+    color: black !important;
+}
+
+.card {
+    background-color: #9cebf3 !important;
+}
+
 .icon-block {
     padding: 0 15px;
 }
@@ -29,3 +42,7 @@
 .collapsible-body span:hover {
     font-weight: bold;
 }
+.pt-10 {
+    padding-top: 10px;
+}
+
