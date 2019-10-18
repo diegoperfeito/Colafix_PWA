@@ -40,7 +40,31 @@ namespace colafix_pwa.controllers
                 return Json(AjaxMessage.Create(new MessageContent
                 {
                     MessageType = MessageType.Success,
-                    Message = "Bem-vindo",
+                    Message = "Menu carregado com suceso",
+                    Title = "Sucesso",
+                    EmbeddedData = data
+                }));
+            }
+            catch (Exception exception)
+            {
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Failure,
+                    Message = exception.Message,
+                    Title = "Erro de Sistema"
+                }));
+            }
+        }
+
+        public ActionResult GetProduto([FromBody] dynamic obj)
+        {
+            try
+            {
+                var data = Api.GetProduto(obj.BodyData);
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Success,
+                    Message = "Produto encontrado",
                     Title = "Sucesso",
                     EmbeddedData = data
                 }));

@@ -89,13 +89,10 @@ namespace colafix_pwa.Services
             }
         }
 
-        public static Product GetProduto(string codProd)
+        public static Product GetProduto(dynamic obj)
         {
             try
             {
-                dynamic obj = new ExpandoObject();
-                obj.codProduto = codProd;
-
                 using (var httpClient = new HttpClient())
                 {
                     var url = BuildCall(httpClient, "getProduto");

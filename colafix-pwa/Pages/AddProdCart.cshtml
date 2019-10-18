@@ -24,7 +24,7 @@
                             <label class="pt-10">Quantidade</label>
                         </div>
                         <div class="col-6" align="left">
-                            <input type="text" id="qtdItem"  onkeyup="calculaItem()" class="form-control weight" value="0" />
+                            <input type="text" id="qtdItem" onkeyup="calculaItem()" class="form-control weight" value="0" />
                         </div>
                     </div>
                     <div class="row">
@@ -78,7 +78,7 @@
 </div>
 <div class="row">
     <div class="col-12" align="center">
-        <button class="btn waves-effect waves-light" type="button" onclick="calculaItem()" name="action">
+        <button class="btn waves-effect waves-light" type="button" onclick="AddCartItem('@produto.CodProd')" name="action">
             Salvar Item
         </button>
     </div>
@@ -86,18 +86,26 @@
 
 
 @section Scripts
-    {
-        <script type="text/javascript">
-            var valorItem;
-            var totalAmount = 0;
+{
+    <script src="~/js/cart.js"></script>
+    <script>
+        $(document).ready(function () {
+            ShowCurrentCli();
+            BuildOrder();
+            $('#qtdItem').focus();
+            $('#qtdItem').select();
+        });
+
+        var valorItem;
+        var totalAmount = 0;
 
         function calculaItem() {
             valorItem = document.getElementById("valorItem").value;
             valorItem = valorItem.replace(",", ".");
-        
+
             totalAmount = document.getElementById("qtdItem").value * valorItem;
             document.getElementById("totalItem").value = totalAmount.toString().replace(".", ",");
-         }
-        </script>
-    }   
+        }
+    </script>
+}
 

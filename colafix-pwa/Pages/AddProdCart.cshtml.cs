@@ -1,4 +1,5 @@
-﻿using colafix_pwa.Services;
+﻿using System.Dynamic;
+using colafix_pwa.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace colafix_pwa.Pages
@@ -7,10 +8,12 @@ namespace colafix_pwa.Pages
     {
         public void OnGet(string id)
         {
-            ViewData["Title"] = "Adicionar ao carrinho";
+            ViewData["Title"] = "Carrinho";
             //Recupera produto para transportar para esta tela. Precisa endpoint
 
-            ViewData["Produto"] = Api.GetProduto(id);
+            dynamic obj = new ExpandoObject();
+            obj.codProduto = id;
+            ViewData["Produto"] = Api.GetProduto(obj);
         }
     }
 }

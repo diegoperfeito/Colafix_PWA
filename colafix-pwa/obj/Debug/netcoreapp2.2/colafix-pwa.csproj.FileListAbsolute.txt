@@ -60,3 +60,4 @@ C:\workspace\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\AddProd
 C:\workspace\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Clientes.g.cshtml.cs
 C:\workspace\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Login.g.cshtml.cs
 C:\workspace\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Menu.g.cshtml.cs
+D:\Projects\Clientes\Carlos Pedroso - RS\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\CheckOut.cshtml.g.cs

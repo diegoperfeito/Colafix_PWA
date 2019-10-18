@@ -3473,7 +3473,7 @@ table span.badge {
 
 .section {
     padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-bottom: 2.5rem;
 }
 
     .section.no-pad {
@@ -6299,6 +6299,7 @@ input[type=datetime-local]:not(.browser-default),
 input[type=tel]:not(.browser-default),
 input[type=number]:not(.browser-default),
 input[type=search]:not(.browser-default),
+input[type=currency]:not(.browser-default),
 textarea.materialize-textarea {
     background-color: transparent;
     border: none;
@@ -6343,6 +6344,7 @@ textarea.materialize-textarea {
     input[type=number]:not(.browser-default)[readonly="readonly"],
     input[type=search]:not(.browser-default):disabled,
     input[type=search]:not(.browser-default)[readonly="readonly"],
+    input[type=currency]:not(.browser-default),
     textarea.materialize-textarea:disabled,
     textarea.materialize-textarea[readonly="readonly"] {
         color: rgba(0, 0, 0, 0.42);
@@ -6373,6 +6375,7 @@ textarea.materialize-textarea {
         input[type=number]:not(.browser-default)[readonly="readonly"] + label,
         input[type=search]:not(.browser-default):disabled + label,
         input[type=search]:not(.browser-default)[readonly="readonly"] + label,
+        input[type=currency]:not(.browser-default)[readonly="readonly"] + label,
         textarea.materialize-textarea:disabled + label,
         textarea.materialize-textarea[readonly="readonly"] + label {
             color: rgba(0, 0, 0, 0.42);
@@ -6390,6 +6393,7 @@ textarea.materialize-textarea {
     input[type=tel]:not(.browser-default):focus:not([readonly]),
     input[type=number]:not(.browser-default):focus:not([readonly]),
     input[type=search]:not(.browser-default):focus:not([readonly]),
+    input[type=currency]:not(.browser-default):focus:not([readonly]),
     textarea.materialize-textarea:focus:not([readonly]) {
         border-bottom: 1px solid #26a69a;
         -webkit-box-shadow: 0 1px 0 0 #26a69a;
@@ -6408,6 +6412,7 @@ textarea.materialize-textarea {
         input[type=tel]:not(.browser-default):focus:not([readonly]) + label,
         input[type=number]:not(.browser-default):focus:not([readonly]) + label,
         input[type=search]:not(.browser-default):focus:not([readonly]) + label,
+        input[type=currency]:not(.browser-default):focus:not([readonly]) + label,
         textarea.materialize-textarea:focus:not([readonly]) + label {
             color: #26a69a;
         }
@@ -6424,6 +6429,7 @@ textarea.materialize-textarea {
     input[type=tel]:not(.browser-default):focus.valid ~ label,
     input[type=number]:not(.browser-default):focus.valid ~ label,
     input[type=search]:not(.browser-default):focus.valid ~ label,
+    input[type=currency]:not(.browser-default):focus.valid ~label,
     textarea.materialize-textarea:focus.valid ~ label {
         color: #4CAF50;
     }
@@ -6440,6 +6446,7 @@ textarea.materialize-textarea {
     input[type=tel]:not(.browser-default):focus.invalid ~ label,
     input[type=number]:not(.browser-default):focus.invalid ~ label,
     input[type=search]:not(.browser-default):focus.invalid ~ label,
+    input[type=currency]:not(.browser-default):focus.invalid ~ label,
     textarea.materialize-textarea:focus.invalid ~ label {
         color: #F44336;
     }
@@ -6456,6 +6463,7 @@ textarea.materialize-textarea {
     input[type=tel]:not(.browser-default).validate + label,
     input[type=number]:not(.browser-default).validate + label,
     input[type=search]:not(.browser-default).validate + label,
+    input[type=currency]:not(.browser-default).validate + label,
     textarea.materialize-textarea.validate + label {
         width: 100%;
     }
@@ -6484,6 +6492,8 @@ textarea.materialize-textarea {
     input[type=number].valid:not(.browser-default):focus,
     input[type=search].valid:not(.browser-default),
     input[type=search].valid:not(.browser-default):focus,
+    input[type=currency].valid:not(.browser-default),
+    input[type=currency].valid:not(.browser-default):focus,
     textarea.materialize-textarea.valid,
     textarea.materialize-textarea.valid:focus, .select-wrapper.valid > input.select-dropdown {
         border-bottom: 1px solid #4CAF50;
@@ -6514,6 +6524,8 @@ textarea.materialize-textarea {
     input[type=number].invalid:not(.browser-default):focus,
     input[type=search].invalid:not(.browser-default),
     input[type=search].invalid:not(.browser-default):focus,
+    input[type=currency].invalid:not(.browser-default),
+    input[type=currency].invalid:not(.browser-default):focus,
     textarea.materialize-textarea.invalid,
     textarea.materialize-textarea.invalid:focus, .select-wrapper.invalid > input.select-dropdown,
     .select-wrapper.invalid > input.select-dropdown:focus {

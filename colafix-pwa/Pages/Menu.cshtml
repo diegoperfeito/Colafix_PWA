@@ -31,9 +31,17 @@
     <script>
         $(document).ready(function(){
             $('.collapsible').collapsible();
+            ShowCurrentCli();
         });
 
         function AddCart(id) {
+            if (currentCli === null) {
+                Notiflix.Report.Warning(
+                    'Atenção', 
+                    'É necessário selecionar um cliente antes', 
+                    'Certo manu?');
+                return;
+            }
             window.location.href = "/AddProdCart/?id=".concat(id);
         }
 

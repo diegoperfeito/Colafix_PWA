@@ -70,7 +70,7 @@
 <body>
     <nav class="light-blue lighten-1" role="navigation">
         <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo">Logo</a>
+            <a id="logo-container" href="#" class="brand-logo">@ViewData["Title"]</a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="/Menu">Menu</a></li>
                 <li><a href="#">Consulta Pedidos</a></li>
@@ -103,6 +103,21 @@
         <div class="section">
             @RenderBody()
         </div>
+        <footer class="light-blue lighten-1">
+            <div style="float: left; width: 50px; height: 100%" onclick="AddRemoveCli(null, null)">
+                <i id="cliIcon" class="material-icons" style="font-size: 35px; padding-top: 7px">person_add</i>
+            </div>
+            <div style="float: left; text-align: left; height: 100%">
+                <p>Cliente selecionado</p>
+                <label id="currentCliName">Nenhum cliente selecionado</label>
+            </div>
+            <div id="cartIcon" style="position: fixed; width: 50px; height: 100%; right: 0; display: none" onclick="RedirectAction('/CheckOut')">
+                <i class="material-icons" style="font-size: 35px; padding-top: 7px">shopping_cart</i>
+            </div>
+            <div id="finishIcon" style="position: fixed; width: 50px; height: 100%; right: 0; display: none" onclick="FinishCheckOut()">
+                <i class="material-icons" style="font-size: 35px; padding-top: 7px">monetization_on</i>
+            </div>
+        </footer>
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
