@@ -73,10 +73,10 @@
             <a id="logo-container" href="#" class="brand-logo">@ViewData["Title"]</a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="/Menu">Menu</a></li>
-                <li><a href="#">Consulta Pedidos</a></li>
                 <li><a href="#" onclick="OpenMenu('Clientes')">Clientes</a></li>
+                <li><a href="#">Consulta Pedidos</a></li>
                 <li><a href="#">Financeiro</a></li>
-                <li><a href="#">Dados de Faturamento</a></li>
+                <li><a href="#" onclick="LimparCarrinho()">Limpar Carrinho</a></li>
                 <li><a href="#" onclick="Sair()">Logout</a></li>
             </ul>
 
@@ -89,10 +89,10 @@
                     </div>
                 </li>
                 <li><a href="/Menu"><i class="material-icons">dehaze</i>Menu</a></li>
-                <li><a href="#"><i class="material-icons">monetization_on</i>Dados de Faturamento</a></li>
-                <li><a href="#"><i class="material-icons">local_atm</i>Financeiro</a></li>
-                <li><a href="#"><i class="material-icons">local_library</i>Consulta Pedidos</a></li>
                 <li><a href="#" onclick="OpenMenu('Clientes')"><i class="material-icons">group</i>Clientes</a></li>
+                <li><a href="#"><i class="material-icons">local_library</i>Consulta Pedidos</a></li>
+                <li><a href="#"><i class="material-icons">local_atm</i>Financeiro</a></li>
+                <li><a href="#" onclick="LimparCarrinho()"><i class="material-icons">group</i>Limpar Carrinho</a></li>
                 <li><a href="#" onclick="Sair()"><i class="material-icons">power_settings_new</i>Logout</a></li>
             </ul>
             <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>

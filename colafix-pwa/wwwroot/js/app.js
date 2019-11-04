@@ -68,7 +68,24 @@ function Sair() {
         "Ficar",
         function () {
             localStorage.removeItem("USER");
+            localStorage.removeItem("CLI");
+            localStorage.removeItem("ORDER");
             RedirectAction("/Login");
+        }, function () {
+
+        });
+}
+
+function LimparCarrinho() {
+    Notiflix.Confirm.Show(
+        "Confirma Limpar Carrinho?",
+        "Pedido atual será apagado.",
+        "Sim",
+        "Não",
+        function () {
+            localStorage.removeItem("ORDER");
+            localStorage.removeItem("CLI");
+            RedirectAction("/Menu");
         }, function () {
 
         });
@@ -93,7 +110,7 @@ function AddRemoveCli(id, nome) {
         if (currentOrder !== null) {
             if (currentOrder.Id !== id) {
                 currentOrder.CodCli = currentCli.Id;
-                Notiflix.Notify.Success("A ordem atual teve seu cliente alterado");
+                Notiflix.Notify.Success("O pedido atual teve seu cliente alterado");
                 localStorage.setItem("ORDER", JSON.stringify(currentOrder));
             }
         }
@@ -136,6 +153,6 @@ function HasCartOpen() {
     if (currentOrder === null) {
         document.getElementById("cartIcon").style.display = "none";
     } else {
-        document.getElementById("cartIcon").style.display = currentOrder.PedidoItemApp.length > 0 ? "block" : "none";
+        document.getElementById("cartIcon").style.display = currentOrder.pedido_item_app.length > 0 ? "block" : "none";
     }
 }

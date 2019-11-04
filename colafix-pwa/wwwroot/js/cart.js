@@ -1,50 +1,174 @@
 ﻿var currentOrder = JSON.parse(localStorage.getItem("ORDER"));
+var empresaLista = JSON.parse(localStorage.getItem("EMPRESAS"));
 function BuildOrder() {
     if (currentOrder === null) {
         const o = new Object();
-        o.CodVen = currentUser.Id;
-        o.CodCli = currentCli.Id;
-        o.CodEmp = null;
-        o.CodEmpFat = null;
-        o.CodLocCob = null;
-        o.CodNatOper = null;
-        o.CodTransa = null;
-        o.CodTransp = null;
-        o.Diap1 = null;
-        o.Diap2 = null;
-        o.Diap3 = null;
-        o.Diap4 = null;
-        o.Diap5 = null;
-        o.Diap6 = null;
-        o.Diap7 = null;
-        o.Diap8 = null;
-        o.Diap9 = null;
-        o.Diap10 = null;
-        o.Embalagem = null;
-        o.Obs = null;
-        o.PercAcrescimo = null;
-        o.PercDesc = null;
-        o.PesoBru = null;
-        o.PesoLiq = null;
-        o.Situacao = null;
-        o.TipoFrete = null;
-        o.TotalFrete = null;
-        o.UsuAltera = null;
-        o.UsuInclui = null;
-        o.VlrMerc = null;
-        o.VlrTot = null;
-        o.VlrAcrescimo = null;
-        o.VlrDesc = null;
-        o.VlrFrete = null;
-        o.VlrIcms = null;
-        o.VlrIcmsSt = null;
-        o.VlrIpi = null;
-        o.PedidoItemApp = [];
+        o.cod_ven = currentUser.id;
+        o.cod_cli = currentCli.Id;
+        o.cod_emp = 0;
+        o.cod_emp_fat = 0;
+        o.cod_loc_cob = 0;
+        o.cod_nat_oper = 0;
+        o.cod_transa = 0;
+        o.cod_transp = 0;
+        o.diap1 = 0;
+        o.diap2 = 0;
+        o.diap3 = 0;
+        o.diap4 = 0;
+        o.diap5 = 0;
+        o.diap6 = 0;
+        o.diap7 = 0;
+        o.diap8 = 0;
+        o.diap9 = 0;
+        o.diap10 = 0;
+        o.embalagem = "";
+        o.obs = "";
+        o.perc_acrescimo = 0;
+        o.perc_desc = 0;
+        o.peso_bru = 0;
+        o.peso_liq = 0;
+        o.situacao = "";
+        o.tipo_frete = "";
+        o.total_frete = 0;
+        o.usu_altera = "";
+        o.usu_inclui = "";
+        o.vlr_merc = 0;
+        o.vlr_tot = 0;
+        o.vlr_acrescimo = 0;
+        o.vlr_desc = 0;
+        o.vlr_frete = 0;
+        o.vlr_icms = 0;
+        o.vlr_icms_st = 0;
+        o.vlr_ipi = 0;
+        o.pedido_item_app = [];
 
         localStorage.setItem("ORDER", JSON.stringify(o));
         currentOrder = JSON.parse(localStorage.getItem("ORDER"));
     }
 }
+
+function BuildEmpresa() {
+    empresaLista = JSON.parse(localStorage.getItem("EMPRESAS"));
+    var currentUser = JSON.parse(localStorage.getItem("USER"));
+    const o = new Object();
+    o.usuario = currentUser.usuario;
+    $.ajax({
+        context: this,
+        url: "/Main/GetUsuarioEmpresaLista",
+        type: "POST",
+        data: BuildData(o),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        beforeSend: function () {
+            Notiflix.Loading.Dots("Aguarde...");
+        },
+        success: function (data) {
+            Notiflix.Loading.Remove();
+            const returnData = JSON.parse(data);
+            if (returnData.MessageType !== 0) {
+                ShowMessage(data);
+                return;
+            }
+            var jaTem = false;
+            var empLista = [];
+            for (let d = 0; d < returnData.EmbeddedData.length; d++) {
+                const empresa = new Object();
+                empresa.CodEmp = returnData.EmbeddedData[d]['codEmp'];
+                empresa.NomeEmp = returnData.EmbeddedData[d]['nomeEmp'];
+                empresa.Unidade = returnData.EmbeddedData[d]['unidade'];
+                empLista.push(empresa);
+            }
+            localStorage.setItem("EMPRESAS", JSON.stringify(empLista));
+            empresaLista = JSON.parse(localStorage.getItem("EMPRESAS"));
+        },
+        error: function (data) {
+            Notiflix.Loading.Remove();
+            ShowError(data);
+        }
+    });
+}
+
+function BuildLocalCobranca() {
+    localCobrancaLista = JSON.parse(localStorage.getItem("LOCAISCOBRANCA"));
+    var currentUser = JSON.parse(localStorage.getItem("USER"));
+    const o = new Object();
+    o.usuario = currentUser.usuario;
+    $.ajax({
+        context: this,
+        url: "/Main/GetLocaisCobrancaLista",
+        type: "POST",
+        data: BuildData(o),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        beforeSend: function () {
+            Notiflix.Loading.Dots("Aguarde...");
+        },
+        success: function (data) {
+            Notiflix.Loading.Remove();
+            const returnData = JSON.parse(data);
+            if (returnData.MessageType !== 0) {
+                ShowMessage(data);
+                return;
+            }
+            var jaTem = false;
+            var locLista = [];
+            for (let d = 0; d < returnData.EmbeddedData.length; d++) {
+                const localCobranca = new Object();
+                localCobranca.CodLocCob = returnData.EmbeddedData[d]['codLocCob'];
+                localCobranca.MostraNoPedido = returnData.EmbeddedData[d]['mostraNoPedido'];
+                localCobranca.NomeLocCob = returnData.EmbeddedData[d]['nomeLocCob'];
+                locLista.push(localCobranca);
+            }
+            localStorage.setItem("LOCAISCOBRANCA", JSON.stringify(locLista));
+            localCobrancaLista = JSON.parse(localStorage.getItem("LOCAISCOBRANCA"));
+        },
+        error: function (data) {
+            Notiflix.Loading.Remove();
+            ShowError(data);
+        }
+    });
+}
+
+function BuildTransacao() {
+    transacaoLista = JSON.parse(localStorage.getItem("TRANSACOES"));
+    var currentUser = JSON.parse(localStorage.getItem("USER"));
+    const o = new Object();
+    o.usuario = currentUser.usuario;
+    $.ajax({
+        context: this,
+        url: "/Main/GetTransacoesLista",
+        type: "POST",
+        data: BuildData(o),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        beforeSend: function () {
+            Notiflix.Loading.Dots("Aguarde...");
+        },
+        success: function (data) {
+            Notiflix.Loading.Remove();
+            const returnData = JSON.parse(data);
+            if (returnData.MessageType !== 0) {
+                ShowMessage(data);
+                return;
+            }
+            var jaTem = false;
+            var transLista = [];
+            for (let d = 0; d < returnData.EmbeddedData.length; d++) {
+                const transacao = new Object();
+                transacao.CodTran = returnData.EmbeddedData[d]['codTran'];
+                transacao.NomeTran = returnData.EmbeddedData[d]['nomeTran'];
+                transLista.push(transacao);
+            }
+            localStorage.setItem("TRANSACOES", JSON.stringify(transLista));
+            transacaoLista = JSON.parse(localStorage.getItem("TRANSACOES"));
+        },
+        error: function (data) {
+            Notiflix.Loading.Remove();
+            ShowError(data);
+        }
+    });
+}
+
 
 function AddCartItem(id) {
     const o = new Object();
@@ -67,47 +191,54 @@ function AddCartItem(id) {
                 return;
             }
             var jaTem = false;
-            for (let i = 0; i < currentOrder.PedidoItemApp.length; i++) {
-                if (currentOrder.PedidoItemApp[i].CodProd === id) {
-                    currentOrder.PedidoItemApp[i].Item = returnData.EmbeddedData.nomeProd;
-                    currentOrder.PedidoItemApp[i].QtdePed += parseFloat(document.getElementById("qtdItem").value.replace(",", "."));
-                    currentOrder.PedidoItemApp[i].Valor += parseFloat(document.getElementById("totalItem").value.replace(",", "."));
-                    item.ValorIndice = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
+            for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
+                if (currentOrder.pedido_item_app[i].cod_prod === id) {
+                    currentOrder.pedido_item_app[i].nome_prod = returnData.EmbeddedData.nomeProd;
+                    currentOrder.pedido_item_app[i].qtde_ped = parseFloat(document.getElementById("qtdItem").value.replace(",", "."));
+                    currentOrder.pedido_item_app[i].valor = returnData.EmbeddedData.ValorFabrica;
+                    currentOrder.pedido_item_app[i].valor_indice = returnData.EmbeddedData.ValorIndice;
+                    currentOrder.pedido_item_app[i].valor_fabrica = returnData.EmbeddedData.ValorFabrica;
+                    currentOrder.pedido_item_app[i].peso_bru_un = returnData.EmbeddedData.pesoBru;
+                    currentOrder.pedido_item_app[i].peso_liq_un = returnData.EmbeddedData.pesoLiq;
+                    currentOrder.pedido_item_app[i].unidade = returnData.EmbeddedData.unidade;
+                    currentOrder.pedido_item_app[i].item = currentOrder.pedido_item_app.length + 1;
                     jaTem = true;
                     break;
                 }
             }
             if (!jaTem) {
                 const item = new Object();
-                item.CodProd = id;
-                item.IndComissao = null;
-                item.IndCusto = null;
-                item.IndFinanceiro = null;
-                item.IndFrete = null;
-                item.IndGeral = null;
-                item.IndImpostos = null;
-                item.Item = returnData.EmbeddedData.nomeProd;
-                item.Obs = null;
-                item.PercDesconto = null;
-                item.PercIcms = null;
-                item.PercIpi = null;
-                item.PesoBruUn = null;
-                item.PesoLiqUn = null;
-                item.QtdePed = parseFloat(document.getElementById("qtdItem").value.replace(",", "."));
-                item.QtdeEmb = null;
-                item.Situacao = null;
-                item.Valor = parseFloat(document.getElementById("totalItem").value.replace(",", "."));
-                item.ValorFabrica = null;
-                item.ValorIndice = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
-                currentOrder.PedidoItemApp.push(item);
+                item.cod_prod = id;
+                item.nome_prod = returnData.EmbeddedData.nomeProd;
+                item.ind_comissao = 0;
+                item.ind_custo = 0;
+                item.ind_financeiro = 0;
+                item.ind_frete = 0;
+                item.ind_geral = 0;
+                item.ind_impostos = 0;
+                item.item = currentOrder.pedido_item_app.length+1;
+                item.obs = 0;
+                item.perc_desconto = 0;
+                item.perc_icms = 0;
+                item.perc_ipi = 0;
+                item.peso_bru_un = returnData.EmbeddedData.pesoBru.replace(",", ".");
+                item.peso_liq_un = returnData.EmbeddedData.pesoLiq.replace(",", ".");
+                item.qtde_ped = parseFloat(document.getElementById("qtdItem").value.replace(",", "."));
+                item.qtde_emb = 0;
+                item.situacao = "ANALISE";
+                item.unidade = returnData.EmbeddedData.unidade;
+                item.valor = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
+                item.valor_fabrica = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
+                item.valor_indice = 0;
+                currentOrder.pedido_item_app.push(item);
             }
             localStorage.setItem("ORDER", JSON.stringify(currentOrder));
             document.getElementById("qtdItem").value = "0";
             document.getElementById("totalItem").value = "";
             $("#qtdItem").focus();
             $("#qtdItem").select();
-            HasCartOpen();
-            console.log(returnData.EmbeddedData);
+            RedirectAction('/Menu');
+//            HasCartOpen();
         },
         error: function(data) {
             Notiflix.Loading.Remove();
@@ -116,45 +247,209 @@ function AddCartItem(id) {
     });
 }
 
+
 function ShowCart() {
+    BuildOrder();
+    BuildEmpresa();
+    BuildTransacao();
+    BuildLocalCobranca();
     var html = "";
-    for (let i = 0; i < currentOrder.PedidoItemApp.length; i++) {
+
+
+    for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
         html +=
             `<div class='row' style='margin-bottom:0'>
                 <div class='col-12'>
-                    <div id='card_${currentOrder.PedidoItemApp[i].CodProd}' class='card' style='margin: 0.5rem 0 0rem 0'>
+                    <div id='card_${currentOrder.pedido_item_app[i].cod_prod}' class='card' style='margin: 0.5rem 0 0rem 0'>
                         <div class='card-body' style='padding: 7px 5px 0px 5px'>
-<div style='position:absolute; height: 25px; width: 25px; right: 0px; top: 2px; z-index:1000; cursor:pointer' onclick=\"DeleteItemCart('${currentOrder.PedidoItemApp[i].CodProd}')\"><i class="material-icons">delete</i></div>
-                            <div class='row'>
-                                <div class='col-12'>
-                                    <label>${currentOrder.PedidoItemApp[i].Item}</label>
+                            <div style='position:absolute; height: 25px; width: 25px; right: 0px; top: 2px; z-index:1000; cursor:pointer' onclick=\"DeleteItemCart('${currentOrder.pedido_item_app[i].cod_prod}')\"><i class="material-icons">delete</i></div>
+                                <div class='row'>
+                                    <div class='col-12'>
+                                        <label>${currentOrder.pedido_item_app[i].nome_prod}</label>
+                                    </div>
+                                    <div class='col-6' align='center'>
+                                        <label for='qtdItem'>Quantidade</label>
+                                        <input type="currency" id="qtdItem" disabled="true" class="form-control" value="${currentOrder.pedido_item_app[i].qtde_ped}" style='text-align:center'/>
+                                    </div>
+                                    <div class='col-6' align='center'>
+                                        <label for='qtdItem'>Valor</label>
+                                        <input type="currency" id="qtdItem" disabled="true" class="form-control" value="${currentOrder.pedido_item_app[i].valor}" style='text-align:center'/>
+                                    </div>
+                                    <div class='col-12' align='right'>
+                                        <label id="lblTotalItem" style='font-weight:bold'>${(currentOrder.pedido_item_app[i].qtde_ped * currentOrder.pedido_item_app[i].valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</label>
+                                    </div>
                                 </div>
-                                <div class='col-6' align='center'>
-<label for='qtdItem'>Quantidade</label>
-<input type="currency" id="qtdItem" onkeyup="calculaItem()" class="form-control" value="${currentOrder.PedidoItemApp[i].QtdePed}" style='text-align:center'/>
-                                </div>
-                                <div class='col-6' align='center'>
-<label for='qtdItem'>Valor</label>
-<input type="currency" id="qtdItem" onkeyup="calculaItem()" class="form-control" value="${currentOrder.PedidoItemApp[i].Valor}" style='text-align:center'/>
-                                </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>`;
+            </div>`
     }
-    html += `<div><div class='row'><div class='col-12' align='right'><span>TOTAL: </span><label id='labelTotalCart' style='font-weight:bold'>${TotalCart()}</label></div></div></div>`;
+
+    html += `<div class='row'>
+                    <div class='col-6'>
+                        <span>Peso(kg): </span><label id='labelPeso' style='font-weight:bold'>${TotalCartPeso()}</label>
+                    </div>
+                    <div class='col-6' align='right'>
+                        <span>Total: </span><label id='labelTotalCart' style='font-weight:bold'>${TotalCart()}</label></div>
+                    </div>
+             </div>
+            <div class='row'>
+                <div class='col-12'>
+                    <div class='input-field col 12'>
+                        <select id="empFaturamento">`
+                for (let i = 0; i < empresaLista.length; i++) {
+                    html += `<option value="" disabled selected>Empresa de Faturamento</option>
+                             <option value="${empresaLista[i].CodEmp}">${empresaLista[i].NomeEmp}</option>`;
+                }
+    html += `</select>
+            </div>
+        </div>
+    </div>`;
+
+
+    html += `<div class='row'>
+                <div class='col-12'>
+                    <div class='input-field col 12'>
+                        <select id="tipoTransacao">`
+    for (let i = 0; i < transacaoLista.length; i++) {
+        html += `<option value="" disabled selected>Tipo de Transação</option>
+                                         <option value="${transacaoLista[i].CodTran}">${transacaoLista[i].NomeTran}</option>`;
+    }
+    html += `</select>
+            </div>
+        </div>
+    </div>`;
+
+    html += `<div class='row'>
+                <div class='col-12'>
+                    <div class='input-field col 12'>
+                        <select id="localCobranca">`
+    for (let i = 0; i < localCobrancaLista.length; i++) {
+        html += `<option value="" disabled selected>Forma Pagamento</option>
+                                         <option value="${localCobrancaLista[i].CodLocCob}">${localCobrancaLista[i].NomeLocCob}</option>`;
+    }
+    html += `</select>
+            </div>
+        </div>
+    </div>`;
+
+    html += `<div class='row'>
+                <div class='col-12'>
+                    <div class='input-field col 12'>
+                        <select id="tipoFrete">
+                            <option value="" disabled selected>Tipo de Frete</option>
+                            <option value="1">CIF</option>
+                            <option value="2">FOB</option>
+                            <option value="3">REPASSADO</option>
+                            <option value="4">PROPRIO</option>
+                        </select>
+                    </div>
+                </div>
+            </div>`;
+
+    html += `<div class='row'>
+                    <div class='col-6'>
+                        <span>Valor do Frete: </span><label id='labelValorFrete' style='font-weight:bold'></label>
+                    </div>
+                    <div class='col-6'>
+                        <input type="currency" id="valorFrete" class="form-control" style='text-align:center'/>
+                    </div>
+             </div>`;
+
+    html += `<div class='row'>
+                    <div class='col-6'>
+                        <span>Prazo Pagto(ex: 30.40.60): </span><label id='labelValorFrete' style='font-weight:bold'></label>
+                    </div>
+                    <div class='col-6'>
+                        <input type="text" id="prazoPagto" class="form-control" style='text-align:center'/>
+                    </div>
+             </div>`;
+
+    html += `<div class='row'>
+                    <div class='col-12'>
+                        <span>Observações: </span><label id='labelObs' style='font-weight:bold'></label>
+                    </div>
+                    <div class='col-12'>
+                        <input type="text" id="obs" class="form-control" style='text-align:center'/>
+                    </div>
+             </div>`;
+
     document.getElementById('cartData').innerHTML = html;
 }
 
 function TotalCart() {
     var total = 0;
-    for (let i = 0; i < currentOrder.PedidoItemApp.length; i++) {
-        total += currentOrder.PedidoItemApp[i].Valor;
+    for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
+        total += currentOrder.pedido_item_app[i].valor * currentOrder.pedido_item_app[i].qtde_ped;
     }
-    return total;
+    currentOrder.vlr_tot = total;
+    currentOrder.vlr_merc = total;
+    return total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+
+
 }
+
+
+function TotalCartPeso() {
+    var pesoTotal = 0;
+    for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
+        if (currentOrder.pedido_item_app[i].unidade == 2) {
+            pesoTotal += currentOrder.pedido_item_app[i].qtde_ped; // * xMultiplo;
+        } else {
+            pesoTotal += parseFloat(currentOrder.pedido_item_app[i].qtde_ped * currentOrder.pedido_item_app[i].peso_bru_un); // * xMultiplo;
+        }
+    }
+    return  pesoTotal;
+}
+
+function ValidaPrazo() {
+    const prazo = document.getElementById("prazoPagto").value;
+    var arPrazo = prazo.split(".");
+    if (arPrazo.length == 0 || arPrazo[0] == "" || arPrazo.length > 10) {
+        Notiflix.Report.Warning(
+            'Atenção',
+            'prazo de pagamento inválido',
+            'Fechar');
+        return false;
+    } else {
+        // verificação de contéudo e de ordem correta dos prazos
+        var x = 0;
+        for (var i = 0; i <= arPrazo.length-1; i++) {
+            if (!$.isNumeric(arPrazo[i])) {
+                Notiflix.Report.Warning(
+                    'Atenção',
+                    'prazo de pagamento inválido',
+                    'Fechar');
+                return false;
+            }
+            if (parseFloat(arPrazo[i]) < x) {
+                Notiflix.Report.Warning(
+                    'Atenção',
+                    'prazo de pagamento inválido',
+                    'Fechar');
+                return false;
+            } else {
+                x = parseFloat(arPrazo[i]);
+            }
+        }
+        for (var i = 0; i <= arPrazo.length-1; i++) {
+            if (i == 0) currentOrder.diap1 = arPrazo[0]; else currentOrder.diap1 = 0;
+            if (i == 1) currentOrder.diap2 = arPrazo[1]; else currentOrder.diap2 = 0;
+            if (i == 2) currentOrder.diap3 = arPrazo[2]; else currentOrder.diap3 = 0;
+            if (i == 3) currentOrder.diap4 = arPrazo[3]; else currentOrder.diap4 = 0;
+            if (i == 4) currentOrder.diap5 = arPrazo[4]; else currentOrder.diap5 = 0;
+            if (i == 5) currentOrder.diap6 = arPrazo[5]; else currentOrder.diap6 = 0;
+            if (i == 6) currentOrder.diap7 = arPrazo[6]; else currentOrder.diap7 = 0;
+            if (i == 7) currentOrder.diap8 = arPrazo[7]; else currentOrder.diap8 = 0;
+            if (i == 8) currentOrder.diap9 = arPrazo[8]; else currentOrder.diap9 = 0;
+            if (i == 9) currentOrder.diap10 = arPrazo[9]; else currentOrder.diap10 = 0;
+        }
+        return true;
+    }
+}
+
 
 function DeleteItemCart(id) {
     Notiflix.Confirm.Show(
@@ -163,33 +458,122 @@ function DeleteItemCart(id) {
         "Sim",
         "Não",
         function () {
-            var i = currentOrder.PedidoItemApp.length;
+            var i = currentOrder.pedido_item_app.length;
             while (i--) {
-                if (currentOrder.PedidoItemApp[i].CodProd === id) {
+                if (currentOrder.pedido_item_app[i].cod_prod === id) {
                     console.log('encontrado');
-                    currentOrder.PedidoItemApp.splice(i, 1);
+                    currentOrder.pedido_item_app.splice(i, 1);
                 }
             }
             localStorage.setItem("ORDER", JSON.stringify(currentOrder));
             const element = document.getElementById("card_".concat(id));
             element.parentNode.removeChild(element);
-            document.getElementById('labelTotalCart').innerHTML = TotalCart();
-            if (currentOrder.PedidoItemApp.length === 0) {
+            if (currentOrder.pedido_item_app.length === 0) {
                 RedirectAction('/Menu');
+            } else {
+                document.getElementById('labelTotalCart').innerHTML = TotalCart();
+                document.getElementById('labelPeso').innerHTML = TotalCartPeso();
             }
         }, function () {
 
         });
 }
 
+3
+
+function currencyFormat(num) {
+    return "R$" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+}
+
+
 function FinishCheckOut() {
+    if (!ValidaPrazo()) {
+        return;
+    }
+
+    var emp = document.getElementById("empFaturamento").value
+    if (emp == "") {
+        Notiflix.Report.Warning(
+            'Atenção',
+            'Selecione empresa de faturamento',
+            'Fechar');
+        return;
+    }
+    currentOrder.cod_emp = emp;
+    currentOrder.cod_emp_fat = emp;
+
+    var locCob = document.getElementById("localCobranca").value
+    if (locCob == "") {
+        Notiflix.Report.Warning(
+            'Atenção',
+            'Selecione forma de pagamento',
+            'Fechar');
+        return;
+    }
+    currentOrder.cod_loc_cob = locCob;
+
+    var frete = document.getElementById("tipoFrete").value
+    if (frete == "") {
+        Notiflix.Report.Warning(
+            'Atenção',
+            'Selecione tipo de frete',
+            'Fechar');
+        return;
+    }
+    currentOrder.tipo_frete = frete;
+    currentOrder.total_frete = 0;
+    currentOrder.situacao = 'ANALISE';
+
+    var tipo = document.getElementById("tipoTransacao").value
+    if (tipo == "") {
+        Notiflix.Report.Warning(
+            'Atenção',
+            'Selecione tipo de transação',
+            'Fechar');
+        return;
+    }
+    currentOrder.cod_transa = tipo;
+
+    currentOrder.obs = document.getElementById("obs").value
+
+    var objPed = new Object();
+    objPed.pedidoApp = currentOrder;
+
+
+
     Notiflix.Confirm.Show(
         "Confirma Envio?",
         "Confirmar envio dos dados e conclusão da venda?",
         "Sim",
         "Não",
-        function() {
-            Notiflix.Notify.Success('Chama ajax do metodo de venda');
+        function () {
+         //   localStorage.removeItem("ORDER");
+            Notiflix.Notify.Success('Enviando pedido para o servidor');
+            $.ajax({
+                context: this,
+                url: "/Main/InsertPedidoApp",
+                type: "POST",
+                data: BuildData(objPed),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    Notiflix.Loading.Dots("Aguarde...");
+                },
+                success: function (data) {
+                    Notiflix.Loading.Remove();
+                    const returnData = JSON.parse(data);
+                    if (returnData.MessageType !== 0) {
+                        ShowMessage(data);
+                        return;
+                    }
+                    Notiflix.Notify.Success('Pedido enviado com sucesso');
+                    LimparCarrinho();
+                },
+                error: function (data) {
+                    Notiflix.Loading.Remove();
+                    ShowError(data);
+                }
+            });
         },
         function() {
             Notiflix.Notify.Warning('Envio cancelado');

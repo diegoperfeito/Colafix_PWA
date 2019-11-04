@@ -1,0 +1,72 @@
+﻿/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+body {
+    /*background-color:red !important;*/
+}
+
+label {
+    font-size: 1rem !important;
+    color: black !important;
+}
+
+.card {
+    background-color: #9cebf3 !important;
+}
+
+.icon-block {
+    padding: 0 15px;
+}
+
+    .icon-block .material-icons {
+        font-size: inherit;
+    }
+
+.pt-6 {
+    padding-top: 60px;
+}
+
+/*REBOOT*/
+.collapsible-header span {
+    color: gray;
+}
+
+.collapsible-body {
+    padding: 5px !important;
+    cursor: pointer;
+}
+
+    .collapsible-body span:hover {
+        font-weight: bold;
+    }
+
+.pt-10 {
+    padding-top: 10px;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50px;
+    background-color: #cccccc;
+    text-align: center;
+    color: white !important;
+    z-index: 10;
+}
+
+    footer p {
+        font-size: 12px;
+        padding: 0;
+        margin: 0;
+    }
+
+    footer label {
+        color: white !important;
+    }

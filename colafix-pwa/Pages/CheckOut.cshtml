@@ -1,11 +1,11 @@
 ﻿@page
 @model colafix_pwa.Pages.CheckOutModel
 @{
-    
+
 }
-
-<div id="cartData" class="pt-6"></div>
-
+    <div class="row pt-6">
+        <div id="cartData"></div>
+    </div>
 @section Scripts
 {
     <script src="js/cart.js"></script>
@@ -13,19 +13,27 @@
         $(document).ready(function () {
             ShowCurrentCli();
             ShowCart();
+            BuildEmpresa();
+            BuildTransacao();
+            BuildLocalCobranca();
             document.getElementById('cartIcon').style.display = 'none';
             document.getElementById('finishIcon').style.display = 'block';
+            $('#empFaturamento').formSelect();
+            $('#tipoTransacao').formSelect();
+            $('#localCobranca').formSelect();
+            $('#tipoFrete').formSelect();
+//            $('#prazopagamento').formSelect();
 
         });
-        
+
         var currencyInput = document.querySelector('input[type="currency"]');
         var currency = 'R$'; // https://www.currency-iso.org/dam/downloads/lists/list_one.xml
 
         //currencyInput.addEventListener('focus', onFocus);
         //currencyInput.addEventListener('blur', onBlur);
 
-        function localStringToNumber( s ){
-            return Number(String(s).replace(/[^0-9.-]+/g,""));
+        function localStringToNumber(s) {
+            return Number(String(s).replace(/[^0-9.-]+/g, ""));
         }
 
         function onFocus(e) {
@@ -33,13 +41,13 @@
             e.target.value = value ? localStringToNumber(value) : '';
         }
 
-        function onBlur(e){
+        function onBlur(e) {
             const value = e.target.value;
             const options = {
-                maximumFractionDigits : 2,
-                currency              : currency,
-                style                 : "currency",
-                currencyDisplay       : "symbol"
+                maximumFractionDigits: 2,
+                currency: currency,
+                style: "currency",
+                currencyDisplay: "symbol"
             }
             e.target.value = value
                 ? localStringToNumber(value).toLocaleString(undefined, options)

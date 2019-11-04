@@ -32,7 +32,7 @@
                             <label class="pt-10">Preço Unitário</label>
                         </div>
                         <div class="col-6" align="left">
-                            <input type="text" id="valorItem" onkeyup="calculaItem()" class="form-control money" value="@produto.CustoRep" />
+                            <input type="number" id="valorItem" onkeyup="calculaItem()" />
                         </div>
                     </div>
                 </div>
@@ -92,6 +92,8 @@
         $(document).ready(function () {
             ShowCurrentCli();
             BuildOrder();
+            BuildEmpresa();
+            BuildLocalCobranca();
             $('#qtdItem').focus();
             $('#qtdItem').select();
         });
@@ -104,7 +106,7 @@
             valorItem = valorItem.replace(",", ".");
 
             totalAmount = document.getElementById("qtdItem").value * valorItem;
-            document.getElementById("totalItem").value = totalAmount.toString().replace(".", ",");
+            document.getElementById("totalItem").value = totalAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }); 
         }
     </script>
 }

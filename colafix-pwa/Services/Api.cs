@@ -21,6 +21,7 @@ namespace colafix_pwa.Services
         private static string BaseUrl()
         {
             return "http://54.94.137.107/Colafix/appservice.svc/";
+            // return "http://localhost:11954/appservice.svc/";
         }
 
         private static string BuildCall(HttpClient httpClient, string endPoint)
@@ -104,7 +105,6 @@ namespace colafix_pwa.Services
                     {
                         throw new Exception(apiResult.GetProdutoResultData.Message);
                     }
-
                     return apiResult.GetProdutoResultData.Product;
                 }
             }
@@ -113,7 +113,6 @@ namespace colafix_pwa.Services
                 throw new Exception(exception.Message);
             }
         }
-
 
 
         public static List<Cli> GetCliForLista(int codRepresentante)
@@ -136,6 +135,108 @@ namespace colafix_pwa.Services
                     }
 
                     return apiResult.GetCliForListaResultGetCliForListaResult.Clientes;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+        public static List<Empresa> GetUsuarioEmpresaLista(dynamic obj)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "GetUsuarioEmpresaLista");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetUsuarioEmpresaListaResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetUsuarioEmpresaListaResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetUsuarioEmpresaListaResultData.Message);
+                    }
+
+                    return apiResult.GetUsuarioEmpresaListaResultData.Empresa;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+        public static List<LocalCobranca> GetLocaisCobrancaLista(dynamic obj)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "GetLocaisCobrancaLista");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetLocaisCobrancaListaResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetLocaisCobrancaListaResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetLocaisCobrancaListaResultData.Message);
+                    }
+
+                    return apiResult.GetLocaisCobrancaListaResultData.LocalCobranca;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+        public static List<Transacao> GetTransacoesLista(dynamic obj)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "GetTransacoesLista");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetTransacoesListaResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetTransacoesListaResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetTransacoesListaResultData.Message);
+                    }
+
+                    return apiResult.GetTransacoesListaResultData.Transacao;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+        public static PedidoApp InsertPedidoApp(dynamic obj)
+        {
+            try
+            {
+                string x = JsonConvert.SerializeObject(obj.BodyData);
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "InsertPedidoApp");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<InsertPedidoAppResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj.BodyData), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.InsertPedidoAppResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.InsertPedidoAppResultData.Message);
+                    }
+
+                    return apiResult.InsertPedidoAppResultData.PedidoApp;
                 }
             }
             catch (Exception exception)
