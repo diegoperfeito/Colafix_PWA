@@ -190,17 +190,29 @@ function AddCartItem(id) {
                 ShowMessage(data);
                 return;
             }
+            if (returnData.EmbeddedData.embalagem != "0") {
+                if (document.getElementById("qtdItem").value % returnData.EmbeddedData.embalagem != 0) {
+                    Notiflix.Report.Info(
+                        'Atenção',
+                        'Quantidade informada não é multiplo da embalagem deste produto.',
+                        'Fechar');
+                    return
+                }
+            }
+
             var jaTem = false;
             for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
                 if (currentOrder.pedido_item_app[i].cod_prod === id) {
                     currentOrder.pedido_item_app[i].nome_prod = returnData.EmbeddedData.nomeProd;
                     currentOrder.pedido_item_app[i].qtde_ped = parseFloat(document.getElementById("qtdItem").value.replace(",", "."));
-                    currentOrder.pedido_item_app[i].valor = returnData.EmbeddedData.ValorFabrica;
+                    currentOrder.pedido_item_app[i].valor = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
                     currentOrder.pedido_item_app[i].valor_indice = returnData.EmbeddedData.ValorIndice;
-                    currentOrder.pedido_item_app[i].valor_fabrica = returnData.EmbeddedData.ValorFabrica;
+                    currentOrder.pedido_item_app[i].valor_fabrica = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
                     currentOrder.pedido_item_app[i].peso_bru_un = returnData.EmbeddedData.pesoBru;
                     currentOrder.pedido_item_app[i].peso_liq_un = returnData.EmbeddedData.pesoLiq;
-                    currentOrder.pedido_item_app[i].Item = currentOrder.pedido_item_app.length + 1;
+                    currentOrder.pedido_item_app[i].unidade = returnData.EmbeddedData.unidade;
+                    currentOrder.pedido_item_app[i].item = currentOrder.pedido_item_app.length + 1;
+                    currentOrder.pedido_item_app[i].embalagem = returnData.EmbeddedData.embalagem;
                     jaTem = true;
                     break;
                 }
@@ -216,7 +228,7 @@ function AddCartItem(id) {
                 item.ind_geral = 0;
                 item.ind_impostos = 0;
                 item.item = currentOrder.pedido_item_app.length+1;
-                item.obs = 0;
+                //item.obs = ;
                 item.perc_desconto = 0;
                 item.perc_icms = 0;
                 item.perc_ipi = 0;
@@ -224,11 +236,13 @@ function AddCartItem(id) {
                 item.peso_liq_un = returnData.EmbeddedData.pesoLiq.replace(",", ".");
                 item.qtde_ped = parseFloat(document.getElementById("qtdItem").value.replace(",", "."));
                 item.qtde_emb = 0;
-                item.situacao = "TEMP";
+                item.situacao = "ANALISE";
                 item.unidade = returnData.EmbeddedData.unidade;
                 item.valor = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
                 item.valor_fabrica = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
                 item.valor_indice = 0;
+                item.embalagem = returnData.EmbeddedData.embalagem;
+
                 currentOrder.pedido_item_app.push(item);
             }
             localStorage.setItem("ORDER", JSON.stringify(currentOrder));
@@ -236,7 +250,8 @@ function AddCartItem(id) {
             document.getElementById("totalItem").value = "";
             $("#qtdItem").focus();
             $("#qtdItem").select();
-            HasCartOpen();
+            RedirectAction('/Menu');
+//            HasCartOpen();
         },
         error: function(data) {
             Notiflix.Loading.Remove();
@@ -267,14 +282,14 @@ function ShowCart() {
                                     </div>
                                     <div class='col-6' align='center'>
                                         <label for='qtdItem'>Quantidade</label>
-                                        <input type="currency" id="qtdItem" onkeyup="calculaItem()" class="form-control" value="${currentOrder.pedido_item_app[i].qtde_ped}" style='text-align:center'/>
+                                        <input type="currency" id="qtdItem" disabled="true" class="form-control" value="${currentOrder.pedido_item_app[i].qtde_ped}" style='text-align:center'/>
                                     </div>
                                     <div class='col-6' align='center'>
                                         <label for='qtdItem'>Valor</label>
-                                        <input type="currency" id="qtdItem" onkeyup="calculaItem()" class="form-control" value="${currentOrder.pedido_item_app[i].valor}" style='text-align:center'/>
+                                        <input type="currency" id="qtdItem" disabled="true" class="form-control" value="${currentOrder.pedido_item_app[i].valor}" style='text-align:center'/>
                                     </div>
                                     <div class='col-12' align='right'>
-                                        <label>Total do Item ${currentOrder.pedido_item_app[i].nome_prod}</label>
+                                        <label id="lblTotalItem" style='font-weight:bold'>${(currentOrder.pedido_item_app[i].qtde_ped * currentOrder.pedido_item_app[i].valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</label>
                                     </div>
                                 </div>
                             </div>
@@ -286,16 +301,16 @@ function ShowCart() {
 
     html += `<div class='row'>
                     <div class='col-6'>
-                        <span>Peso: </span><label id='labelPeso' style='font-weight:bold'>${TotalCartPeso()}</label>
+                        <span>Peso(kg): </span><label id='labelPeso' style='font-weight:bold'>${TotalCartPeso()}</label>
                     </div>
-                    <div class='col-6'>
-                        <span>R$ Total: </span><label id='labelTotalCart' style='font-weight:bold'>${TotalCart()}</label></div>
+                    <div class='col-6' align='right'>
+                        <span>Total: </span><label id='labelTotalCart' style='font-weight:bold'>${TotalCart()}</label></div>
                     </div>
              </div>
             <div class='row'>
                 <div class='col-12'>
                     <div class='input-field col 12'>
-                        <select id="empFaturamento">`
+                        <select id="empFaturamento" {...getToggleButtonProps({onBlur: e => (e.preventDownshiftDefault = true })}>`
                 for (let i = 0; i < empresaLista.length; i++) {
                     html += `<option value="" disabled selected>Empresa de Faturamento</option>
                              <option value="${empresaLista[i].CodEmp}">${empresaLista[i].NomeEmp}</option>`;
@@ -309,10 +324,10 @@ function ShowCart() {
     html += `<div class='row'>
                 <div class='col-12'>
                     <div class='input-field col 12'>
-                        <select id="tipoTransacao">`
+                        <select id="tipoTransacao" {...getToggleButtonProps({onBlur: e => (e.preventDownshiftDefault = true })}>`
     for (let i = 0; i < transacaoLista.length; i++) {
         html += `<option value="" disabled selected>Tipo de Transação</option>
-                                         <option value="${transacaoLista[i].CodTran}">${transacaoLista[i].NomeTran}</option>`;
+                 <option value="${transacaoLista[i].CodTran}">${transacaoLista[i].NomeTran}</option>`;
     }
     html += `</select>
             </div>
@@ -322,7 +337,7 @@ function ShowCart() {
     html += `<div class='row'>
                 <div class='col-12'>
                     <div class='input-field col 12'>
-                        <select id="localCobranca">`
+                        <select id="localCobranca" {...getToggleButtonProps({onBlur: e => (e.preventDownshiftDefault = true })}>`
     for (let i = 0; i < localCobrancaLista.length; i++) {
         html += `<option value="" disabled selected>Forma Pagamento</option>
                                          <option value="${localCobrancaLista[i].CodLocCob}">${localCobrancaLista[i].NomeLocCob}</option>`;
@@ -335,7 +350,7 @@ function ShowCart() {
     html += `<div class='row'>
                 <div class='col-12'>
                     <div class='input-field col 12'>
-                        <select id="tipoFrete">
+                        <select id="tipoFrete" {...getToggleButtonProps({onBlur: e => (e.preventDownshiftDefault = true })}>
                             <option value="" disabled selected>Tipo de Frete</option>
                             <option value="1">CIF</option>
                             <option value="2">FOB</option>
@@ -379,56 +394,70 @@ function ShowCart() {
 function TotalCart() {
     var total = 0;
     for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
-        total += currentOrder.pedido_item_app[i].valor;
+        total += currentOrder.pedido_item_app[i].valor * currentOrder.pedido_item_app[i].qtde_ped;
     }
-    return total;
+    currentOrder.vlr_tot = total;
+    currentOrder.vlr_merc = total;
+    return total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+
+
 }
 
 
 function TotalCartPeso() {
     var pesoTotal = 0;
     for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
-        if (currentOrder.pedido_item_app[i].unidade == "KG") {
+        if (currentOrder.pedido_item_app[i].unidade == 2) {
             pesoTotal += currentOrder.pedido_item_app[i].qtde_ped; // * xMultiplo;
         } else {
             pesoTotal += parseFloat(currentOrder.pedido_item_app[i].qtde_ped * currentOrder.pedido_item_app[i].peso_bru_un); // * xMultiplo;
         }
     }
-    return pesoTotal;
+    return  pesoTotal;
 }
 
 function ValidaPrazo() {
     const prazo = document.getElementById("prazoPagto").value;
     var arPrazo = prazo.split(".");
     if (arPrazo.length == 0 || arPrazo[0] == "" || arPrazo.length > 10) {
-        alert("prazo de pagamento inválido");
+        Notiflix.Report.Warning(
+            'Atenção',
+            'prazo de pagamento inválido',
+            'Fechar');
         return false;
     } else {
         // verificação de contéudo e de ordem correta dos prazos
         var x = 0;
         for (var i = 0; i <= arPrazo.length-1; i++) {
             if (!$.isNumeric(arPrazo[i])) {
-                alert("prazo de pagamento inválido");
+                Notiflix.Report.Warning(
+                    'Atenção',
+                    'prazo de pagamento inválido',
+                    'Fechar');
                 return false;
             }
             if (parseFloat(arPrazo[i]) < x) {
-                alert("prazo de pagamento inválido");
+                Notiflix.Report.Warning(
+                    'Atenção',
+                    'prazo de pagamento inválido',
+                    'Fechar');
                 return false;
             } else {
                 x = parseFloat(arPrazo[i]);
             }
         }
-        for (var i = 0; i <= arPrazo.length-1; i++) {
-            if (i == 0) currentOrder.diap1 = arPrazo[0]; else currentOrder.diap1 = 0;
-            if (i == 1) currentOrder.diap2 = arPrazo[1]; else currentOrder.diap2 = 0;
-            if (i == 2) currentOrder.diap3 = arPrazo[2]; else currentOrder.diap3 = 0;
-            if (i == 3) currentOrder.diap4 = arPrazo[3]; else currentOrder.diap4 = 0;
-            if (i == 4) currentOrder.diap5 = arPrazo[4]; else currentOrder.diap5 = 0;
-            if (i == 5) currentOrder.diap6 = arPrazo[5]; else currentOrder.diap6 = 0;
-            if (i == 6) currentOrder.diap7 = arPrazo[6]; else currentOrder.diap7 = 0;
-            if (i == 7) currentOrder.diap8 = arPrazo[7]; else currentOrder.diap8 = 0;
-            if (i == 8) currentOrder.diap9 = arPrazo[8]; else currentOrder.diap9 = 0;
-            if (i == 9) currentOrder.diap10 = arPrazo[9]; else currentOrder.diap10 = 0;
+        for (var i = 0; i <= arPrazo.length - 1; i++) {
+            if (i == 0) currentOrder.diap1 = arPrazo[0];
+            if (i == 1) currentOrder.diap2 = arPrazo[1];
+            if (i == 2) currentOrder.diap3 = arPrazo[2];
+            if (i == 3) currentOrder.diap4 = arPrazo[3];
+            if (i == 4) currentOrder.diap5 = arPrazo[4];
+            if (i == 5) currentOrder.diap6 = arPrazo[5];
+            if (i == 6) currentOrder.diap7 = arPrazo[6];
+            if (i == 7) currentOrder.diap8 = arPrazo[7];
+            if (i == 8) currentOrder.diap9 = arPrazo[8];
+            if (i == 9) currentOrder.diap10 = arPrazo[9];
         }
         return true;
     }
@@ -444,7 +473,7 @@ function DeleteItemCart(id) {
         function () {
             var i = currentOrder.pedido_item_app.length;
             while (i--) {
-                if (currentOrder.pedido_item_app[i].CodProd === id) {
+                if (currentOrder.pedido_item_app[i].cod_prod === id) {
                     console.log('encontrado');
                     currentOrder.pedido_item_app.splice(i, 1);
                 }
@@ -452,14 +481,23 @@ function DeleteItemCart(id) {
             localStorage.setItem("ORDER", JSON.stringify(currentOrder));
             const element = document.getElementById("card_".concat(id));
             element.parentNode.removeChild(element);
-            document.getElementById('labelTotalCart').innerHTML = TotalCart();
             if (currentOrder.pedido_item_app.length === 0) {
                 RedirectAction('/Menu');
+            } else {
+                document.getElementById('labelTotalCart').innerHTML = TotalCart();
+                document.getElementById('labelPeso').innerHTML = TotalCartPeso();
             }
         }, function () {
 
         });
 }
+
+
+
+function currencyFormat(num) {
+    return "R$" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+}
+
 
 function FinishCheckOut() {
     if (!ValidaPrazo()) {
@@ -468,7 +506,10 @@ function FinishCheckOut() {
 
     var emp = document.getElementById("empFaturamento").value
     if (emp == "") {
-        alert("Selecione empresa de faturamento");
+        Notiflix.Report.Warning(
+            'Atenção',
+            'Selecione empresa de faturamento',
+            'Fechar');
         return;
     }
     currentOrder.cod_emp = emp;
@@ -476,30 +517,43 @@ function FinishCheckOut() {
 
     var locCob = document.getElementById("localCobranca").value
     if (locCob == "") {
-        alert("Selecione forma de pagamento");
+        Notiflix.Report.Warning(
+            'Atenção',
+            'Selecione forma de pagamento',
+            'Fechar');
         return;
     }
     currentOrder.cod_loc_cob = locCob;
 
-    var frete = document.getElementById("tipoFrete").value
+    var frete = document.getElementById("tipoFrete").value;
     if (frete == "") {
-        alert("Selecione tipo de frete");
+        Notiflix.Report.Warning(
+            'Atenção',
+            'Selecione tipo de frete',
+            'Fechar');
         return;
     }
     currentOrder.tipo_frete = frete;
-    currentOrder.total_frete = 0;
+    currentOrder.vlr_frete = parseFloat(document.getElementById("valorFrete").value.replace(",", "."));;
+    currentOrder.situacao = 'ANALISE';
 
-    var tipo = document.getElementById("tipoTransacao").value
+    var tipo = document.getElementById("tipoTransacao").value;
     if (tipo == "") {
-        alert("Selecione tipo de transação");
+        Notiflix.Report.Warning(
+            'Atenção',
+            'Selecione tipo de transação',
+            'Fechar');
         return;
     }
     currentOrder.cod_transa = tipo;
 
-    currentOrder.obs = document.getElementById("obs").value
+    currentOrder.obs = document.getElementById("obs").value;
+    currentOrder.usu_inclui = currentUser.usuario;
 
     var objPed = new Object();
     objPed.pedidoApp = currentOrder;
+
+
 
     Notiflix.Confirm.Show(
         "Confirma Envio?",
@@ -527,6 +581,9 @@ function FinishCheckOut() {
                         return;
                     }
                     Notiflix.Notify.Success('Pedido enviado com sucesso');
+                    localStorage.removeItem("ORDER");
+                    localStorage.removeItem("CLI");
+                    RedirectAction("/Menu");
                 },
                 error: function (data) {
                     Notiflix.Loading.Remove();
@@ -538,3 +595,4 @@ function FinishCheckOut() {
             Notiflix.Notify.Warning('Envio cancelado');
         });
 }
+

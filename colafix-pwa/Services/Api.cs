@@ -20,8 +20,8 @@ namespace colafix_pwa.Services
 
         private static string BaseUrl()
         {
-            return "http://54.94.137.107/Colafix/appservice.svc/";
-            // return "http://localhost:11954/appservice.svc/";
+            //return "http://54.94.137.107/Colafix/appservice.svc/";
+            return "http://localhost:11954/appservice.svc/";
         }
 
         private static string BuildCall(HttpClient httpClient, string endPoint)
@@ -111,6 +111,35 @@ namespace colafix_pwa.Services
             catch (Exception exception)
             {
                 throw new Exception(exception.Message);
+            }
+        }
+
+        public static ProdutoUltimaCompra GetProdutoUltimaCompra(dynamic obj)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "getProdutoUltimaCompra");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetProdutoUltimaCompraResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetProdutoUltimaCompraResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetProdutoUltimaCompraResultData.Message);
+                    }
+                    return apiResult.GetProdutoUltimaCompraResultData.ProdutoUltimaCompra;
+                }
+            }
+            catch (Exception exception)
+            {
+                ProdutoUltimaCompra produtoUltimaCompra = new ProdutoUltimaCompra();
+                produtoUltimaCompra.DataUltimaCompra = "00/00/0000";
+                produtoUltimaCompra.QuantidadeUltimaCompra = 0;
+                produtoUltimaCompra.PedidoUltimaCompra = 0;
+                produtoUltimaCompra.ValorUltimaCompra = "";
+                return produtoUltimaCompra;
             }
         }
 
@@ -244,5 +273,119 @@ namespace colafix_pwa.Services
                 throw new Exception(exception.Message);
             }
         }
+
+
+        public static void EnviaEmailPedido(dynamic obj)
+        {
+            try
+            {
+                string x = JsonConvert.SerializeObject(obj.BodyData);
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "EnviaEmailPedido");
+                     var apiResult =
+                        JsonConvert.DeserializeObject<EnviaEmailPedidoResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj.BodyData), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.EnviaEmailPedidoResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.EnviaEmailPedidoResultData.Message);
+                    }
+
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+
+
+
+        public static PedidosRelatorio GetConsultaPedidosListaVendedor(int codVend)
+        {
+            try
+            {
+                dynamic obj = new ExpandoObject();
+                obj.codVend = codVend;
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "GetConsultaPedidosListaVendedor");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetConsultaPedidosListaVendedorResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetConsultaPedidosListaVendedorResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetConsultaPedidosListaVendedorResultData.Message);
+                    }
+
+                    return apiResult.GetConsultaPedidosListaVendedorResultData.PedidosRelatorio;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+        public static PedidoApp GetConsultaPedido(int codPed)
+        {
+            try
+            {
+                dynamic obj = new ExpandoObject();
+                obj.codPed = codPed;
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "GetConsultaPedido");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetConsultaPedidoResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetConsultaPedidoResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetConsultaPedidoResultData.Message);
+                    }
+
+                    return apiResult.GetConsultaPedidoResultData.PedidoApp;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+
+        public static List<Cli> GetCliForAdminLista(dynamic obj)
+        {
+            try
+            {
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "GetCliForAdminLista");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetCliForAdminListaResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj.BodyData), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetCliForAdminListaResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetCliForAdminListaResultData.Message);
+                    }
+
+                    return apiResult.GetCliForAdminListaResultData.Clientes;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
     }
 }

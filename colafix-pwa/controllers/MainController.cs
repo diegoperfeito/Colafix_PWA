@@ -155,6 +155,31 @@ namespace colafix_pwa.controllers
         }
 
 
+        public ActionResult GetCliForAdminLista([FromBody] dynamic obj)
+        {
+            try
+            {
+                var data = Api.GetCliForAdminLista(obj);
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Success,
+                    Message = "Cliente não encontrato",
+                    Title = "Sucesso",
+                    EmbeddedData = data
+                }));
+            }
+            catch (Exception exception)
+            {
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Failure,
+                    Message = exception.Message,
+                    Title = "Erro de Sistema"
+                }));
+            }
+        }
+
+
 
         public ActionResult InsertPedidoApp([FromBody] dynamic obj)
         {
@@ -167,6 +192,31 @@ namespace colafix_pwa.controllers
                     Message = "Produto encontrado",
                     Title = "Sucesso",
                     EmbeddedData = data
+                }));
+            }
+            catch (Exception exception)
+            {
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Failure,
+                    Message = exception.Message,
+                    Title = "Erro de Sistema"
+                }));
+            }
+        }
+
+
+        public ActionResult EnviaEmailPedido([FromBody] dynamic obj)
+        {
+            try
+            {
+                Api.EnviaEmailPedido(obj);
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Success,
+                    Message = "Email Enviado",
+                    Title = "Sucesso",
+
                 }));
             }
             catch (Exception exception)

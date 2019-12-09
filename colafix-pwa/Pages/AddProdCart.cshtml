@@ -3,6 +3,7 @@
 @model colafix_pwa.Pages.AddProdCartModel
 @{
     var produto = (Product)ViewData["Produto"];
+    var produtoUltimaCompra = (ProdutoUltimaCompra)ViewData["ProdutoUltimaCompra"];
 }
 
 <div class="row pt-6">
@@ -24,7 +25,7 @@
                             <label class="pt-10">Quantidade</label>
                         </div>
                         <div class="col-6" align="left">
-                            <input type="text" id="qtdItem" onkeyup="calculaItem()" class="form-control weight" value="0" />
+                            <input type="number" id="qtdItem" onkeyup="calculaItem()" class="form-control weight" value="0" />
                         </div>
                     </div>
                     <div class="row">
@@ -43,19 +44,19 @@
                     </div>
                     <div class="row">
                         <div class="col s8">Pedido</div>
-                        <div class="col s4">@produto.CodProd</div>
+                        <div class="col s4">@produtoUltimaCompra.PedidoUltimaCompra</div>
                     </div>
                     <div class="row">
                         <div class="col s8"> Data</div>
-                        <div class="col s4">@produto.CodProd</div>
+                        <div class="col s4">@produtoUltimaCompra.DataUltimaCompra.Substring(0,10) </div>
                     </div>
                     <div class="row">
                         <div class="col s8">Quantidade </div>
-                        <div class="col s4">@produto.CodProd</div>
+                        <div class="col s4">@produtoUltimaCompra.QuantidadeUltimaCompra</div>
                     </div>
                     <div class="row">
                         <div class="col s8"> Valor Unitário</div>
-                        <div class="col s4">@produto.CodProd</div>
+                        <div class="col s4">@produtoUltimaCompra.ValorUltimaCompra</div>
                     </div>
                 </div>
             </div>
@@ -101,12 +102,12 @@
         var valorItem;
         var totalAmount = 0;
 
-        function calculaItem() {
-            valorItem = document.getElementById("valorItem").value;
-            valorItem = valorItem.replace(",", ".");
+    function calculaItem() {
+        valorItem = document.getElementById("valorItem").value;
+        valorItem = valorItem.replace(",", ".");
 
-            totalAmount = document.getElementById("qtdItem").value * valorItem;
-            document.getElementById("totalItem").value = totalAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }); 
+        totalAmount = document.getElementById("qtdItem").value * valorItem;
+        document.getElementById("totalItem").value = totalAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }); 
         }
     </script>
 }

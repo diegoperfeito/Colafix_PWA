@@ -56,7 +56,10 @@ function RedirectAction(action) {
 
 function OpenMenu(action) {
     if (action.toLowerCase() === "clientes") {
-        RedirectAction("/Clientes/?id=".concat(currentUser.id));
+        RedirectAction("/Clientes/?id=".concat(currentUser.id).concat("&admin=").concat(currentUser.admin));
+    }
+    if (action.toLowerCase() === "pedidos") {
+        RedirectAction("/Pedidos/?id=".concat(currentUser.id));
     }
 }
 
@@ -84,6 +87,7 @@ function LimparCarrinho() {
         "Não",
         function () {
             localStorage.removeItem("ORDER");
+            localStorage.removeItem("CLI");
             RedirectAction("/Menu");
         }, function () {
 
@@ -113,6 +117,8 @@ function AddRemoveCli(id, nome) {
                 localStorage.setItem("ORDER", JSON.stringify(currentOrder));
             }
         }
+        RedirectAction('/Menu');
+        return;
     } else {
         if (currentCli === null) {
             RedirectAction("/Clientes/?id=".concat(currentUser.id));

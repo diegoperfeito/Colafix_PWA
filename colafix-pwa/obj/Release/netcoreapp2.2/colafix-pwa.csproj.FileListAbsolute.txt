@@ -29,3 +29,5 @@ C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\colafix-pwa.Views
 C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\colafix-pwa.dll
 C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\colafix-pwa.pdb
 C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\colafix-pwa.csproj.CopyComplete
+C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\Razor\Pages\Pedidos.g.cshtml.cs
+C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\Razor\Pages\PedidoDetalhe.g.cshtml.cs

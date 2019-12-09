@@ -1,0 +1,134 @@
+﻿@page
+@using colafix_pwa.Model
+@model colafix_pwa.Pages.PedidoDetalheModel
+@{
+    var pedido = (PedidoApp)ViewData["Pedido"];
+    var classe = "col-12 padrao";
+    var prazo = pedido.Diap1;
+    var frete = "";
+    if(pedido.Diap2 != "0"){prazo = prazo + "/" + pedido.Diap2;}
+    if(pedido.Diap3 != "0"){prazo = prazo + "/" + pedido.Diap3;}
+    if(pedido.Diap4 != "0"){prazo = prazo + "/" + pedido.Diap4;}
+    if(pedido.Diap5 != "0"){prazo = prazo + "/" + pedido.Diap5;}
+    if(pedido.Diap6 != "0"){prazo = prazo + "/" + pedido.Diap6;}
+    if(pedido.Diap7 != "0"){prazo = prazo + "/" + pedido.Diap7;}
+    if(pedido.Diap8 != "0"){prazo = prazo + "/" + pedido.Diap8;}
+    if(pedido.Diap9 != "0"){prazo = prazo + "/" + pedido.Diap9;}
+    if(pedido.Diap10 != "0"){prazo = prazo + "/" + pedido.Diap10;}
+
+    if(pedido.TipoFrete == 1){frete="CIF";}
+    if(pedido.TipoFrete == 2){frete="FOB";}
+    if(pedido.TipoFrete == 3){frete="REPASSADO";}
+    if(pedido.TipoFrete == 4){frete="PROPRIO";}
+
+}
+
+<div class="@classe pt-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="col-sm-12">
+                <b>Pedido:</b> @pedido.Id <b>Emissão:</b> @pedido.DataEmissao
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <b>Cliente:</b> @pedido.NomeCli<br />
+                    <b>Forma Pagto:</b> @pedido.CodLocCob  @pedido.NomeLocCob<br />
+                    <b>Prazo:</b> @prazo <br />
+                    <b>Tipo Frete:</b> @frete<br />
+                    <b>Valor Frete:</b> @string.Format("{0:C}", pedido.TotalFrete)<br />
+                    <b>Situação:</b> @pedido.Situacao<br />
+                    <b>Obs:</b> @pedido.Obs
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <b>Total do Pedido:</b> @string.Format("{0:C}", pedido.VlrTot)
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var pedidoItem in pedido.PedidoItemApp)
+                {
+                <div class="@classe">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="col-sm-12">
+                                <b>@pedidoItem.CodProd - @pedidoItem.NomeProd</b>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <b>Qtde:</b> @pedidoItem.QtdePed<br />
+                                    <b>Valor:</b>@string.Format("{0:C4}",pedidoItem.Valor)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    classe = "col-12 padrao";
+                }
+            </div>
+            <div class="card-footer">
+                <button class="btn waves-effect waves-light" type="button" onclick="enviaEmail(@pedido.Id)">Enviar Email</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            ShowCurrentCli();
+        });
+
+    function enviaEmail(codPed) {
+
+    var objPed = new Object();
+    objPed.codPed = codPed;
+
+
+
+    Notiflix.Confirm.Show(
+        "Confirma Envio do email?",
+        "Confirmar envio de email",
+        "Sim",
+        "Não",
+        function () {
+            //   localStorage.removeItem("ORDER");
+            Notiflix.Notify.Success('Enviando pedido para o servidor');
+            $.ajax({
+                context: this,
+                url: "/Main/EnviaEmailPedido",
+                type: "POST",
+                data: BuildData(objPed),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    Notiflix.Loading.Dots("Aguarde...");
+                },
+                success: function (data) {
+                    Notiflix.Loading.Remove();
+                    const returnData = JSON.parse(data);
+                    if (returnData.MessageType !== 0) {
+                        ShowMessage(data);
+                        return;
+                    }
+                    Notiflix.Notify.Success('Pedido enviado com sucesso');
+                },
+                error: function (data) {
+                    Notiflix.Loading.Remove();
+                    ShowError(data);
+                }
+            });
+        },
+        function () {
+            Notiflix.Notify.Warning('Envio cancelado');
+        });
+    }
+
+
+    </script>
+}

@@ -5,11 +5,26 @@ namespace colafix_pwa.Model
 {
     public class PedidoApp
     {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("data_emissao")]
+        public string DataEmissao { get; set; }
+
         [JsonProperty("cod_ven")]
         public string CodVen { get; set; }
 
         [JsonProperty("cod_cli")]
         public string CodCli { get; set; }
+
+        [JsonProperty("nome_cli")]
+        public string NomeCli { get; set; }
+
+        [JsonProperty("nome_loc_cob")]
+        public string NomeLocCob { get; set; }
+
+        [JsonProperty("nome_transa")]
+        public string NomeTransa { get; set; }
 
         [JsonProperty("cod_emp")]
         public string CodEmp { get; set; }
@@ -125,6 +140,9 @@ namespace colafix_pwa.Model
         [JsonProperty("cod_prod")]
         public string CodProd { get; set; }
 
+        [JsonProperty("nome_prod")]
+        public string NomeProd { get; set; }
+
         [JsonProperty("ind_comissao")]
         public long IndComissao { get; set; }
 
@@ -175,7 +193,7 @@ namespace colafix_pwa.Model
         public string Situacao { get; set; }
 
         [JsonProperty("valor")]
-        public long Valor { get; set; }
+        public decimal Valor { get; set; }
 
         [JsonProperty("valor_fabrica")]
         public long ValorFabrica { get; set; }
@@ -183,4 +201,11 @@ namespace colafix_pwa.Model
         [JsonProperty("valor_indice")]
         public long ValorIndice { get; set; }
     }
+
+    public class Pedidos
+    {
+    }
+
+
+
 }

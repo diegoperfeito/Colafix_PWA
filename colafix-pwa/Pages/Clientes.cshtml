@@ -2,37 +2,208 @@
 @using colafix_pwa.Model
 @model colafix_pwa.Pages.ClientesModel
 @{
-    var clientes = (List<Cli>) ViewData["Clientes"];
+    List<Cli> clientes = (List<Cli>)ViewData["Clientes"];
 }
-
-<div class="row pt-6">
-    @foreach (var cliente in clientes)
+@{if (clientes.Count == 0)
     {
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    @cliente.Nome
+        <div class="row pt-6">
+            <div class="row">
+                <div class="col-12" align="left">
+                    <label class="pt-10">Pesquisa por Nome do Cliente</label>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            @cliente.Fone
-                        </div>
-                    </div>
+                <div class="col-9" align="left">
+                    <input type="text" name="cli" id="cli" class="form-control" value="" />
                 </div>
-                <div class="card-footer">
-                    <button class="btn waves-effect waves-light" type="button" onclick="AddRemoveCli(@cliente.Id, '@cliente.Nome')">Selecionar</button>
+                <div class="col-3" align="left">
+                    <button class="btn waves-effect waves-light" onclick="buscarAdmin(cli.value)">
+                        OK
+                    </button>
                 </div>
             </div>
         </div>
     }
+}
+<div id="dados">
+    @*<div class="row pt-6">
+            @foreach (var cliente in clientes)
+            {
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <b>Código: </b>@cliente.Id <b>Nome: </b>@cliente.Nome
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <b>Fone: </b> @cliente.Fone
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <b>Endereço: </b> @cliente.Endereco
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <b>CEP: </b> @cliente.Cep
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <b>Bairro: </b> @cliente.Bairro
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <b>Cidade: </b> @cliente.Cidade
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn waves-effect waves-light" type="button" onclick="AddRemoveCli(@cliente.Id, '@cliente.Nome')">Selecionar</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>*@
 </div>
-
 @section Scripts
 {
     <script>
         $(document).ready(function(){
             ShowCurrentCli();
+            if (currentUser.admin != "1") {
+                buscar("");
+            }
         });
+
+
+    function buscar(obj) {
+        var x = obj;
+        var html = "";
+        html = `<div class="row pt-6">
+            <div class="row pt-6">
+                @foreach (var cliente in clientes)
+                {
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <b>Código: </b>@cliente.Id <b>Nome: </b>@cliente.Nome
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <b>Fone: </b> @cliente.Fone
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <b>Endereço: </b> @cliente.Endereco
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <b>CEP: </b> @cliente.Cep
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <b>Bairro: </b> @cliente.Bairro
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <b>Cidade: </b> @cliente.Cidade
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn waves-effect waves-light" type="button" onclick="AddRemoveCli(@cliente.Id, '@cliente.Nome')">Selecionar</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>`
+        html += '</div>'
+        document.getElementById('dados').innerHTML = html;
+
+    }
+
+    function buscarAdmin(obj) {
+        var x = obj;
+        var html = "";
+        html = `<div class="row pt-6">`
+
+        const o = new Object();
+        o.nome = obj;
+        $.ajax({
+            context: this,
+            url: "/Main/GetCliForAdminLista",
+            type: "POST",
+            data: BuildData(o),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            beforeSend: function () {
+                Notiflix.Loading.Dots("Aguarde...");
+            },
+            success: function (data) {
+                Notiflix.Loading.Remove();
+                const returnData = JSON.parse(data);
+                console.log(returnData);
+                if (returnData.MessageType !== 0) {
+                    ShowMessage(data);
+                    return;
+                }
+                for (let d = 0; d < returnData.EmbeddedData.length; d++) {
+                    html += `<div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <b>Código: </b>${returnData.EmbeddedData[d].id} <b>Nome: </b>${returnData.EmbeddedData[d].nome}
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <b>Fone: </b> ${returnData.EmbeddedData[d].fone}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <b>Endereço: </b> ${returnData.EmbeddedData[d].endereco}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <b>CEP: </b> ${returnData.EmbeddedData[d].cep}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <b>Bairro: </b> ${returnData.EmbeddedData[d].bairro}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <b>Cidade: </b> ${returnData.EmbeddedData[d].cidade}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn waves-effect waves-light" type="button" onclick="AddRemoveCli(${returnData.EmbeddedData[d].id}, '${returnData.EmbeddedData[d].nome}')">Selecionar</button>
+                        </div>
+                        </div>
+                    </div>`
+                }
+                html += '</div>'
+                document.getElementById('dados').innerHTML = html;
+            },
+            error: function (data) {
+                Notiflix.Loading.Remove();
+                ShowError(data);
+            }
+        });
+    }
+
+
+
     </script>
 }

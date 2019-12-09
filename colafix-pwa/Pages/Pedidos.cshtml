@@ -1,0 +1,185 @@
+﻿@page
+@using colafix_pwa.Model
+@model colafix_pwa.Pages.PedidosRelatorioModel
+@{
+    var pedidosRelatorio = (PedidosRelatorio)ViewData["PedidosRelatorio"];
+    var classe = "col-12 padrao";
+}
+
+<div class="row pt-6">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="col-sm-12">
+                    Totais de Pedidos
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Pendente:</b> R$ @pedidosRelatorio.TotalPendente
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Análise:</b> R$ @pedidosRelatorio.TotalAnalise
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Crédito:</b> R$ @pedidosRelatorio.TotalCredito
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Liquidado:</b> R$ @pedidosRelatorio.TotalLiquidado
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Reprovado:</b> R$ @pedidosRelatorio.TotalReprovado
+                    </div>
+                </div>
+            </div>
+            @*<div class="card-footer">
+                    <button class="btn waves-effect waves-light" type="button" onclick="AddRemoveCli(@cliente.Id, '@cliente.Nome')">Selecionar</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+
+<div class="input-field col s12">
+    <select id="filtro" onchange="filtrar(this)">
+        <option value="" disabled selected>Selecione Situação</option>
+        <option value="1">Pendente</option>
+        <option value="2">Análise</option>
+        <option value="3">Crédito</option>
+        <option value="4">Liquidado</option>
+        <option value="5">Reprovado</option>
+    </select>
+</div>
+
+
+
+
+<div class="row pt-6">
+    @foreach (var pedido in pedidosRelatorio.PedidosAapp)
+    {
+
+
+        classe += pedido.Situacao == "PENDENTE"
+            ? " pendente"
+            : pedido.Situacao == "ANALISE"
+                ? " analise"
+                : pedido.Situacao == "CREDITO"
+                ? " credito"
+                : pedido.Situacao == "LIQUIDADO" ? " liquidado" : "reprovado";
+
+
+    <div class="@classe" style="display:none">
+        <div class="card">
+            <div class="card-header">
+                <div class="col-sm-12">
+                    <b>Pedido:</b> @pedido.Id <b>Emissão:</b> @pedido.DataEmissao
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Cliente:</b> @pedido.NomeCli
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Obs:</b> @pedido.Obs
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Situação:</b> @pedido.Situacao
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Total do Pedido:</b> @string.Format("{0:C}", pedido.VlrTot)
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn waves-effect waves-light" type="button" onclick="mostraDetalhe(@pedido.Id)">Detalhes do Pedido</button>
+                </div>
+
+                @*<div class="row">
+                    <div class="col-sm-12">
+                        @pedido.PedidoItemApp[0].CodProd - @pedido.PedidoItemApp[0].NomeProd <br>
+                        Qtde    : @pedido.PedidoItemApp[0].QtdePed<br />
+                        Valor R$: @pedido.PedidoItemApp[0].Valor
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+        classe = "col-12 padrao";
+    }
+</div>
+
+@section Scripts
+{
+    <script>
+         $(document).ready(function () {
+            $('.collapsible').collapsible();
+            ShowCurrentCli();
+
+            $(document).ready(function () {
+                $('#filtro').formSelect();
+            });
+        });
+
+        function filtrar(obj) {
+            var divs = document.getElementsByClassName('padrao');
+            console.log(divs);
+            for (var i = 0; i < divs.length; i++) {
+                divs[i].style.display = "none";
+            }
+            var e = document.getElementById(obj.id);
+            var fil = e.options[e.selectedIndex].value;
+            if (fil == 1) {
+                var divs = document.getElementsByClassName('pendente');
+                console.log(divs);
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].style.display = "block";
+                }
+            } else if (fil == 2) {
+                var divs = document.getElementsByClassName('analise');
+                console.log(divs);
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].style.display = "block";
+                }
+            } else if (fil == 3) {
+                var divs = document.getElementsByClassName('credito');
+                console.log(divs);
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].style.display = "block";
+                }
+            } else if (fil == 4) {
+                var divs = document.getElementsByClassName('liquidado');
+                console.log(divs);
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].style.display = "block";
+                }
+            } else if (fil == 5) {
+                var divs = document.getElementsByClassName('reprovado');
+                console.log(divs);
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].style.display = "block";
+                }
+            }
+
+       }
+
+        function mostraDetalhe(id) {
+            RedirectAction("/PedidoDetalhe/?id=".concat(id));
+        }
+
+    </script>
+}

@@ -54,4 +54,33 @@ namespace colafix_pwa.Model
         [JsonProperty("unidade")]
         public Enums.Unidade Unidade { get; set; }
     }
+
+
+    public class ProdutoUltimaCompra
+    {
+        [JsonProperty("codCli")]
+        [JsonConverter(typeof(ParseStringConverter))]
+        public long CodCli { get; set; }
+
+        [JsonProperty("codProd")]
+        public string CodProd { get; set; }
+
+        [JsonProperty("codVend")]
+        [JsonConverter(typeof(ParseStringConverter))]
+        public long CodVend { get; set; }
+
+        [JsonProperty("dataUltimaCompra")]
+        public string DataUltimaCompra { get; set; }
+
+        [JsonProperty("pedidoUltimaCompra")]
+        [JsonConverter(typeof(ParseStringConverter))]
+        public long PedidoUltimaCompra { get; set; }
+
+        [JsonProperty("quantidadeUltimaCompra")]
+        [JsonConverter(typeof(ParseStringConverter))]
+        public long QuantidadeUltimaCompra { get; set; }
+
+        [JsonProperty("valorUltimaCompra")]
+        public string ValorUltimaCompra { get; set; }
+    }
 }
