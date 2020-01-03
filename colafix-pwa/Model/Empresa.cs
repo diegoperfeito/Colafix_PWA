@@ -11,8 +11,8 @@ namespace colafix_pwa.Model
         [JsonProperty("nomeEmp")]
         public string NomeEmp { get; set; }
 
-        [JsonProperty("unidade")]
-        public object Unidade { get; set; }
+        //[JsonProperty("unidade")]
+        //public object Unidade { get; set; }
 
         [JsonProperty("usuario")]
         public string Usuario { get; set; }

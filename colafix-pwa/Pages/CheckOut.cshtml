@@ -1,36 +1,96 @@
 ﻿@page
+@using colafix_pwa.Model
 @model colafix_pwa.Pages.CheckOutModel
 @{
-
+    var locaisCobranca = (List<LocalCobranca>)ViewData["LocaisCobranca"];
+    var transacoes = (List<Transacao>)ViewData["Transacoes"];
+    var empresas = (List<Empresa>)ViewData["Empresas"];
 }
-    <div class="row pt-6">
-        <div id="cartData"></div>
+<div class="row pt-6" style='margin-bottom:0'>
+    <div id="cartData"></div>
+</div>
+
+<div class='row' style='margin-bottom:0'>
+    <div class='col-12'>
+        <label class="label-select" style="color: var(--theme-color)" for="cbxempresas"><b>Empresa de Faturamento</b></label>
+        <select id="cbxempresas"></select>
+        <span class="highlight"></span>
+        <span class="bar"></span>
     </div>
+</div>
+
+<div class='row' style='margin-bottom:0'>
+    <div class='col-12'>
+        <label class="label-select" style="color: var(--theme-color)" for="cbxtransacoes"><b>Tipo de Transação</b></label>
+        <select id="cbxtransacoes"></select>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+    </div>
+</div>
+
+<div class='row' style='margin-bottom:0'>
+    <div class='col-12'>
+        <label class="label-select" style="color: var(--theme-color)" for="cbxlocaiscobranca"><b>Forma de Pagamento</b></label>
+        <select id="cbxlocaiscobranca"></select>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+    </div>
+</div>
+
+<div class='row' style='margin-bottom:0'>
+    <div class='col-12'>
+        <label class="label-select" style="color: var(--theme-color)" for="cbxtipofrete"><b>Tipo de Frete</b></label>
+        <select id="cbxtipofrete"></select>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+    </div>
+</div>
+
+<div class="row pt-6">
+    <div id="cartInfo"></div>
+</div>
+
+
+
 @section Scripts
 {
-    <script src="js/cart.js"></script>
+    <script src="../js/cart.js"></script>
     <script>
         $(document).ready(function () {
             ShowCurrentCli();
             ShowCart();
-            BuildEmpresa();
-            BuildTransacao();
-            BuildLocalCobranca();
+            ShowInfo();
+            //BuildEmpresa();
+            //BuildTransacao();
+            //BuildLocalCobranca();
             document.getElementById('cartIcon').style.display = 'none';
             document.getElementById('finishIcon').style.display = 'block';
-            $('#empFaturamento').formSelect();
-            $('#tipoTransacao').formSelect();
-            $('#localCobranca').formSelect();
-            $('#tipoFrete').formSelect();
-            $('#empFaturamento option:nth-child(1)').prop("selected", true);
-            $('#tipoTransacao option:nth-child(1)').prop("selected", true);
-            $('#localCobranca option:nth-child(1)').prop("selected", true);
-            $('#tipoFrete option:nth-child(1)').prop("selected", true);
 
+            $('#cbxtransacoes').formSelect();
+            $('#cbxlocaiscobranca').formSelect();
+            $('#cbxempresas').formSelect();
+            $('#cbxtipofrete').formSelect();
+
+            $('#cbxtransacoes option:nth-child(1)').prop("selected", true);
+            $('#cbxlocaiscobranca option:nth-child(1)').prop("selected", true);
+            $('#cbxempresas option:nth-child(1)').prop("selected", true);
+            $('#cbxtipofrete option:nth-child(1)').prop("selected", true);
         });
 
         var currencyInput = document.querySelector('input[type="currency"]');
         var currency = 'R$'; // https://www.currency-iso.org/dam/downloads/lists/list_one.xml
+
+        const lstEmpresa = document.getElementById('cbxempresas');
+        carregaEmpresa();
+
+        const lstTransacao = document.getElementById('cbxtransacoes');
+        carregaTransacao();
+
+        const lstLocalCobranca = document.getElementById('cbxlocaiscobranca');
+        carregaLocalCobranca();
+
+        const lstTipoFrete = document.getElementById('cbxtipofrete');
+        carregaTipoFrete();
 
         //currencyInput.addEventListener('focus', onFocus);
         //currencyInput.addEventListener('blur', onBlur);
@@ -55,6 +115,64 @@
             e.target.value = value
                 ? localStringToNumber(value).toLocaleString(undefined, options)
                 : '';
+        }
+
+        function carregaEmpresa() {
+            var json = @Html.Raw(Json.Serialize(empresas));
+            console.log(json);
+            json.forEach(funcEmpresa);
+        }
+        function funcEmpresa(item) {
+            const option = document.createElement("option");
+            option.value = item.codEmp;
+            option.innerHTML = item.codEmp + ' - ' + item.nomeEmp;
+            lstEmpresa.appendChild(option);
+        }
+
+        function carregaLocalCobranca() {
+            var json = @Html.Raw(Json.Serialize(locaisCobranca));
+            var i;
+            json.forEach(funcLocalCobranca);
+        }
+        function funcLocalCobranca(item) {
+            const option = document.createElement("option");
+            option.value = item.codLocCob;
+            option.innerHTML = item.codLocCob + ' - ' + item.nomeLocCob;
+            lstLocalCobranca.appendChild(option);
+        }
+
+        function carregaTransacao() {
+            var json = @Html.Raw(Json.Serialize(transacoes));
+            var i;
+            json.forEach(funcTransacao);
+        }
+        function funcTransacao(item) {
+            const option = document.createElement("option");
+            option.value = item.codTran;
+            option.innerHTML = item.codTran + ' - ' + item.nomeTran;
+            lstTransacao.appendChild(option);
+        }
+
+        function carregaTipoFrete() {
+            const option = document.createElement("option");
+            option.value = "1";
+            option.innerHTML = "CIF"
+            lstTipoFrete.appendChild(option);
+
+            const option2 = document.createElement("option");
+            option2.value = "2";
+            option2.innerHTML = "FOB"
+            lstTipoFrete.appendChild(option2);
+
+            const option3 = document.createElement("option");
+            option3.value = "3";
+            option3.innerHTML = "REPASSADO"
+            lstTipoFrete.appendChild(option3);
+
+            option4 = document.createElement("option");
+            option4.value = "4";
+            option4.innerHTML = "PROPRIO"
+            lstTipoFrete.appendChild(option4);
         }
     </script>
 }

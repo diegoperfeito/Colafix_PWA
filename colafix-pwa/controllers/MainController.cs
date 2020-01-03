@@ -84,7 +84,7 @@ namespace colafix_pwa.controllers
         {
             try
             {
-                var data = Api.GetUsuarioEmpresaLista(obj.BodyData);
+                var data = Api.GetUsuarioEmpresaLista(obj);
                 return Json(AjaxMessage.Create(new MessageContent
                 {
                     MessageType = MessageType.Success,
@@ -108,7 +108,7 @@ namespace colafix_pwa.controllers
         {
             try
             {
-                var data = Api.GetLocaisCobrancaLista(obj.BodyData);
+                var data = Api.GetLocaisCobrancaLista();
                 return Json(AjaxMessage.Create(new MessageContent
                 {
                     MessageType = MessageType.Success,
@@ -134,7 +134,7 @@ namespace colafix_pwa.controllers
         {
             try
             {
-                var data = Api.GetTransacoesLista(obj.BodyData);
+                var data = Api.GetTransacoesLista();
                 return Json(AjaxMessage.Create(new MessageContent
                 {
                     MessageType = MessageType.Success,

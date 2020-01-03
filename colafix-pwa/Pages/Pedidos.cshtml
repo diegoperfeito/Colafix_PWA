@@ -48,8 +48,17 @@
     </div>
 </div>
 
+<div class='row' style='margin-bottom:0'>
+    <div class='col-12'>
+        <label class="label-select" style="color: var(--theme-color)" for="filtro"><b>Selecione Situação</b></label>
+        <select id="filtro" onchange="filtrar(this)"></select>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+    </div>
+</div>
 
-<div class="input-field col s12">
+
+@*<div class="input-field col s12">
     <select id="filtro" onchange="filtrar(this)">
         <option value="" disabled selected>Selecione Situação</option>
         <option value="1">Pendente</option>
@@ -58,7 +67,7 @@
         <option value="4">Liquidado</option>
         <option value="5">Reprovado</option>
     </select>
-</div>
+</div>*@
 
 
 
@@ -126,7 +135,8 @@
 @section Scripts
 {
     <script>
-         $(document).ready(function () {
+        carregaSituacao();
+        $(document).ready(function () {
             $('.collapsible').collapsible();
             ShowCurrentCli();
 
@@ -136,49 +146,82 @@
         });
 
         function filtrar(obj) {
-            var divs = document.getElementsByClassName('padrao');
+        var divs = document.getElementsByClassName('padrao');
+        console.log(divs);
+        for (var i = 0; i < divs.length; i++) {
+            divs[i].style.display = "none";
+        }
+        var e = document.getElementById(obj.id);
+        var fil = e.options[e.selectedIndex].value;
+        if (fil == 1) {
+            var divs = document.getElementsByClassName('pendente');
             console.log(divs);
             for (var i = 0; i < divs.length; i++) {
-                divs[i].style.display = "none";
+                divs[i].style.display = "block";
             }
-            var e = document.getElementById(obj.id);
-            var fil = e.options[e.selectedIndex].value;
-            if (fil == 1) {
-                var divs = document.getElementsByClassName('pendente');
-                console.log(divs);
-                for (var i = 0; i < divs.length; i++) {
-                    divs[i].style.display = "block";
-                }
-            } else if (fil == 2) {
-                var divs = document.getElementsByClassName('analise');
-                console.log(divs);
-                for (var i = 0; i < divs.length; i++) {
-                    divs[i].style.display = "block";
-                }
-            } else if (fil == 3) {
-                var divs = document.getElementsByClassName('credito');
-                console.log(divs);
-                for (var i = 0; i < divs.length; i++) {
-                    divs[i].style.display = "block";
-                }
-            } else if (fil == 4) {
-                var divs = document.getElementsByClassName('liquidado');
-                console.log(divs);
-                for (var i = 0; i < divs.length; i++) {
-                    divs[i].style.display = "block";
-                }
-            } else if (fil == 5) {
-                var divs = document.getElementsByClassName('reprovado');
-                console.log(divs);
-                for (var i = 0; i < divs.length; i++) {
-                    divs[i].style.display = "block";
-                }
+        } else if (fil == 2) {
+            var divs = document.getElementsByClassName('analise');
+            console.log(divs);
+            for (var i = 0; i < divs.length; i++) {
+                divs[i].style.display = "block";
             }
+        } else if (fil == 3) {
+            var divs = document.getElementsByClassName('credito');
+            console.log(divs);
+            for (var i = 0; i < divs.length; i++) {
+                divs[i].style.display = "block";
+            }
+        } else if (fil == 4) {
+            var divs = document.getElementsByClassName('liquidado');
+            console.log(divs);
+            for (var i = 0; i < divs.length; i++) {
+                divs[i].style.display = "block";
+            }
+        } else if (fil == 5) {
+            var divs = document.getElementsByClassName('reprovado');
+            console.log(divs);
+            for (var i = 0; i < divs.length; i++) {
+                divs[i].style.display = "block";
+            }
+        }
 
        }
 
         function mostraDetalhe(id) {
             RedirectAction("/PedidoDetalhe/?id=".concat(id));
+        }
+
+    function carregaSituacao() {
+            const lstSituacao = document.getElementById('filtro');
+
+            const option = document.createElement("option");
+            option.value = "1";
+            option.innerHTML = "Pendente"
+            lstSituacao.appendChild(option);
+
+            const option2 = document.createElement("option");
+            option2.value = "2";
+            option2.innerHTML = "Análise"
+            lstSituacao.appendChild(option2);
+
+            const option3 = document.createElement("option");
+            option3.value = "3";
+            option3.innerHTML = "Crédito"
+            lstSituacao.appendChild(option3);
+
+            const option4 = document.createElement("option");
+            option4.value = "4";
+            option4.innerHTML = "Liquidado"
+            lstSituacao.appendChild(option4);
+
+            const option5 = document.createElement("option");
+            option5.value = "5";
+            option5.innerHTML = "Reprovado"
+            lstSituacao.appendChild(option4);
+
+            console.log(lstSituacao);
+
+
         }
 
     </script>

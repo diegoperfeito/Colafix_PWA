@@ -20,8 +20,8 @@ namespace colafix_pwa.Services
 
         private static string BaseUrl()
         {
-            //return "http://54.94.137.107/Colafix/appservice.svc/";
-            return "http://localhost:11954/appservice.svc/";
+           return "http://54.94.137.107/Colafix/appservice.svc/";
+           // return "http://localhost:11954/appservice.svc/";
         }
 
         private static string BuildCall(HttpClient httpClient, string endPoint)
@@ -172,10 +172,12 @@ namespace colafix_pwa.Services
             }
         }
 
-        public static List<Empresa> GetUsuarioEmpresaLista(dynamic obj)
+        public static List<Empresa> GetUsuarioEmpresaLista(string usuario)
         {
             try
             {
+                dynamic obj = new ExpandoObject();
+                obj.usuario = usuario;
                 using (var httpClient = new HttpClient())
                 {
                     var url = BuildCall(httpClient, "GetUsuarioEmpresaLista");
@@ -197,10 +199,12 @@ namespace colafix_pwa.Services
             }
         }
 
-        public static List<LocalCobranca> GetLocaisCobrancaLista(dynamic obj)
+        public static List<LocalCobranca> GetLocaisCobrancaLista()
         {
             try
             {
+                dynamic obj = new ExpandoObject();
+                obj.codLocalCobranca = "";
                 using (var httpClient = new HttpClient())
                 {
                     var url = BuildCall(httpClient, "GetLocaisCobrancaLista");
@@ -222,10 +226,12 @@ namespace colafix_pwa.Services
             }
         }
 
-        public static List<Transacao> GetTransacoesLista(dynamic obj)
+        public static List<Transacao> GetTransacoesLista()
         {
             try
             {
+                dynamic obj = new ExpandoObject();
+                obj.usuario = "";
                 using (var httpClient = new HttpClient())
                 {
                     var url = BuildCall(httpClient, "GetTransacoesLista");

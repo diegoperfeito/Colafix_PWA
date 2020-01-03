@@ -1,5 +1,5 @@
 ﻿var currentOrder = JSON.parse(localStorage.getItem("ORDER"));
-var empresaLista = JSON.parse(localStorage.getItem("EMPRESAS"));
+//var empresaLista = JSON.parse(localStorage.getItem("EMPRESAS"));
 function BuildOrder() {
     if (currentOrder === null) {
         const o = new Object();
@@ -201,20 +201,22 @@ function AddCartItem(id) {
             }
 
             var jaTem = false;
-            for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
-                if (currentOrder.pedido_item_app[i].cod_prod === id) {
-                    currentOrder.pedido_item_app[i].nome_prod = returnData.EmbeddedData.nomeProd;
-                    currentOrder.pedido_item_app[i].qtde_ped = parseFloat(document.getElementById("qtdItem").value.replace(",", "."));
-                    currentOrder.pedido_item_app[i].valor = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
-                    currentOrder.pedido_item_app[i].valor_indice = returnData.EmbeddedData.ValorIndice;
-                    currentOrder.pedido_item_app[i].valor_fabrica = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
-                    currentOrder.pedido_item_app[i].peso_bru_un = returnData.EmbeddedData.pesoBru;
-                    currentOrder.pedido_item_app[i].peso_liq_un = returnData.EmbeddedData.pesoLiq;
-                    currentOrder.pedido_item_app[i].unidade = returnData.EmbeddedData.unidade;
-                    currentOrder.pedido_item_app[i].item = currentOrder.pedido_item_app.length + 1;
-                    currentOrder.pedido_item_app[i].embalagem = returnData.EmbeddedData.embalagem;
-                    jaTem = true;
-                    break;
+            if (currentOrder != null) {
+                for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
+                    if (currentOrder.pedido_item_app[i].cod_prod === id) {
+                        currentOrder.pedido_item_app[i].nome_prod = returnData.EmbeddedData.nomeProd;
+                        currentOrder.pedido_item_app[i].qtde_ped = parseFloat(document.getElementById("qtdItem").value.replace(",", "."));
+                        currentOrder.pedido_item_app[i].valor = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
+                        currentOrder.pedido_item_app[i].valor_indice = returnData.EmbeddedData.ValorIndice;
+                        currentOrder.pedido_item_app[i].valor_fabrica = parseFloat(document.getElementById("valorItem").value.replace(",", "."));
+                        currentOrder.pedido_item_app[i].peso_bru_un = returnData.EmbeddedData.pesoBru;
+                        currentOrder.pedido_item_app[i].peso_liq_un = returnData.EmbeddedData.pesoLiq;
+                        currentOrder.pedido_item_app[i].unidade = returnData.EmbeddedData.unidade;
+                        currentOrder.pedido_item_app[i].item = currentOrder.pedido_item_app.length + 1;
+                        currentOrder.pedido_item_app[i].embalagem = returnData.EmbeddedData.embalagem;
+                        jaTem = true;
+                        break;
+                    }
                 }
             }
             if (!jaTem) {
@@ -227,7 +229,7 @@ function AddCartItem(id) {
                 item.ind_frete = 0;
                 item.ind_geral = 0;
                 item.ind_impostos = 0;
-                item.item = currentOrder.pedido_item_app.length+1;
+                item.item = currentOrder.pedido_item_app.length + 1;
                 //item.obs = ;
                 item.perc_desconto = 0;
                 item.perc_icms = 0;
@@ -263,12 +265,10 @@ function AddCartItem(id) {
 
 function ShowCart() {
     BuildOrder();
-    BuildEmpresa();
-    BuildTransacao();
-    BuildLocalCobranca();
+    //BuildEmpresa();
+    //BuildTransacao();
+    //BuildLocalCobranca();
     var html = "";
-
-
     for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
         html +=
             `<div class='row' style='margin-bottom:0'>
@@ -306,60 +306,14 @@ function ShowCart() {
                     <div class='col-6' align='right'>
                         <span>Total: </span><label id='labelTotalCart' style='font-weight:bold'>${TotalCart()}</label></div>
                     </div>
-             </div>
-            <div class='row'>
-                <div class='col-12'>
-                    <div class='input-field col 12'>
-                        <select id="empFaturamento" {...getToggleButtonProps({onBlur: e => (e.preventDownshiftDefault = true })}>`
-                for (let i = 0; i < empresaLista.length; i++) {
-                    html += `<option value="" disabled selected>Empresa de Faturamento</option>
-                             <option value="${empresaLista[i].CodEmp}">${empresaLista[i].NomeEmp}</option>`;
-                }
-    html += `</select>
-            </div>
-        </div>
-    </div>`;
+             </div>`;
+    document.getElementById('cartData').innerHTML = html;
+}
 
 
-    html += `<div class='row'>
-                <div class='col-12'>
-                    <div class='input-field col 12'>
-                        <select id="tipoTransacao" {...getToggleButtonProps({onBlur: e => (e.preventDownshiftDefault = true })}>`
-    for (let i = 0; i < transacaoLista.length; i++) {
-        html += `<option value="" disabled selected>Tipo de Transação</option>
-                 <option value="${transacaoLista[i].CodTran}">${transacaoLista[i].NomeTran}</option>`;
-    }
-    html += `</select>
-            </div>
-        </div>
-    </div>`;
-
-    html += `<div class='row'>
-                <div class='col-12'>
-                    <div class='input-field col 12'>
-                        <select id="localCobranca" {...getToggleButtonProps({onBlur: e => (e.preventDownshiftDefault = true })}>`
-    for (let i = 0; i < localCobrancaLista.length; i++) {
-        html += `<option value="" disabled selected>Forma Pagamento</option>
-                                         <option value="${localCobrancaLista[i].CodLocCob}">${localCobrancaLista[i].NomeLocCob}</option>`;
-    }
-    html += `</select>
-            </div>
-        </div>
-    </div>`;
-
-    html += `<div class='row'>
-                <div class='col-12'>
-                    <div class='input-field col 12'>
-                        <select id="tipoFrete" {...getToggleButtonProps({onBlur: e => (e.preventDownshiftDefault = true })}>
-                            <option value="" disabled selected>Tipo de Frete</option>
-                            <option value="1">CIF</option>
-                            <option value="2">FOB</option>
-                            <option value="3">REPASSADO</option>
-                            <option value="4">PROPRIO</option>
-                        </select>
-                    </div>
-                </div>
-            </div>`;
+function ShowInfo() {
+    BuildOrder();
+    var html = "";
 
     html += `<div class='row'>
                     <div class='col-6'>
@@ -388,8 +342,14 @@ function ShowCart() {
                     </div>
              </div>`;
 
-    document.getElementById('cartData').innerHTML = html;
+    document.getElementById('cartInfo').innerHTML = html;
 }
+
+
+
+
+
+
 
 function TotalCart() {
     var total = 0;
@@ -504,7 +464,7 @@ function FinishCheckOut() {
         return;
     }
 
-    var emp = document.getElementById("empFaturamento").value
+    var emp = document.getElementById("txtEmpresa").value
     if (emp == "") {
         Notiflix.Report.Warning(
             'Atenção',
@@ -512,10 +472,10 @@ function FinishCheckOut() {
             'Fechar');
         return;
     }
-    currentOrder.cod_emp = emp;
-    currentOrder.cod_emp_fat = emp;
+    currentOrder.cod_emp = emp.split(" - ")[0];
+    currentOrder.cod_emp_fat = emp.split(" - ")[0];
 
-    var locCob = document.getElementById("localCobranca").value
+    var locCob = document.getElementById("txtLocalCobranca").value
     if (locCob == "") {
         Notiflix.Report.Warning(
             'Atenção',
@@ -523,9 +483,9 @@ function FinishCheckOut() {
             'Fechar');
         return;
     }
-    currentOrder.cod_loc_cob = locCob;
+    currentOrder.cod_loc_cob = locCob.split(" - ")[0];
 
-    var frete = document.getElementById("tipoFrete").value;
+    var frete = document.getElementById("txtTipoFrete").value;
     if (frete == "") {
         Notiflix.Report.Warning(
             'Atenção',
@@ -533,11 +493,11 @@ function FinishCheckOut() {
             'Fechar');
         return;
     }
-    currentOrder.tipo_frete = frete;
+    currentOrder.tipo_frete = frete.split(" - ")[0];
     currentOrder.vlr_frete = parseFloat(document.getElementById("valorFrete").value.replace(",", "."));;
     currentOrder.situacao = 'ANALISE';
 
-    var tipo = document.getElementById("tipoTransacao").value;
+    var tipo = document.getElementById("txtTransacao").value;
     if (tipo == "") {
         Notiflix.Report.Warning(
             'Atenção',
@@ -545,7 +505,7 @@ function FinishCheckOut() {
             'Fechar');
         return;
     }
-    currentOrder.cod_transa = tipo;
+    currentOrder.cod_transa = tipo.split(" - ")[0];
 
     currentOrder.obs = document.getElementById("obs").value;
     currentOrder.usu_inclui = currentUser.usuario;

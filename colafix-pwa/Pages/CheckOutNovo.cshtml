@@ -1,0 +1,281 @@
+﻿@page
+@using colafix_pwa.Model
+@model colafix_pwa.Pages.CheckOutModel
+@{
+    var locaisCobranca = (List<LocalCobranca>)ViewData["LocaisCobranca"];
+    var transacoes = (List<Transacao>)ViewData["Transacoes"];
+    var empresas = (List<Empresa>)ViewData["Empresas"];
+}
+
+<div class="row pt-6" style='margin-bottom:0'>
+    <div id="cartData"></div>
+</div>
+
+<div class='row' style='margin-bottom:0'>
+    <div class="col-sm-12">
+        <ul class="collapsible" id="colemp">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Seleciona Empresa</div>
+                @foreach (var emp in empresas)
+                {
+                <div class="verificar collapsible-body">
+                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                    <span onclick="selEmpresa('@emp.CodEmp','@emp.NomeEmp')">@emp.NomeEmp</span>
+                    <label style="float: right">@emp.CodEmp</label>
+                </div>
+                }
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="row" style='margin-bottom:0'>
+    <div class='col-12'>
+        <span>Empresa: </span><label id='labelEmpresa' style='font-weight:bold'></label>
+    </div>
+    <div class='col-12'>
+        <input type="text" disabled id="txtEmpresa" class="form-control" style='text-align:left' />
+    </div>
+</div>
+
+
+<div class='row' style='margin-bottom:0'>
+    <div class="col-sm-12">
+        <ul class="collapsible" id="coltran">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Selecione Tipo de Transacao</div>
+                @foreach (var emp in transacoes)
+                {
+                <div class="verificar collapsible-body">
+                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                    <span onclick="selTransacao('@emp.CodTran','@emp.NomeTran')">@emp.NomeTran</span>
+                    <label style="float: right">@emp.CodTran</label>
+                </div>
+                }
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class='row'>
+    <div class='col-12'>
+        <span>Tipo de Transação: </span><label id='labelTransacao' style='font-weight:bold'></label>
+    </div>
+    <div class='col-12'>
+        <input type="text" disabled id="txtTransacao" class="form-control" style='text-align:left' />
+    </div>
+</div>
+
+
+<div class='row' style='margin-bottom:0'>
+    <div class="col-sm-12">
+        <ul class="collapsible" id="colcob">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Selecione Forma de Pagamento</div>
+                @foreach (var emp in locaisCobranca)
+                {
+                <div class="verificar collapsible-body">
+                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                    <span onclick="selLocalCobranca('@emp.CodLocCob','@emp.NomeLocCob')">@emp.NomeLocCob</span>
+                    <label style="float: right">@emp.CodLocCob</label>
+                </div>
+                }
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class='row'>
+    <div class='col-12'>
+        <span>Forma de Pagamento: </span><label id='labelLocalCobranca' style='font-weight:bold'></label>
+    </div>
+    <div class='col-12'>
+        <input type="text" disabled id="txtLocalCobranca" class="form-control" style='text-align:left'   />
+    </div>
+</div>
+
+
+<div class='row' style='margin-bottom:0'>
+    <div class="col-sm-12">
+        <ul class="collapsible" id="colfrete">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Selecione Tipo de Frete</div>
+                <div class="verificar collapsible-body">
+                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                    <span onclick="selTipoFrete('1','CIF')">CIF</span>
+                    <label style="float: right">1</label>
+                </div>
+                <div class="verificar collapsible-body">
+                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                    <span onclick="selTipoFrete('2','FOB')">FOB</span>
+                    <label style="float: right">2</label>
+                </div>
+                <div class="verificar collapsible-body">
+                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                    <span onclick="selTipoFrete('3','REPASSADO')">REPASSADO</span>
+                    <label style="float: right">3</label>
+                </div>
+                <div class="verificar collapsible-body">
+                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                    <span onclick="selTipoFrete('4','PROPRIO')">PROPRIO</span>
+                    <label style="float: right">4</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class='row'>
+    <div class='col-12'>
+        <span>Tipo de Frete: </span><label id='labelTipoFrete' style='font-weight:bold'></label>
+    </div>
+    <div class='col-12'>
+        <input type="text" disabled id="txtTipoFrete" class="form-control" style='text-align:left' />
+    </div>
+</div>
+
+<div class="row">
+    <div id="cartInfo"></div>
+</div>
+
+
+
+@section Scripts
+{
+    <script src="../js/cart.js"></script>
+    <script>
+    $(document).ready(function () {
+            $('.collapsible').collapsible();
+            ShowCurrentCli();
+            ShowCart();
+            ShowInfo();
+            //BuildEmpresa();
+            //BuildTransacao();
+            //BuildLocalCobranca();
+            document.getElementById('cartIcon').style.display = 'none';
+            document.getElementById('finishIcon').style.display = 'block';
+        });
+
+        var currencyInput = document.querySelector('input[type="currency"]');
+        var currency = 'R$'; // https://www.currency-iso.org/dam/downloads/lists/list_one.xml
+
+        //currencyInput.addEventListener('focus', onFocus);
+        //currencyInput.addEventListener('blur', onBlur);
+
+        function localStringToNumber(s) {
+            return Number(String(s).replace(/[^0-9.-]+/g, ""));
+        }
+
+        function onFocus(e) {
+            const value = e.target.value;
+            e.target.value = value ? localStringToNumber(value) : '';
+        }
+
+        function onBlur(e) {
+            const value = e.target.value;
+            const options = {
+                maximumFractionDigits: 2,
+                currency: currency,
+                style: "currency",
+                currencyDisplay: "symbol"
+            }
+            e.target.value = value
+                ? localStringToNumber(value).toLocaleString(undefined, options)
+                : '';
+        }
+
+        function carregaEmpresa() {
+            var json = @Html.Raw(Json.Serialize(empresas));
+            console.log(json);
+            json.forEach(funcEmpresa);
+        }
+        function funcEmpresa(item) {
+            const option = document.createElement("option");
+            option.value = item.codEmp;
+            option.innerHTML = item.codEmp + ' - ' + item.nomeEmp;
+            lstEmpresa.appendChild(option);
+        }
+
+        function carregaLocalCobranca() {
+            var json = @Html.Raw(Json.Serialize(locaisCobranca));
+            var i;
+            json.forEach(funcLocalCobranca);
+        }
+        function funcLocalCobranca(item) {
+            const option = document.createElement("option");
+            option.value = item.codLocCob;
+            option.innerHTML = item.codLocCob + ' - ' + item.nomeLocCob;
+            lstLocalCobranca.appendChild(option);
+        }
+
+        function carregaTransacao() {
+            var json = @Html.Raw(Json.Serialize(transacoes));
+            var i;
+            json.forEach(funcTransacao);
+        }
+        function funcTransacao(item) {
+            const option = document.createElement("option");
+            option.value = item.codTran;
+            option.innerHTML = item.codTran + ' - ' + item.nomeTran;
+            lstTransacao.appendChild(option);
+        }
+
+        function carregaTipoFrete() {
+            const option = document.createElement("option");
+            option.value = "1";
+            option.innerHTML = "CIF"
+            lstTipoFrete.appendChild(option);
+
+            const option2 = document.createElement("option");
+            option2.value = "2";
+            option2.innerHTML = "FOB"
+            lstTipoFrete.appendChild(option2);
+
+            const option3 = document.createElement("option");
+            option3.value = "3";
+            option3.innerHTML = "REPASSADO"
+            lstTipoFrete.appendChild(option3);
+
+            option4 = document.createElement("option");
+            option4.value = "4";
+            option4.innerHTML = "PROPRIO"
+            lstTipoFrete.appendChild(option4);
+        }
+
+        function selEmpresa(codEmp, nomeEmp) {
+            var inputF = document.getElementById("txtEmpresa");
+            const txt = codEmp + ' - '+ nomeEmp;
+            inputF.setAttribute('value', txt);
+            $('.collapsible').collapsible('close');
+
+        }
+
+        function selTransacao(cod,nome) {
+            var inputF = document.getElementById("txtTransacao");
+            const txt = cod + ' - '+ nome;
+            inputF.setAttribute('value', txt);
+            $('.collapsible').collapsible('close');
+
+        }
+
+        function selLocalCobranca(cod,nome) {
+        var inputF = document.getElementById("txtLocalCobranca");
+        const txt = cod + ' - '+ nome;
+        inputF.setAttribute('value', txt);
+        $('.collapsible').collapsible('close');
+
+        }
+
+        function selTipoFrete(cod,nome) {
+        var inputF = document.getElementById("txtTipoFrete");
+        const txt = cod + ' - '+ nome;
+        inputF.setAttribute('value', txt);
+        $('.collapsible').collapsible('close');
+
+        }
+
+    </script>
+}

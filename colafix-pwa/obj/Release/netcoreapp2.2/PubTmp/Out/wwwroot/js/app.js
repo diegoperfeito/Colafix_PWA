@@ -61,6 +61,12 @@ function OpenMenu(action) {
     if (action.toLowerCase() === "pedidos") {
         RedirectAction("/Pedidos/?id=".concat(currentUser.id));
     }
+    if (action.toLowerCase() === "checkout") {
+        RedirectAction("/CheckOut/?usuario=".concat(currentUser.usuario));
+    }
+    if (action.toLowerCase() === "checkoutnovo") {
+        RedirectAction("/CheckOutNovo/?usuario=".concat(currentUser.usuario));
+    }
 }
 
 function Sair() {
