@@ -4,25 +4,23 @@
 @{
     List<Cli> clientes = (List<Cli>)ViewData["Clientes"];
 }
-@{if (clientes.Count == 0)
-    {
-        <div class="row pt-6">
-            <div class="row">
-                <div class="col-12" align="left">
-                    <label class="pt-10">Pesquisa por Nome do Cliente</label>
-                </div>
-                <div class="col-9" align="left">
-                    <input type="text" name="cli" id="cli" class="form-control" value="" />
-                </div>
-                <div class="col-3" align="left">
-                    <button class="btn waves-effect waves-light" onclick="buscarAdmin(cli.value)">
-                        OK
-                    </button>
-                </div>
-            </div>
+
+<div class="row pt-6">
+    <div class="row">
+        <div class="col-12" align="left">
+            <label class="pt-10">Pesquisa por Nome do Cliente</label>
         </div>
-    }
-}
+        <div class="col-9" align="left">
+            <input type="text" name="cli" id="cli" class="form-control" value="" />
+        </div>
+        <div class="col-3" align="left">
+            <button class="btn waves-effect waves-light" onclick="buscarAdmin(cli.value)">
+                OK
+            </button>
+        </div>
+    </div>
+</div>
+
 <div id="dados">
     @*<div class="row pt-6">
             @foreach (var cliente in clientes)
@@ -81,8 +79,8 @@
     function buscar(obj) {
         var x = obj;
         var html = "";
-        html = `<div class="row pt-6">
-            <div class="row pt-6">
+        html = `<div class="row">
+            <div class="row">
                 @foreach (var cliente in clientes)
                 {
                     <div class="col-12">
@@ -126,36 +124,48 @@
             </div>`
         html += '</div>'
         document.getElementById('dados').innerHTML = html;
-
     }
 
     function buscarAdmin(obj) {
-        var x = obj;
-        var html = "";
-        html = `<div class="row pt-6">`
-
-        const o = new Object();
-        o.nome = obj;
-        $.ajax({
-            context: this,
-            url: "/Main/GetCliForAdminLista",
-            type: "POST",
-            data: BuildData(o),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            beforeSend: function () {
-                Notiflix.Loading.Dots("Aguarde...");
-            },
-            success: function (data) {
-                Notiflix.Loading.Remove();
-                const returnData = JSON.parse(data);
-                console.log(returnData);
-                if (returnData.MessageType !== 0) {
-                    ShowMessage(data);
-                    return;
+        console.log(currentUser.admin);
+        if (currentUser.admin != "1") {
+            $(".card").each(function () {
+                console.log("aqui");
+                var resultado = $(this).text().toUpperCase().indexOf(' ' + obj.toUpperCase());
+                if (resultado < 0) {
+                    $(this).fadeOut();
+                } else {
+                    $(this).fadeIn();
                 }
-                for (let d = 0; d < returnData.EmbeddedData.length; d++) {
-                    html += `<div class="col-12">
+            });
+        } else {
+
+            var x = obj;
+            var html = "";
+            html = `<div class="row pt-6">`
+
+            const o = new Object();
+            o.nome = obj;
+            $.ajax({
+                context: this,
+                url: "/Main/GetCliForAdminLista",
+                type: "POST",
+                data: BuildData(o),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    Notiflix.Loading.Dots("Aguarde...");
+                },
+                success: function (data) {
+                    Notiflix.Loading.Remove();
+                    const returnData = JSON.parse(data);
+                    console.log(returnData);
+                    if (returnData.MessageType !== 0) {
+                        ShowMessage(data);
+                        return;
+                    }
+                    for (let d = 0; d < returnData.EmbeddedData.length; d++) {
+                        html += `<div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <b>Código: </b>${returnData.EmbeddedData[d].id} <b>Nome: </b>${returnData.EmbeddedData[d].nome}
@@ -192,15 +202,16 @@
                         </div>
                         </div>
                     </div>`
+                    }
+                    html += '</div>'
+                    document.getElementById('dados').innerHTML = html;
+                },
+                error: function (data) {
+                    Notiflix.Loading.Remove();
+                    ShowError(data);
                 }
-                html += '</div>'
-                document.getElementById('dados').innerHTML = html;
-            },
-            error: function (data) {
-                Notiflix.Loading.Remove();
-                ShowError(data);
-            }
-        });
+            });
+        }
     }
 
 
