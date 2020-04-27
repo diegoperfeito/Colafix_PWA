@@ -20,8 +20,8 @@ namespace colafix_pwa.Services
 
         private static string BaseUrl()
         {
-           return "http://54.94.137.107/Colafix/appservice.svc/";
-           // return "http://localhost:11954/appservice.svc/";
+            //return "http://54.94.137.107/Colafix/appservice.svc/";
+            return "http://localhost:11954/appservice.svc/";
         }
 
         private static string BuildCall(HttpClient httpClient, string endPoint)
@@ -39,7 +39,7 @@ namespace colafix_pwa.Services
                 using (var httpClient = new HttpClient())
                 {
                     var url = BuildCall(httpClient, "login");
-                    var apiResult = 
+                    var apiResult =
                         JsonConvert.DeserializeObject<LoginResult>(
                             httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
                         );
@@ -72,7 +72,7 @@ namespace colafix_pwa.Services
                 using (var httpClient = new HttpClient())
                 {
                     var url = BuildCall(httpClient, "getMenu");
-                    var apiResult = 
+                    var apiResult =
                         JsonConvert.DeserializeObject<GetMenuResult>(
                             httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
                         );
@@ -154,7 +154,7 @@ namespace colafix_pwa.Services
                 using (var httpClient = new HttpClient())
                 {
                     var url = BuildCall(httpClient, "GetCliForLista");
-                    var apiResult = 
+                    var apiResult =
                         JsonConvert.DeserializeObject<GetCliForListaResult>(
                             httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
                         );
@@ -290,10 +290,10 @@ namespace colafix_pwa.Services
                 using (var httpClient = new HttpClient())
                 {
                     var url = BuildCall(httpClient, "EnviaEmailPedido");
-                     var apiResult =
-                        JsonConvert.DeserializeObject<EnviaEmailPedidoResult>(
-                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj.BodyData), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
-                        );
+                    var apiResult =
+                       JsonConvert.DeserializeObject<EnviaEmailPedidoResult>(
+                           httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj.BodyData), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                       );
                     if (apiResult.EnviaEmailPedidoResultData.State != 1)
                     {
                         throw new Exception(apiResult.EnviaEmailPedidoResultData.Message);
