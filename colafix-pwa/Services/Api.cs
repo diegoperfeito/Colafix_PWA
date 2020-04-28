@@ -20,8 +20,10 @@ namespace colafix_pwa.Services
 
         private static string BaseUrl()
         {
-           return "http://54.94.137.107/Colafix/appservice.svc/";
-           // return "http://localhost:11954/appservice.svc/";
+           // return "http://54.94.137.107/Colafix/appservice.svc/";
+           return "http://localhost:11954/appservice.svc/";
+           // return "http://127.0.0.1:82/Colafix/appservice.svc/";
+           // return "http://200.98.172.139/Colafix/appservice.svc/";
         }
 
         private static string BuildCall(HttpClient httpClient, string endPoint)
@@ -62,6 +64,38 @@ namespace colafix_pwa.Services
                 throw new Exception(exception.Message);
             }
         }
+
+        public static Boolean UsuarioAtivo(Credential obj)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "usuarioAtivo");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<UsuarioAtivoResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.UsuarioAtivoResultUsuarioAtivoResult.State != 1)
+                    {
+                        return false;
+                    }
+
+                    var usuario = apiResult.UsuarioAtivoResultUsuarioAtivoResult.Data;
+
+                    ////Criptografa senha para guardar local já que a senha não é retornada. Melhor que seja assim.
+                    //var shield = new Shield(CryptProvider.Rijndael);
+                    //usuario.Senha = shield.Lock(obj.Senha);
+
+                    return true;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
 
         public static List<ProductGroup> GetMenu(Credential obj)
         {
@@ -310,12 +344,13 @@ namespace colafix_pwa.Services
 
 
 
-        public static PedidosRelatorio GetConsultaPedidosListaVendedor(int codVend)
+        public static PedidosRelatorio GetConsultaPedidosListaVendedor(int codVend, int codCli)
         {
             try
             {
                 dynamic obj = new ExpandoObject();
                 obj.codVend = codVend;
+                obj.codCli = codCli;
 
                 using (var httpClient = new HttpClient())
                 {
@@ -330,6 +365,67 @@ namespace colafix_pwa.Services
                     }
 
                     return apiResult.GetConsultaPedidosListaVendedorResultData.PedidosRelatorio;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+        public static PedidoApp GetUltimoPedido(int codCliente)
+        {
+            try
+            {
+                dynamic obj = new ExpandoObject();
+                obj.codCliente = codCliente;
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "GetConsultaUltimoPedidoCliente");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetConsultaUltimoPedidoClienteResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetConsultaUltimoPedidoClienteResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetConsultaUltimoPedidoClienteResultData.Message);
+                    }
+
+                    PedidoApp pedidoApp = apiResult.GetConsultaUltimoPedidoClienteResultData.PedidosRelatorio;
+
+                    return pedidoApp;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+
+
+
+        public static Financeiro GetClienteFinanceiro(int codCliente)
+        {
+            try
+            {
+                dynamic obj = new ExpandoObject();
+                obj.codCliente = codCliente;
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "GetClienteFinanceiro");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetClienteFinanceiroResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetClienteFinanceiroResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetClienteFinanceiroResultData.Message);
+                    }
+
+                    return apiResult.GetClienteFinanceiroResultData.Financeiro;
                 }
             }
             catch (Exception exception)
@@ -385,6 +481,63 @@ namespace colafix_pwa.Services
                     }
 
                     return apiResult.GetCliForAdminListaResultData.Clientes;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+        public static List<ProductGroup> GetProdutosSemCompra(int codCliente)
+        {
+            try
+            {
+                dynamic obj = new ExpandoObject();
+                obj.codCliente = codCliente;
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "getProdutosSemCompra");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetProdutosSemComprasResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetProdutosSemComprasResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetProdutosSemComprasResultData.Message);
+                    }
+
+                    return apiResult.GetProdutosSemComprasResultData.ProductGroup;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+
+        public static List<Entrega> GetEntregas(string placaVeiculo)
+        {
+            try
+            {
+                dynamic obj = new ExpandoObject();
+                obj.placaVeiculo = placaVeiculo;
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "getEntregas");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<GetEntregasResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.GetEntregasResultData.State != 1)
+                    {
+                        throw new Exception(apiResult.GetEntregasResultData.Message);
+                    }
+
+                    return apiResult.GetEntregasResultData.Entregas;
                 }
             }
             catch (Exception exception)

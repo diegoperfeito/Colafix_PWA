@@ -1,0 +1,45 @@
+﻿@page
+@using colafix_pwa.Model
+@model colafix_pwa.Pages.RegistroEntregaModel
+@{
+    var entregas = (List<Entrega>)ViewData["Entregas"];
+    var entregasDias = entregas.GroupBy(s => new { s.DataCurta }).Select(s => s.First());
+ //   var entregasDias = from entrega in entregas group entrega by entrega.DataCurta;
+}
+@section Style{
+    <style>
+    </style>
+}
+<div class='row pt-6' style='margin-bottom:0'>
+    @foreach (var dataEntrega in entregasDias)
+    {
+        <div class="col-sm-12">
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Entregas em @dataEntrega.DataCurta&nbsp;</div>
+                    @{
+                        var dias = entregas.Where(n => n.DataCurta == dataEntrega.DataCurta);
+                        @foreach (var dia in dias)
+                            {
+                                <div class="verificar collapsible-body" id="@dia.NumeroNota">
+                                    <span onclick="">@dia.NumeroNota</span>
+                                    <label style="float: right">@dia.SerieNota</label>
+                                </div>
+                            }
+                    }
+                </li>
+            </ul>
+        </div>
+    }
+
+</div>
+@section Scripts
+{
+    <script>
+    $(document).ready(function () {
+            $('.collapsible').collapsible();
+            ShowCurrentCli();
+        });
+    </script>
+}
+

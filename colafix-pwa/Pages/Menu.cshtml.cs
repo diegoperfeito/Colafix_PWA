@@ -8,7 +8,7 @@ namespace colafix_pwa.Pages
     {
         public void OnGet()
         {
-            ViewData["Title"] = "Menu v.1.1.0";
+            ViewData["Title"] = "Menu v.1.2.0";
 
             var cred = new Credential
             {

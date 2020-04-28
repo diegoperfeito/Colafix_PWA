@@ -190,6 +190,23 @@ function AddCartItem(id) {
                 ShowMessage(data);
                 return;
             }
+
+            if (document.getElementById("qtdItem").value === "0" || document.getElementById("qtdItem").value === "" ) {
+                Notiflix.Report.Info(
+                    'Atenção',
+                    'Informe a quantidade do produto!',
+                    'Fechar');
+                return
+            }
+
+            if (document.getElementById("valorItem").value === "0" || document.getElementById("valorItem").value === "") {
+                Notiflix.Report.Info(
+                    'Atenção',
+                    'Informe o valor do produto!',
+                    'Fechar');
+                return
+            }
+
             if (returnData.EmbeddedData.embalagem != "0") {
                 if (document.getElementById("qtdItem").value % returnData.EmbeddedData.embalagem != 0) {
                     Notiflix.Report.Info(
@@ -265,9 +282,7 @@ function AddCartItem(id) {
 
 function ShowCart() {
     BuildOrder();
-    //BuildEmpresa();
-    //BuildTransacao();
-    //BuildLocalCobranca();
+    console.log(currentOrder);
     var html = "";
     for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
         html +=
@@ -495,6 +510,11 @@ function FinishCheckOut() {
     }
     currentOrder.tipo_frete = frete.split(" - ")[0];
     currentOrder.vlr_frete = parseFloat(document.getElementById("valorFrete").value.replace(",", "."));;
+
+    if (isNaN(currentOrder.vlr_frete)) {
+        currentOrder.vlr_frete = 0;
+    }
+
     currentOrder.situacao = 'ANALISE';
 
     var tipo = document.getElementById("txtTransacao").value;
@@ -537,7 +557,7 @@ function FinishCheckOut() {
                     Notiflix.Loading.Remove();
                     const returnData = JSON.parse(data);
                     if (returnData.MessageType !== 0) {
-                        ShowMessage(data);
+                        Notiflix.Notify.Success(data);
                         return;
                     }
                     Notiflix.Notify.Success('Pedido enviado com sucesso');

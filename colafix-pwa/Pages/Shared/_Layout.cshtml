@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Colafix versão: 1.1.0</title>
+    <title>@ViewData["Title"] - Colafix versão: 1.2.0</title>
 
     <meta name="theme-color" content="#ffffff" />
     <meta name="background_color" content="#ffffff" />
@@ -70,16 +70,17 @@
 <body>
     <nav class="light-blue lighten-1" role="navigation">
         <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo">@ViewData["Title"]</a>
+            <a id="logo-container" href="#" class="brand-logo hide-on-large-only">@ViewData["Title"]</a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="/Menu">Menu</a></li>
                 <li><a href="#" onclick="OpenMenu('Clientes')">Clientes</a></li>
                 <li><a href="#" onclick="OpenMenu('Pedidos')">Consulta Pedidos</a></li>
-                @*<li><a href="#" onclick="OpenMenu('checkoutnovo')">Carrinho IOS</a></li>*@
+                <li><a href="#" onclick="OpenMenu('Financ')">Financeiro</a></li>
+                <li><a href="#" onclick="OpenMenu('SemCompras')">Produtos sem Compra</a></li>
+                <li><a href="#" onclick="OpenMenu('Entregas')">Controle Entregas</a></li>
                 <li><a href="#" onclick="LimparCarrinho()">Limpar Carrinho</a></li>
                 <li><a href="#" onclick="Sair()">Logout</a></li>
             </ul>
-
             <ul id="nav-mobile" class="sidenav" style="padding-top: 200px;">
                 <li>
                     <div id="container">
@@ -88,11 +89,12 @@
                         </div>
                     </div>
                 </li>
-                <li><a href="/Menu"><i class="material-icons">dehaze</i>Menu</a></li>
+                <li><a href="/Menu"><i class="material-icons">dehaze</i>Menu <label id="currentUser"></label></a></li>
                 <li><a href="#" onclick="OpenMenu('Clientes')"><i class="material-icons">group</i>Clientes</a></li>
                 <li><a href="#" onclick="OpenMenu('Pedidos')"><i class="material-icons">local_library</i>Consulta Pedidos</a></li>
-                @*                <li><a href="#"><i class="material-icons">local_atm</i>Financeiro</a></li>*@
-                @*<li><a href="#" onclick="OpenMenu('checkoutnovo')"><i class="material-icons">local_library</i>Carrinho IOS</a></li>*@
+                <li><a href="#" onclick="OpenMenu('Financ')"><i class="material-icons">local_library</i>Financeiro</a></li>
+                <li><a href="#" onclick="OpenMenu('SemCompras')"><i class="material-icons">dehaze</i>Produtos sem Compra</a></li>
+                <li><a href="#" onclick="OpenMenu('Entregas')"><i class="material-icons">dehaze</i>Controle Entregas</a></li>
                 <li><a href="#" onclick="LimparCarrinho()"><i class="material-icons">group</i>Limpar Carrinho</a></li>
                 <li><a href="#" onclick="Sair()"><i class="material-icons">power_settings_new</i>Logout</a></li>
             </ul>
@@ -109,7 +111,7 @@
                 <i id="cliIcon" class="material-icons" style="font-size: 35px; padding-top: 7px">person_add</i>
             </div>
             <div style="float: left; text-align: left; height: 100%">
-                <p>Cliente selecionado</p>
+                <p><label id="currentUserName">Nenhum cliente selecionado</label></p>
                 <label id="currentCliName">Nenhum cliente selecionado</label>
             </div>
             <div id="cartIcon" style="position: fixed; width: 50px; height: 100%; right: 0; display: none" onclick="OpenMenu('CheckOutNovo')">

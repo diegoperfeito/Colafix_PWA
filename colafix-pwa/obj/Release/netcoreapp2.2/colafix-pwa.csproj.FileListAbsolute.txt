@@ -32,3 +32,6 @@ C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\colafix-pwa.cspro
 C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\Razor\Pages\Pedidos.g.cshtml.cs
 C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\Razor\Pages\PedidoDetalhe.g.cshtml.cs
 C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\Razor\Pages\CheckOutNovo.g.cshtml.cs
+C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\Razor\Pages\Financeiro.g.cshtml.cs
+C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\Razor\Pages\ProdutosSemCompras.g.cshtml.cs
+C:\workspace\colafix-pwa\colafix-pwa\obj\Release\netcoreapp2.2\Razor\Pages\RegistroEntrega.g.cshtml.cs

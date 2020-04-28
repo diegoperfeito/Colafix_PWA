@@ -32,6 +32,31 @@ namespace colafix_pwa.controllers
             }
         }
 
+        public ActionResult UsuarioAtivo([FromBody] Credential obj)
+        {
+            try
+            {
+                var data = Api.UsuarioAtivo(obj);
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Success,
+                    Message = "Bem-vindo",
+                    Title = "Sucesso",
+                    EmbeddedData = data
+                }));
+            }
+            catch (Exception exception)
+            {
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Failure,
+                    Message = exception.Message,
+                    Title = "Erro de Sistema"
+                }));
+            }
+        }
+
+
         public ActionResult GetMenu([FromBody] Credential obj)
         {
             try
