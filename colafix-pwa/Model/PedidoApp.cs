@@ -26,6 +26,9 @@ namespace colafix_pwa.Model
         [JsonProperty("nome_transa")]
         public string NomeTransa { get; set; }
 
+        [JsonProperty("prazo_pagamento")]
+        public string PrazoPagamento { get; set; }
+
         [JsonProperty("cod_emp")]
         public string CodEmp { get; set; }
 

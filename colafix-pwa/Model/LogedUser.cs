@@ -25,8 +25,8 @@ namespace colafix_pwa.Model
         public string Name { get; set; }
 
         [JsonProperty("phone")]
-        [JsonConverter(typeof(ParseStringConverter))]
-        public long Phone { get; set; }
+//        [JsonConverter(typeof(ParseStringConverter))]
+        public string Phone { get; set; }
 
         [JsonProperty("phoneCode")]
         public string PhoneCode { get; set; }

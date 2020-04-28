@@ -1,152 +1,190 @@
 ﻿@page
 @using colafix_pwa.Model
-@model colafix_pwa.Pages.CheckOutModel
+@model colafix_pwa.Pages.CheckOutNovoModel
 @{
     var locaisCobranca = (List<LocalCobranca>)ViewData["LocaisCobranca"];
     var transacoes = (List<Transacao>)ViewData["Transacoes"];
     var empresas = (List<Empresa>)ViewData["Empresas"];
+    var pedido = (PedidoApp)ViewData["Pedido"];
 }
 
-<div class="row pt-6" style='margin-bottom:0'>
-    <div id="cartData"></div>
-</div>
-
-<div class='row' style='margin-bottom:0'>
-    <div class="col-sm-12">
-        <ul class="collapsible" id="colemp">
-            <li>
-                <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Seleciona Empresa</div>
-                @foreach (var emp in empresas)
-                {
-                <div class="verificar collapsible-body">
-                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
-                    <span onclick="selEmpresa('@emp.CodEmp','@emp.NomeEmp')">@emp.NomeEmp</span>
-                    <label style="float: right">@emp.CodEmp</label>
-                </div>
-                }
-            </li>
-        </ul>
+    <div class='row pt-6' style='margin-bottom:0'>
+        <div class="col-sm-12">
+            <ul class="collapsible" id="ultped">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">remove_red_eye</i><b>Ver Último Pedido</b></div>
+                    <div class="verificar collapsible-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <b>pedido: </b>@pedido.Id<br />
+                                <b>Data: </b>@pedido.DataEmissao<br />
+                                <b>Empresa Fat: </b>@pedido.CodEmpFat<br />
+                                <b>Tipo Transação: </b>@pedido.CodTransa  -  @pedido.NomeTransa<br />
+                                <b>Forma Pagto: </b>@pedido.CodLocCob - @pedido.NomeLocCob<br />
+                                <b>Prazo Pagto: </b>@pedido.PrazoPagamento<br />
+                                <b>Observações: </b>@pedido.Obs
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            @foreach (var pedidoItem in pedido.PedidoItemApp){
+                                            <div class="col-sm-12">
+                                                <b>@pedidoItem.CodProd - @pedidoItem.NomeProd</b><br/>
+                                                <b>Qtde:</b> @pedidoItem.QtdePed<br />
+                                                <b>Valor:</b>@string.Format("{0:C4}",pedidoItem.Valor)
+                                            </div>
+                                    }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 
-
-<div class="row" style='margin-bottom:0'>
-    <div class='col-12'>
-        <span>Empresa: </span><label id='labelEmpresa' style='font-weight:bold'></label>
+    <div class="row" style='margin-bottom:0'>
+        <div id="cartData"></div>
     </div>
-    <div class='col-12'>
-        <input type="text" disabled id="txtEmpresa" class="form-control" style='text-align:left' />
+
+
+    <div class='row' style='margin-bottom:0'>
+        <div class="col-sm-12">
+            <ul class="collapsible" id="colemp">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Seleciona Empresa</div>
+                    @foreach (var emp in empresas)
+                    {
+                        <div class="verificar collapsible-body">
+                            @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                            <span onclick="selEmpresa('@emp.CodEmp','@emp.NomeEmp')">@emp.NomeEmp</span>
+                            <label style="float: right">@emp.CodEmp</label>
+                        </div>
+                    }
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 
 
-<div class='row' style='margin-bottom:0'>
-    <div class="col-sm-12">
-        <ul class="collapsible" id="coltran">
-            <li>
-                <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Selecione Tipo de Transacao</div>
-                @foreach (var emp in transacoes)
-                {
-                <div class="verificar collapsible-body">
-                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
-                    <span onclick="selTransacao('@emp.CodTran','@emp.NomeTran')">@emp.NomeTran</span>
-                    <label style="float: right">@emp.CodTran</label>
-                </div>
-                }
-            </li>
-        </ul>
+    <div class="row" style='margin-bottom:0'>
+        <div class='col-12'>
+            <span>Empresa: </span><label id='labelEmpresa' style='font-weight:bold'></label>
+        </div>
+        <div class='col-12'>
+            <input type="text" disabled id="txtEmpresa" class="form-control" style='text-align:left' />
+        </div>
     </div>
-</div>
 
-<div class='row'>
-    <div class='col-12'>
-        <span>Tipo de Transação: </span><label id='labelTransacao' style='font-weight:bold'></label>
+
+    <div class='row' style='margin-bottom:0'>
+        <div class="col-sm-12">
+            <ul class="collapsible" id="coltran">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Selecione Tipo de Transacao</div>
+                    @foreach (var emp in transacoes)
+                    {
+                        <div class="verificar collapsible-body">
+                            @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                            <span onclick="selTransacao('@emp.CodTran','@emp.NomeTran')">@emp.NomeTran</span>
+                            <label style="float: right">@emp.CodTran</label>
+                        </div>
+                    }
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class='col-12'>
-        <input type="text" disabled id="txtTransacao" class="form-control" style='text-align:left' />
+
+    <div class='row'>
+        <div class='col-12'>
+            <span>Tipo de Transação: </span><label id='labelTransacao' style='font-weight:bold'></label>
+        </div>
+        <div class='col-12'>
+            <input type="text" disabled id="txtTransacao" class="form-control" style='text-align:left' />
+        </div>
     </div>
-</div>
 
 
-<div class='row' style='margin-bottom:0'>
-    <div class="col-sm-12">
-        <ul class="collapsible" id="colcob">
-            <li>
-                <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Selecione Forma de Pagamento</div>
-                @foreach (var emp in locaisCobranca)
-                {
-                <div class="verificar collapsible-body">
-                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
-                    <span onclick="selLocalCobranca('@emp.CodLocCob','@emp.NomeLocCob')">@emp.NomeLocCob</span>
-                    <label style="float: right">@emp.CodLocCob</label>
-                </div>
-                }
-            </li>
-        </ul>
+    <div class='row' style='margin-bottom:0'>
+        <div class="col-sm-12">
+            <ul class="collapsible" id="colcob">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Selecione Forma de Pagamento</div>
+                    @foreach (var emp in locaisCobranca)
+                    {
+                        <div class="verificar collapsible-body">
+                            @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                            <span onclick="selLocalCobranca('@emp.CodLocCob','@emp.NomeLocCob')">@emp.NomeLocCob</span>
+                            <label style="float: right">@emp.CodLocCob</label>
+                        </div>
+                    }
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 
 
-<div class='row'>
-    <div class='col-12'>
-        <span>Forma de Pagamento: </span><label id='labelLocalCobranca' style='font-weight:bold'></label>
+    <div class='row'>
+        <div class='col-12'>
+            <span>Forma de Pagamento: </span><label id='labelLocalCobranca' style='font-weight:bold'></label>
+        </div>
+        <div class='col-12'>
+            <input type="text" disabled id="txtLocalCobranca" class="form-control" style='text-align:left' />
+        </div>
     </div>
-    <div class='col-12'>
-        <input type="text" disabled id="txtLocalCobranca" class="form-control" style='text-align:left'   />
+
+
+    <div class='row' style='margin-bottom:0'>
+        <div class="col-sm-12">
+            <ul class="collapsible" id="colfrete">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Selecione Tipo de Frete</div>
+                    <div class="verificar collapsible-body">
+                        @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                        <span onclick="selTipoFrete('1','CIF')">CIF</span>
+                        <label style="float: right">1</label>
+                    </div>
+                    <div class="verificar collapsible-body">
+                        @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                        <span onclick="selTipoFrete('2','FOB')">FOB</span>
+                        <label style="float: right">2</label>
+                    </div>
+                    <div class="verificar collapsible-body">
+                        @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                        <span onclick="selTipoFrete('3','REPASSADO')">REPASSADO</span>
+                        <label style="float: right">3</label>
+                    </div>
+                    <div class="verificar collapsible-body">
+                        @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
+                        <span onclick="selTipoFrete('4','PROPRIO')">PROPRIO</span>
+                        <label style="float: right">4</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 
 
-<div class='row' style='margin-bottom:0'>
-    <div class="col-sm-12">
-        <ul class="collapsible" id="colfrete">
-            <li>
-                <div class="collapsible-header"><i class="material-icons">remove_red_eye</i>Selecione Tipo de Frete</div>
-                <div class="verificar collapsible-body">
-                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
-                    <span onclick="selTipoFrete('1','CIF')">CIF</span>
-                    <label style="float: right">1</label>
-                </div>
-                <div class="verificar collapsible-body">
-                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
-                    <span onclick="selTipoFrete('2','FOB')">FOB</span>
-                    <label style="float: right">2</label>
-                </div>
-                <div class="verificar collapsible-body">
-                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
-                    <span onclick="selTipoFrete('3','REPASSADO')">REPASSADO</span>
-                    <label style="float: right">3</label>
-                </div>
-                <div class="verificar collapsible-body">
-                    @*<span onclick="teste('@empresa.codEmp')">@empresa.nomeEmp</span>*@
-                    <span onclick="selTipoFrete('4','PROPRIO')">PROPRIO</span>
-                    <label style="float: right">4</label>
-                </div>
-            </li>
-        </ul>
+    <div class='row'>
+        <div class='col-12'>
+            <span>Tipo de Frete: </span><label id='labelTipoFrete' style='font-weight:bold'></label>
+        </div>
+        <div class='col-12'>
+            <input type="text" disabled id="txtTipoFrete" class="form-control" style='text-align:left' />
+        </div>
     </div>
-</div>
 
-
-<div class='row'>
-    <div class='col-12'>
-        <span>Tipo de Frete: </span><label id='labelTipoFrete' style='font-weight:bold'></label>
+    <div class="row">
+        <div id="cartInfo"></div>
     </div>
-    <div class='col-12'>
-        <input type="text" disabled id="txtTipoFrete" class="form-control" style='text-align:left' />
-    </div>
-</div>
-
-<div class="row">
-    <div id="cartInfo"></div>
-</div>
 
 
 
-@section Scripts
+    @section Scripts
 {
-    <script src="../js/cart.js"></script>
-    <script>
+        <script src="../js/cart.js"></script>
+        <script>
     $(document).ready(function () {
             $('.collapsible').collapsible();
             ShowCurrentCli();
@@ -277,5 +315,5 @@
 
         }
 
-    </script>
-}
+        </script>
+    }

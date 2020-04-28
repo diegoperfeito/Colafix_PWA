@@ -1,0 +1,148 @@
+﻿@page
+@using colafix_pwa.Model
+@model colafix_pwa.Pages.FinanceiroModel
+@{
+    var titulos = (Financeiro)ViewData["titulos"];
+    var classe = "col-12 padrao";
+}
+
+<div class="row pt-6">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="col-sm-12">
+                    <b>Totalizadores</b>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Em Aberto:</b> R$ @titulos.TotalEmAberto
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Aberto em Cartório:</b> R$ @titulos.TotalEmAbertoCartorio
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Aberto em Protesto:</b> R$ @titulos.TotalEmAbertoProtesto
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Vencido:</b> R$ @titulos.TotalVencido
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>A Vencer:</b> R$ @titulos.TotalAVencer
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Limite:</b> R$ @titulos.ValorLimite
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Limite Disponível:</b> R$ @titulos.TotalLimiteDisponivel
+                    </div>
+                </div>
+
+            </div>
+            @*<div class="card-footer">
+                    <button class="btn waves-effect waves-light" type="button" onclick="AddRemoveCli(@cliente.Id, '@cliente.Nome')">Selecionar</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var titulo in titulos.FinanceiroTitulo)
+    {
+
+
+    <div class="@classe">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Título:</b> @titulo.CodTit<br />
+                        Parcela: @titulo.DesdTit<br />
+                        Vencimento: @titulo.DtVencimFormatado<br />
+                        Saldo: R$ @titulo.SaldoFormatado<br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        classe = "col-12 padrao";
+    }
+</div>
+
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('.collapsible').collapsible();
+            ShowCurrentCli();
+
+            $(document).ready(function () {
+                $('#filtro').formSelect();
+            });
+
+            var json = @Html.Raw(Json.Serialize(titulos));
+            console.log(json);
+        });
+
+        function filtrar(cod,nome) {
+            var divs = document.getElementsByClassName('padrao');
+            console.log(divs);
+            for (var i = 0; i < divs.length; i++) {
+                divs[i].style.display = "none";
+            }
+            var fil = cod;
+            if (fil == '1') {
+                var divs = document.getElementsByClassName('pendente');
+                console.log(divs);
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].style.display = "block";
+                }
+            } else if (fil == '2') {
+                var divs = document.getElementsByClassName('analise');
+                console.log(divs);
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].style.display = "block";
+                }
+            } else if (fil == '3') {
+                var divs = document.getElementsByClassName('credito');
+                console.log(divs);
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].style.display = "block";
+                }
+            } else if (fil == '4') {
+                var divs = document.getElementsByClassName('liquidado');
+                console.log(divs);
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].style.display = "block";
+                }
+            } else if (fil == '5') {
+                var divs = document.getElementsByClassName('reprovado');
+                console.log(divs);
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].style.display = "block";
+                }
+            }
+            $('.collapsible').collapsible('close');
+       }
+
+        function mostraDetalhe(id) {
+            RedirectAction("/PedidoDetalhe/?id=".concat(id));
+        }
+
+    </script>
+}

@@ -55,7 +55,7 @@ namespace colafix_pwa.Model
         public string Endereco { get; set; }
 
         [JsonProperty("estado")]
-        public Enums.Estado Estado { get; set; }
+        public string Estado { get; set; }
 
         [JsonProperty("fax")]
         public object Fax { get; set; }
