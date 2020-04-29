@@ -4,7 +4,7 @@
 @{
     var entregas = (List<Entrega>)ViewData["Entregas"];
     var entregasDias = entregas.GroupBy(s => new { s.DataCurta }).Select(s => s.First());
- //   var entregasDias = from entrega in entregas group entrega by entrega.DataCurta;
+    //   var entregasDias = from entrega in entregas group entrega by entrega.DataCurta;
 }
 @section Style{
     <style>
@@ -20,12 +20,16 @@
                     @{
                         var dias = entregas.Where(n => n.DataCurta == dataEntrega.DataCurta);
                         @foreach (var dia in dias)
-                            {
-                                <div class="verificar collapsible-body" id="@dia.NumeroNota">
-                                    <span onclick="">@dia.NumeroNota</span>
-                                    <label style="float: right">@dia.SerieNota</label>
-                                </div>
-                            }
+                        {
+                            var destination = "https://www.google.com/maps?q=" + dia.Latitude + "," + dia.Longitude;
+                            <div class="verificar collapsible-body" id="@dia.NumeroNota">
+                                <p><b>Cliente: </b>@dia.CodCliente - @dia.NomeCliente </p>
+                                <span onclick=""><b>Nota: </b> @dia.NumeroNota </span>
+                                <b> Hora Entrega: </b> @dia.DataEntrega.Substring(11,5)
+                                <p><b> Placa: </b> @dia.PlacaVeiculo
+                                <a href="@destination" target="_blank">Local da Entrega </a></p>
+                            </div>
+                        }
                     }
                 </li>
             </ul>
@@ -34,9 +38,9 @@
 
 </div>
 @section Scripts
-{
+                                {
     <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
             $('.collapsible').collapsible();
             ShowCurrentCli();
         });

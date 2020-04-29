@@ -106,3 +106,6 @@ E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\co
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.pdb
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.genruntimeconfig.cache
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.csproj.CopyComplete
+E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Financeiro.cshtml.g.cs
+E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\ProdutosSemCompras.cshtml.g.cs
+E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\RegistroEntrega.cshtml.g.cs
