@@ -37,10 +37,10 @@ namespace colafix_pwa.Model
         [JsonProperty("dataCurta")]
         public string DataCurta { get; set; }
 
-        [JsonProperty("cod_cli")]
+        [JsonProperty("codCliente")]
         public string CodCliente { get; set; }
 
-        [JsonProperty("nome_cli")]
+        [JsonProperty("nomeCliente")]
         public string NomeCliente { get; set; }
 
     }
