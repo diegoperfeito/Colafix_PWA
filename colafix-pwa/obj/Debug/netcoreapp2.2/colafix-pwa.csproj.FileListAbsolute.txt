@@ -71,6 +71,8 @@ C:\workspace\colafix-pwa\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.csprojA
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\bin\Debug\netcoreapp2.2\appsettings.Development.json
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\bin\Debug\netcoreapp2.2\appsettings.json
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
+E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.AssemblyInfoInputs.cache
+E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.AssemblyInfo.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\bin\Debug\netcoreapp2.2\colafix-pwa.deps.json
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\bin\Debug\netcoreapp2.2\colafix-pwa.runtimeconfig.json
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\bin\Debug\netcoreapp2.2\colafix-pwa.runtimeconfig.dev.json
@@ -82,8 +84,6 @@ E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\co
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.csproj.CoreCompileInputs.cache
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.RazorAssemblyInfo.cache
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.RazorAssemblyInfo.cs
-E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.AssemblyInfoInputs.cache
-E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.AssemblyInfo.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.TagHelpers.input.cache
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.TagHelpers.output.cache
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.RazorCoreGenerate.cache
@@ -91,11 +91,14 @@ E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\co
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\CheckOut.cshtml.g.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\CheckOutNovo.cshtml.g.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Clientes.cshtml.g.cs
+E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Financeiro.cshtml.g.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Index.cshtml.g.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Login.cshtml.g.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Menu.cshtml.g.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\PedidoDetalhe.cshtml.g.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Pedidos.cshtml.g.cs
+E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\ProdutosSemCompras.cshtml.g.cs
+E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\RegistroEntrega.cshtml.g.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Shared\_Layout.cshtml.g.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\_ViewImports.cshtml.g.cs
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\_ViewStart.cshtml.g.cs
@@ -106,6 +109,3 @@ E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\co
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.pdb
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.genruntimeconfig.cache
 E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\colafix-pwa.csproj.CopyComplete
-E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\Financeiro.cshtml.g.cs
-E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\ProdutosSemCompras.cshtml.g.cs
-E:\Redir_Pasta\OneDrive\Documentos\Visual Studio 2019\Projects\ColafixAPP_PWA\colafix-pwa\obj\Debug\netcoreapp2.2\Razor\Pages\RegistroEntrega.cshtml.g.cs

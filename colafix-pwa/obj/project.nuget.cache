@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "M5r5BSvxlHt+yq0iplsqQgI9eAvfdiZP/qdyarddb8bLLqlj0k4r1l9SyBv5FfPttLtJwFZmsLeeqiEXf6zlMQ==",
+  "dgSpecHash": "6APjaN9k0PpkZyxfdyVBM1TbLEArvcMOoIdwe5VF/R63NHgmTcfKrFKmld+YUx5dEUPKEw4wrFhpft8yy9LhMA==",
   "success": true,
   "projectFilePath": "E:\\Redir_Pasta\\OneDrive\\Documentos\\Visual Studio 2019\\Projects\\ColafixAPP_PWA\\colafix-pwa\\colafix-pwa.csproj",
   "expectedPackageFiles": [
@@ -177,7 +177,7 @@
     "C:\\Users\\Diego\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.design\\3.1.2\\microsoft.visualstudio.web.codegeneration.design.3.1.2.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Users\\Diego\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\Diego\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\remotion.linq\\2.2.0\\remotion.linq.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
