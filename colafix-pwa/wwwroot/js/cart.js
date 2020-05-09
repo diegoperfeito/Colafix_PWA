@@ -340,6 +340,15 @@ function ShowInfo() {
              </div>`;
 
     html += `<div class='row'>
+                 <div class='col-12'>  
+                    <label>
+                        <input type="checkbox" id="ckbLiberaFrete" />
+                        <span>Libera Pedido Sem Frete</span>
+                  </label>
+                </div>
+             </div>`;
+
+    html += `<div class='row'>
                     <div class='col-6'>
                         <span>Prazo Pagto(ex: 30.40.60): </span><label id='labelValorFrete' style='font-weight:bold'></label>
                     </div>
@@ -500,6 +509,8 @@ function FinishCheckOut() {
     }
     currentOrder.cod_loc_cob = locCob.split(" - ")[0];
 
+
+
     var frete = document.getElementById("txtTipoFrete").value;
     if (frete == "") {
         Notiflix.Report.Warning(
@@ -515,6 +526,17 @@ function FinishCheckOut() {
         currentOrder.vlr_frete = 0;
     }
 
+   
+    const liberaFrete = document.getElementById("ckbLiberaFrete");
+    if ((liberaFrete.checked == false && currentOrder.vlr_frete == 0) || (liberaFrete.checked == true && currentOrder.vlr_frete > 0)) {
+        Notiflix.Report.Warning(
+            'Atenção',
+            'Informe o valor do frete ou marque a opção de liberar pedido sem frete',
+            'Fechar');
+        return;
+    }
+
+  
     currentOrder.situacao = 'ANALISE';
 
     var tipo = document.getElementById("txtTransacao").value;
@@ -526,6 +548,15 @@ function FinishCheckOut() {
         return;
     }
     currentOrder.cod_transa = tipo.split(" - ")[0];
+
+    if (currentOrder.cod_loc_cob == "1300" && (currentOrder.cod_transa != "7" && currentOrder.cod_transa != "914")){
+        Notiflix.Report.Warning(
+            'Atenção',
+            'Selecione uma transação de BONIFICAÇÃO',
+            'Fechar');
+        return;
+    }
+
 
     currentOrder.obs = document.getElementById("obs").value;
     currentOrder.usu_inclui = currentUser.usuario;
