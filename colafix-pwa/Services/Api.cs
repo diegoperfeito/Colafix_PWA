@@ -21,8 +21,8 @@ namespace colafix_pwa.Services
         private static string BaseUrl()
         {
             //return "http://remoto.colafix.com:9292/Colafix/appservice.svc/";
-            // return "http://localhost:11954/appservice.svc/";
-            return "http://127.0.0.1:9292/Colafix/appservice.svc/";
+             return "http://localhost:11954/appservice.svc/";
+           // return "http://127.0.0.1:9292/Colafix/appservice.svc/";
             // return "http://200.98.172.139/Colafix/appservice.svc/";
         }
 
@@ -287,7 +287,7 @@ namespace colafix_pwa.Services
             }
         }
 
-        public static PedidoApp InsertPedidoApp(dynamic obj)
+        public static PedidoNovo InsertPedidoApp(dynamic obj)
         {
             try
             {
@@ -300,12 +300,12 @@ namespace colafix_pwa.Services
                         JsonConvert.DeserializeObject<InsertPedidoAppResult>(
                             httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj.BodyData), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
                         );
-                    if (apiResult.InsertPedidoAppResultData.State != 1)
+                    if (apiResult.InsertPedidoAppResultData.State == -1)
                     {
                         throw new Exception(apiResult.InsertPedidoAppResultData.Message);
                     }
 
-                    return apiResult.InsertPedidoAppResultData.PedidoApp;
+                    return apiResult.InsertPedidoAppResultData.PedidoNovo;
                 }
             }
             catch (Exception exception)
@@ -538,6 +538,67 @@ namespace colafix_pwa.Services
                     }
 
                     return apiResult.GetEntregasResultData.Entregas;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+
+        public static string UpdateSituacaoPedidoApp(string pedidoId)
+        {
+            try
+            {
+
+                dynamic obj = new ExpandoObject();
+                obj.pedidoId = pedidoId;
+                obj.situacao = "ANALISE";
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "updateSituacaoPedidoApp");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<UpdateSituacaoPedidoAppResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.UpdateSituacaoPedidoAppResultData.State == -1)
+                    {
+                        throw new Exception(apiResult.UpdateSituacaoPedidoAppResultData.Message);
+                    }
+
+                    return apiResult.UpdateSituacaoPedidoAppResultData.PedidoApp;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+
+        public static string DeletePedidoApp(string deletePedidoId)
+        {
+            try
+            {
+
+                dynamic obj = new ExpandoObject();
+                obj.deletePedidoId = deletePedidoId;
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "deletePedidoApp");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<DeletePedidoAppResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.DeletePedidoAppResultData.State == -1)
+                    {
+                        throw new Exception(apiResult.DeletePedidoAppResultData.Message);
+                    }
+
+                    return apiResult.DeletePedidoAppResultData.PedidoApp;
                 }
             }
             catch (Exception exception)

@@ -1,5 +1,6 @@
 ﻿var currentOrder = JSON.parse(localStorage.getItem("ORDER"));
 //var empresaLista = JSON.parse(localStorage.getItem("EMPRESAS"));
+var pedidoTemp = 0;
 function BuildOrder() {
     if (currentOrder === null) {
         const o = new Object();
@@ -522,19 +523,34 @@ function FinishCheckOut() {
     currentOrder.tipo_frete = frete.split(" - ")[0];
     currentOrder.vlr_frete = parseFloat(document.getElementById("valorFrete").value.replace(",", "."));;
 
+    const liberaFrete = document.getElementById("ckbLiberaFrete");
+
     if (isNaN(currentOrder.vlr_frete)) {
         currentOrder.vlr_frete = 0;
     }
 
-   
-    const liberaFrete = document.getElementById("ckbLiberaFrete");
-    if ((liberaFrete.checked == false && currentOrder.vlr_frete == 0) || (liberaFrete.checked == true && currentOrder.vlr_frete > 0)) {
+    if (currentOrder.tipo_frete != "2") {
+        liberaFrete.checked = false;
+    }
+
+    if (currentOrder.tipo_frete != "2" && currentOrder.vlr_frete == 0) {
         Notiflix.Report.Warning(
-            'Atenção',
-            'Informe o valor do frete ou marque a opção de liberar pedido sem frete',
+            'Informe o valor do frete',
+            'Valor do frete é obrigatório para este tipo de frete',
             'Fechar');
         return;
     }
+   
+   
+    if ((liberaFrete.checked == false && currentOrder.vlr_frete == 0) || (liberaFrete.checked == true && currentOrder.vlr_frete > 0)) {
+        Notiflix.Report.Warning(
+            'Frete FOB',
+            'Informe o valor do frete ou marque Libera Pedido sem Frete',
+            'Fechar');
+        return;
+    }
+
+
 
   
     currentOrder.situacao = 'ANALISE';
@@ -560,12 +576,11 @@ function FinishCheckOut() {
 
     currentOrder.obs = document.getElementById("obs").value;
     currentOrder.usu_inclui = currentUser.usuario;
-
+    
     var objPed = new Object();
     objPed.pedidoApp = currentOrder;
 
-
-
+ 
     Notiflix.Confirm.Show(
         "Confirma Envio?",
         "Confirmar envio dos dados e conclusão da venda?",
@@ -587,8 +602,26 @@ function FinishCheckOut() {
                 success: function (data) {
                     Notiflix.Loading.Remove();
                     const returnData = JSON.parse(data);
-                    if (returnData.MessageType !== 0) {
-                        Notiflix.Notify.Success(data);
+                    var criticas = [];
+                    var msgs = "";
+                    if (returnData.MessageType == 2){
+                        pedidoTemp = returnData.EmbeddedData.PedidoId;
+                        for (let d = 0; d < returnData.EmbeddedData.Criticas.length; d++) {
+                            const critica = new Object();
+                            critica.descricao = returnData.EmbeddedData.Criticas[d]['Descricao'];
+                            critica.tipo = returnData.EmbeddedData.Criticas[d]['Tipo'];
+                            criticas.push(critica);
+                            msgs = msgs + "<b>"+critica.tipo +"</b><br>";
+                            msgs = msgs + critica.descricao + "<br><br>";
+                         }
+                        var htmlCritica = "";
+                         htmlCritica += `<div class='row'>
+                                <div class='col-12'>`+ msgs + `
+                                 </div>
+                            </div>`;
+                        document.getElementById('listaCriticas').innerHTML = htmlCritica;
+                        $('#newModal').modal('open');
+                        
                         return;
                     }
                     Notiflix.Notify.Success('Pedido enviado com sucesso');
@@ -605,5 +638,75 @@ function FinishCheckOut() {
         function() {
             Notiflix.Notify.Warning('Envio cancelado');
         });
+
+
+
+}
+
+function confirmarEnvio() {
+
+    var objPed = new Object();
+    objPed.pedidoId = pedidoTemp;
+
+    $.ajax({
+        context: this,
+        url: "/Main/UpdateSituacaoPedidoApp",
+        type: "POST",
+        data: BuildData(objPed),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        beforeSend: function () {
+            Notiflix.Loading.Dots("Aguarde...");
+        },
+        success: function (data) {
+            Notiflix.Loading.Remove();
+            const returnData = JSON.parse(data);
+            if (returnData.MessageType == 1) {
+                Notiflix.Notify.Warning('Falha na atualização do pedido');
+                return;
+            }
+            Notiflix.Notify.Success('Pedido enviado com sucesso');
+            $('#newModal').modal('close');
+            localStorage.removeItem("ORDER");
+            localStorage.removeItem("CLI");
+            RedirectAction("/Menu");
+        },
+        error: function (data) {
+            Notiflix.Loading.Remove();
+            ShowError(data);
+        }
+    });
+}
+
+function deletePedidoApp() {
+
+    var objPed = new Object();
+    objPed.deletePedidoId = pedidoTemp;
+
+    $.ajax({
+        context: this,
+        url: "/Main/DeletePedidoApp",
+        type: "POST",
+        data: BuildData(objPed),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        beforeSend: function () {
+            Notiflix.Loading.Dots("Aguarde...");
+        },
+        success: function (data) {
+            Notiflix.Loading.Remove();
+            const returnData = JSON.parse(data);
+            if (returnData.MessageType == 1) {
+                Notiflix.Notify.Warning('Falha na atualização do pedido');
+                return;
+            }
+            Notiflix.Notify.Success('Siga com as aterações no pedido');
+            $('#newModal').modal('close');
+        },
+        error: function (data) {
+            Notiflix.Loading.Remove();
+            ShowError(data);
+        }
+    });
 }
 

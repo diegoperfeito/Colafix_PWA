@@ -18,7 +18,7 @@ namespace colafix_pwa.Model
         public long State { get; set; }
 
         [JsonProperty("data")]
-        public PedidoApp PedidoApp { get; set; }
+        public PedidoNovo PedidoNovo { get; set; }
     }
 
     public partial class InsertPedidoAppResult

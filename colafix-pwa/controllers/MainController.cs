@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using colafix_pwa.Model;
 using colafix_pwa.Services;
 using colafix_pwa.Utils;
@@ -210,7 +211,18 @@ namespace colafix_pwa.controllers
         {
             try
             {
-                var data = Api.InsertPedidoApp(obj);
+                PedidoNovo data = Api.InsertPedidoApp(obj);
+
+                if(data.Criticas.Count() > 0)
+                {
+                    return Json(AjaxMessage.Create(new MessageContent
+                    {
+                        MessageType = MessageType.Warning,
+                        Message = "Produto encontrado",
+                        Title = "Sucesso",
+                        EmbeddedData = data
+                    }));
+                }else
                 return Json(AjaxMessage.Create(new MessageContent
                 {
                     MessageType = MessageType.Success,
@@ -254,6 +266,59 @@ namespace colafix_pwa.controllers
                 }));
             }
         }
+
+
+        public ActionResult UpdateSituacaoPedidoApp([FromBody] dynamic obj)
+        {
+            try
+            {
+                string pedidoId = obj.BodyData.pedidoId;
+                var data = Api.UpdateSituacaoPedidoApp(pedidoId);
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Success,
+                    Message = "Produto encontrado",
+                    Title = "Sucesso",
+                    EmbeddedData = data
+                }));
+            }
+            catch (Exception exception)
+            {
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Failure,
+                    Message = exception.Message,
+                    Title = "Erro de Sistema"
+                }));
+            }
+        }
+
+
+        public ActionResult DeletePedidoApp([FromBody] dynamic obj)
+        {
+            try
+            {
+                string deletePedidoId = obj.BodyData.deletePedidoId;
+                var data = Api.DeletePedidoApp(deletePedidoId);
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Success,
+                    Message = "Pedido Deletado",
+                    Title = "Sucesso",
+                    EmbeddedData = data
+                }));
+            }
+            catch (Exception exception)
+            {
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Failure,
+                    Message = exception.Message,
+                    Title = "Erro de Sistema"
+                }));
+            }
+        }
+
 
     }
 }
