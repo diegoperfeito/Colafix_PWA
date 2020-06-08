@@ -319,6 +319,32 @@ namespace colafix_pwa.controllers
             }
         }
 
+        public ActionResult UpdateClienteEmpilhadeira([FromBody] dynamic obj)
+        {
+            try
+            {
+                string id = obj.BodyData.Id;
+                int temEmpilhadeira = obj.BodyData.TemEmpilhadeira;
+                var data = Api.UpdateClienteEmpilhadeira(id, temEmpilhadeira);
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Success,
+                    Message = "Cliente alterado",
+                    Title = "Sucesso",
+                    EmbeddedData = data
+                }));
+            }
+            catch (Exception exception)
+            {
+                return Json(AjaxMessage.Create(new MessageContent
+                {
+                    MessageType = MessageType.Failure,
+                    Message = exception.Message,
+                    Title = "Erro de Sistema"
+                }));
+            }
+        }
+
 
     }
 }

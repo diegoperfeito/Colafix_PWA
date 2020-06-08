@@ -65,9 +65,11 @@
             }
         </div>*@
 </div>
+
+
 @section Scripts
 {
-    <script>
+        <script>
         $(document).ready(function(){
             ShowCurrentCli();
             if (currentUser.admin != "1") {
@@ -122,7 +124,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button class="btn waves-effect waves-light" type="button" onclick="AddRemoveCli(@cliente.Id, '@cliente.Nome')">Selecionar</button>
+                                <button class="btn waves-effect waves-light" type="button" onclick="selecionaCliente(@cliente.Id, '@cliente.Nome', '@cliente.Empilhadeira')">Selecionar</button>
                             </div>
                         </div>
                     </div>
@@ -205,7 +207,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn waves-effect waves-light" type="button" onclick="AddRemoveCli(${returnData.EmbeddedData[d].id}, '${returnData.EmbeddedData[d].nome}')">Selecionar</button>
+                            <button class="btn waves-effect waves-light" type="button" onclick="selecionaCliente(${returnData.EmbeddedData[d].id}, '${returnData.EmbeddedData[d].nome}','${returnData.EmbeddedData[d].empilhadeira}')">Selecionar</button>
                         </div>
                         </div>
                     </div>`
@@ -222,41 +224,101 @@
     }
 
     function cpfCnpj(v){
- 
+
         //Remove tudo o que não é dígito
         v=v.replace(/\D/g,"")
- 
+
         if (v.length <= 14) { //CPF
- 
+
             //Coloca um ponto entre o terceiro e o quarto dígitos
             v=v.replace(/(\d{3})(\d)/,"$1.$2")
- 
+
             //Coloca um ponto entre o terceiro e o quarto dígitos
             //de novo (para o segundo bloco de números)
             v=v.replace(/(\d{3})(\d)/,"$1.$2")
- 
+
             //Coloca um hífen entre o terceiro e o quarto dígitos
             v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2")
- 
+
         } else { //CNPJ
- 
+
             //Coloca ponto entre o segundo e o terceiro dígitos
             v=v.replace(/^(\d{2})(\d)/,"$1.$2")
- 
+
             //Coloca ponto entre o quinto e o sexto dígitos
             v=v.replace(/^(\d{2})\.(\d{3})(\d)/,"$1.$2.$3")
- 
+
             //Coloca uma barra entre o oitavo e o nono dígitos
             v=v.replace(/\.(\d{3})(\d)/,".$1/$2")
- 
+
             //Coloca um hífen depois do bloco de quatro dígitos
             v=v.replace(/(\d{4})(\d)/,"$1-$2")
- 
+
         }
- 
+
         return v
- 
+
     }
 
+    function selecionaCliente(id, nome, empilhadeira) {
+        if (empilhadeira != "") {
+            AddRemoveCli(id, nome);
+        } else {
+            Notiflix.Confirm.Show(
+            "Informar ao sistema!!",
+            "CLIENTE POSSUI EMPILHADEIRA?",
+            "Sim",
+            "Não",
+            function () {
+                const obj = new Object();
+                obj.Id = id;
+                obj.TemEmpilhadeira = 1;
+                $.ajax({
+                    context: this,
+                    url: "/Main/UpdateClienteEmpilhadeira",
+                    type: "POST",
+                    data: BuildData(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    beforeSend: function () {
+                        Notiflix.Loading.Dots("Aguarde...");
+                    },
+                    success: function (data) {
+                        Notiflix.Notify.Success('cliente alterado com sucesso');
+                        AddRemoveCli(id, nome);
+                    },
+                    error: function (data) {
+                        Notiflix.Loading.Remove();
+                        ShowError(data);
+                    }
+                });
+            },
+            function () {
+                const obj = new Object();
+                obj.Id = id;
+                obj.TemEmpilhadeira = 0;
+                $.ajax({
+                    context: this,
+                    url: "/Main/UpdateClienteEmpilhadeira",
+                    type: "POST",
+                    data: BuildData(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    beforeSend: function () {
+                        Notiflix.Loading.Dots("Aguarde...");
+                    },
+                    success: function (data) {
+                        Notiflix.Notify.Success('cliente alterado com sucesso');
+                        AddRemoveCli(id, nome);
+                    },
+                    error: function (data) {
+                        Notiflix.Loading.Remove();
+                        ShowError(data);
+                    }
+                });
+            });
+ //           $('#newModal').modal('open');
+        }
+    }
     </script>
-}
+    }

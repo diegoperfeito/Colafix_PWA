@@ -3,13 +3,13 @@ using Newtonsoft.Json;
 
 namespace colafix_pwa.Model
 {
-    public partial class UpdateSituacaoPedidoAppResult
+    public partial class UpdateClienteEmpilhadeiraResult
     {
-        [JsonProperty("UpdateSituacaoPedidoAppResult")]
-        public UpdateSituacaoPedidoAppResultData UpdateSituacaoPedidoAppResultData { get; set; }
+        [JsonProperty("UpdateClienteEmpilhadeiraResult")]
+        public UpdateClienteEmpilhadeiraResultData UpdateClienteEmpilhadeiraResultData { get; set; }
     }
 
-    public class UpdateSituacaoPedidoAppResultData
+    public class UpdateClienteEmpilhadeiraResultData
     {
         [JsonProperty("message")]
         public string Message { get; set; }
@@ -18,11 +18,11 @@ namespace colafix_pwa.Model
         public long State { get; set; }
 
         [JsonProperty("data")]
-        public string PedidoApp { get; set; }
+        public string TemEmpilhadeira { get; set; }
     }
 
-    public partial class UpdateSituacaoPedidoAppResult
+    public partial class UpdateClienteEmpilhadeiraResult
     {
-        public static UpdateSituacaoPedidoAppResult FromJson(string json) => JsonConvert.DeserializeObject<UpdateSituacaoPedidoAppResult>(json, Converter.Settings);
+        public static UpdateClienteEmpilhadeiraResult FromJson(string json) => JsonConvert.DeserializeObject<UpdateClienteEmpilhadeiraResult>(json, Converter.Settings);
     }
 }

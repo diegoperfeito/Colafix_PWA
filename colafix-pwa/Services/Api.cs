@@ -20,9 +20,9 @@ namespace colafix_pwa.Services
 
         private static string BaseUrl()
         {
-            //return "http://remoto.colafix.com:9292/Colafix/appservice.svc/";
+           return "http://www.appcolafix.com.br:9292/Colafix/appservice.svc/";
            //  return "http://localhost:11954/appservice.svc/";
-            return "http://127.0.0.1:9292/Colafix/appservice.svc/";
+           // return "http://127.0.0.1:9292/Colafix/appservice.svc/";
             // return "http://200.98.172.139/Colafix/appservice.svc/";
         }
 
@@ -599,6 +599,36 @@ namespace colafix_pwa.Services
                     }
 
                     return apiResult.DeletePedidoAppResultData.PedidoApp;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+        public static string UpdateClienteEmpilhadeira(string clienteId, int temEmpilhadeira)
+        {
+            try
+            {
+
+                dynamic obj = new ExpandoObject();
+                obj.id = clienteId;
+                obj.temEmpilhadeira = temEmpilhadeira;
+
+                using (var httpClient = new HttpClient())
+                {
+                    var url = BuildCall(httpClient, "updateClienteEmpilhadeira");
+                    var apiResult =
+                        JsonConvert.DeserializeObject<UpdateClienteEmpilhadeiraResult>(
+                            httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result
+                        );
+                    if (apiResult.UpdateClienteEmpilhadeiraResultData.State == -1)
+                    {
+                        throw new Exception(apiResult.UpdateClienteEmpilhadeiraResultData.Message);
+                    }
+
+                    return apiResult.UpdateClienteEmpilhadeiraResultData.TemEmpilhadeira;
                 }
             }
             catch (Exception exception)
