@@ -124,14 +124,16 @@ function OpenMenu(action) {
     }
 
     if (action.toLowerCase() === "entregas") {
-        if (currentCli == null) {
-            Notiflix.Report.Warning(
-                'Atenção',
-                'Selecione um cliente',
-                'Fechar');
-            return;
-        }
-        RedirectAction("/RegistroEntrega/?id=".concat(currentCli.Id));
+        //if (currentCli == null) {
+        //    Notiflix.Report.Warning(
+        //        'Atenção',
+        //        'Selecione um cliente',
+        //        'Fechar');
+        //    return;
+        //}
+        //RedirectAction("/RegistroEntrega/?id=".concat(currentCli.Id));
+        RedirectAction("/RegistroEntrega");
+
     }
 }
 

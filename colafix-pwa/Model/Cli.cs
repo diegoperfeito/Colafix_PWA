@@ -105,5 +105,8 @@ namespace colafix_pwa.Model
 
         [JsonProperty("vlrLimiteCredito")]
         public object VlrLimiteCredito { get; set; }
+
+        [JsonProperty("empilhadeira")]
+        public object Empilhadeira { get; set; }
     }
 }
