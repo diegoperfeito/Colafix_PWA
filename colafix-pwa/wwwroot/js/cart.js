@@ -41,6 +41,7 @@ function BuildOrder() {
         o.vlr_icms = 0;
         o.vlr_icms_st = 0;
         o.vlr_ipi = 0;
+        o.sem_frete = "N";
         o.pedido_item_app = [];
 
         localStorage.setItem("ORDER", JSON.stringify(o));
@@ -170,7 +171,6 @@ function BuildTransacao() {
     });
 }
 
-
 function AddCartItem(id) {
     const o = new Object();
     o.codProduto = id;
@@ -181,10 +181,10 @@ function AddCartItem(id) {
         data: BuildData(o),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        beforeSend: function() {
+        beforeSend: function () {
             Notiflix.Loading.Dots("Aguarde...");
         },
-        success: function(data) {
+        success: function (data) {
             Notiflix.Loading.Remove();
             const returnData = JSON.parse(data);
             if (returnData.MessageType !== 0) {
@@ -192,7 +192,7 @@ function AddCartItem(id) {
                 return;
             }
 
-            if (document.getElementById("qtdItem").value === "0" || document.getElementById("qtdItem").value === "" ) {
+            if (document.getElementById("qtdItem").value === "0" || document.getElementById("qtdItem").value === "") {
                 Notiflix.Report.Info(
                     'Atenção',
                     'Informe a quantidade do produto!',
@@ -271,15 +271,14 @@ function AddCartItem(id) {
             $("#qtdItem").focus();
             $("#qtdItem").select();
             RedirectAction('/Menu');
-//            HasCartOpen();
+            //            HasCartOpen();
         },
-        error: function(data) {
+        error: function (data) {
             Notiflix.Loading.Remove();
             ShowError(data);
         }
     });
 }
-
 
 function ShowCart() {
     BuildOrder();
@@ -326,7 +325,6 @@ function ShowCart() {
     document.getElementById('cartData').innerHTML = html;
 }
 
-
 function ShowInfo() {
     BuildOrder();
     var html = "";
@@ -370,12 +368,6 @@ function ShowInfo() {
     document.getElementById('cartInfo').innerHTML = html;
 }
 
-
-
-
-
-
-
 function TotalCart() {
     var total = 0;
     for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
@@ -389,7 +381,6 @@ function TotalCart() {
 
 }
 
-
 function TotalCartPeso() {
     var pesoTotal = 0;
     for (let i = 0; i < currentOrder.pedido_item_app.length; i++) {
@@ -399,7 +390,7 @@ function TotalCartPeso() {
             pesoTotal += parseFloat(currentOrder.pedido_item_app[i].qtde_ped * currentOrder.pedido_item_app[i].peso_bru_un); // * xMultiplo;
         }
     }
-    return  pesoTotal;
+    return pesoTotal;
 }
 
 function ValidaPrazo() {
@@ -414,7 +405,7 @@ function ValidaPrazo() {
     } else {
         // verificação de contéudo e de ordem correta dos prazos
         var x = 0;
-        for (var i = 0; i <= arPrazo.length-1; i++) {
+        for (var i = 0; i <= arPrazo.length - 1; i++) {
             if (!$.isNumeric(arPrazo[i])) {
                 Notiflix.Report.Warning(
                     'Atenção',
@@ -447,7 +438,6 @@ function ValidaPrazo() {
         return true;
     }
 }
-
 
 function DeleteItemCart(id) {
     Notiflix.Confirm.Show(
@@ -540,8 +530,8 @@ function FinishCheckOut() {
             'Fechar');
         return;
     }
-   
-   
+
+
     if ((liberaFrete.checked == false && currentOrder.vlr_frete == 0) || (liberaFrete.checked == true && currentOrder.vlr_frete > 0)) {
         Notiflix.Report.Warning(
             'Frete FOB',
@@ -550,9 +540,13 @@ function FinishCheckOut() {
         return;
     }
 
+    if (liberaFrete.checked == false) {
+        currentOrder.sem_frete = "N";
+    }
+    else {
+        currentOrder.sem_frete = "S";
+    }
 
-
-  
     currentOrder.situacao = 'ANALISE';
 
     var tipo = document.getElementById("txtTransacao").value;
@@ -565,7 +559,7 @@ function FinishCheckOut() {
     }
     currentOrder.cod_transa = tipo.split(" - ")[0];
 
-    if (currentOrder.cod_loc_cob == "1300" && (currentOrder.cod_transa != "7" && currentOrder.cod_transa != "914")){
+    if (currentOrder.cod_loc_cob == "1300" && (currentOrder.cod_transa != "7" && currentOrder.cod_transa != "914")) {
         Notiflix.Report.Warning(
             'Atenção',
             'Selecione uma transação de BONIFICAÇÃO',
@@ -576,18 +570,18 @@ function FinishCheckOut() {
 
     currentOrder.obs = document.getElementById("obs").value;
     currentOrder.usu_inclui = currentUser.usuario;
-    
+
     var objPed = new Object();
     objPed.pedidoApp = currentOrder;
 
- 
+
     Notiflix.Confirm.Show(
         "Confirma Envio?",
         "Confirmar envio dos dados e conclusão da venda?",
         "Sim",
         "Não",
         function () {
-         //   localStorage.removeItem("ORDER");
+            //   localStorage.removeItem("ORDER");
             Notiflix.Notify.Success('Enviando pedido para o servidor');
             $.ajax({
                 context: this,
@@ -604,24 +598,24 @@ function FinishCheckOut() {
                     const returnData = JSON.parse(data);
                     var criticas = [];
                     var msgs = "";
-                    if (returnData.MessageType == 2){
+                    if (returnData.MessageType == 2) {
                         pedidoTemp = returnData.EmbeddedData.PedidoId;
                         for (let d = 0; d < returnData.EmbeddedData.Criticas.length; d++) {
                             const critica = new Object();
                             critica.descricao = returnData.EmbeddedData.Criticas[d]['Descricao'];
                             critica.tipo = returnData.EmbeddedData.Criticas[d]['Tipo'];
                             criticas.push(critica);
-                            msgs = msgs + "<b>"+critica.tipo +"</b><br>";
+                            msgs = msgs + "<b>" + critica.tipo + "</b><br>";
                             msgs = msgs + critica.descricao + "<br><br>";
-                         }
+                        }
                         var htmlCritica = "";
-                         htmlCritica += `<div class='row'>
+                        htmlCritica += `<div class='row'>
                                 <div class='col-12'>`+ msgs + `
                                  </div>
                             </div>`;
                         document.getElementById('listaCriticas').innerHTML = htmlCritica;
                         $('#newModal').modal('open');
-                        
+
                         return;
                     }
                     Notiflix.Notify.Success('Pedido enviado com sucesso');
@@ -635,7 +629,7 @@ function FinishCheckOut() {
                 }
             });
         },
-        function() {
+        function () {
             Notiflix.Notify.Warning('Envio cancelado');
         });
 

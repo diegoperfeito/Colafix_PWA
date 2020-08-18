@@ -134,6 +134,9 @@ namespace colafix_pwa.Model
         [JsonProperty("vlr_ipi")]
         public long VlrIpi { get; set; }
 
+        [JsonProperty("sem_frete")]
+        public string SemFrete { get; set; }
+
         [JsonProperty("pedido_item_app")]
         public List<PedidoItemApp> PedidoItemApp { get; set; }
     }

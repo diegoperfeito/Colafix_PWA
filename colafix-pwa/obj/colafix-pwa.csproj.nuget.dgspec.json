@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\workspace\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj": {}
+    "E:\\Redir_Pasta\\OneDrive\\Documentos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj": {}
   },
   "projects": {
-    "C:\\workspace\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj": {
-      "version": "1.0.0",
+    "E:\\Redir_Pasta\\OneDrive\\Documentos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj": {
+      "version": "1.1.1",
       "restore": {
-        "projectUniqueName": "C:\\workspace\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj",
+        "projectUniqueName": "E:\\Redir_Pasta\\OneDrive\\Documentos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj",
         "projectName": "colafix-pwa",
-        "projectPath": "C:\\workspace\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj",
-        "packagesPath": "C:\\Users\\Carlos\\.nuget\\packages\\",
-        "outputPath": "C:\\workspace\\colafix-pwa\\colafix-pwa\\obj\\",
+        "projectPath": "E:\\Redir_Pasta\\OneDrive\\Documentos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj",
+        "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
+        "outputPath": "E:\\Redir_Pasta\\OneDrive\\Documentos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Carlos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -83,7 +83,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
