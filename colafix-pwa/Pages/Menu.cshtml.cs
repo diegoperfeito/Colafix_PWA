@@ -8,8 +8,9 @@ namespace colafix_pwa.Pages
     {
         public void OnGet()
         {
-            ViewData["Title"] = "Menu v.1.2.0";
+            ViewData["Title"] = "Menu v." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString().Substring(0,5);
 
+            //TODO Melhorar isso, definir tipos de menu ao logar e manter a credencial
             var cred = new Credential
             {
                 Usuario = "simone",

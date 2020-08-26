@@ -146,6 +146,7 @@
             const o = new Object();
             o.Usuario = email;
             o.Senha = password;
+           
 
             $.ajax({
                 context: this,
@@ -167,7 +168,8 @@
                     }
 
                     localStorage.setItem('USER', JSON.stringify(returnData.EmbeddedData));
-                    RedirectAction("Menu");
+                    //TODO Parei aqui
+                    RedirectAction("/Clientes/?id=".concat(currentUser.id).concat("&admin=").concat(currentUser.admin));
                 },
                 error: function (data) {
                     Notiflix.Loading.Remove();
