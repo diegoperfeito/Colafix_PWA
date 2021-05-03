@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Redir_Pasta\\OneDrive\\Documentos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj": {}
+    "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj": {}
   },
   "projects": {
-    "E:\\Redir_Pasta\\OneDrive\\Documentos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj": {
+    "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj": {
       "version": "1.1.1",
       "restore": {
-        "projectUniqueName": "E:\\Redir_Pasta\\OneDrive\\Documentos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj",
+        "projectUniqueName": "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj",
         "projectName": "colafix-pwa",
-        "projectPath": "E:\\Redir_Pasta\\OneDrive\\Documentos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj",
-        "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-        "outputPath": "E:\\Redir_Pasta\\OneDrive\\Documentos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\obj\\",
+        "projectPath": "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj",
+        "packagesPath": "C:\\Users\\dperf\\.nuget\\packages\\",
+        "outputPath": "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dperf\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -31,6 +33,7 @@
         },
         "frameworks": {
           "netcoreapp2.2": {
+            "targetAlias": "netcoreapp2.2",
             "projectReferences": {}
           }
         },
@@ -42,6 +45,7 @@
       },
       "frameworks": {
         "netcoreapp2.2": {
+          "targetAlias": "netcoreapp2.2",
           "dependencies": {
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
@@ -83,7 +87,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

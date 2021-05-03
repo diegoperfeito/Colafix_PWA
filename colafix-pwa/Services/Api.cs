@@ -20,7 +20,8 @@ namespace colafix_pwa.Services
 
         private static string BaseUrl()
         {
-            return "http://www.appcolafix.com.br:9292/Colafix/appservice.svc/";
+            //return "http://www.appcolafix.com.br:9292/Colafix/appservice.svc/";
+            return "http://192.168.0.9:9292/Colafix/appservice.svc/";
             //CODE TESTE DESENVOLVIMENTO
             //return "http://localhost:11954/appservice.svc/";
             //CODE Producao
