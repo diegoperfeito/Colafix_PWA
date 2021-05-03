@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj": {}
+    "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\Colafix_PWA\\colafix-pwa\\colafix-pwa.csproj": {}
   },
   "projects": {
-    "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj": {
+    "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\Colafix_PWA\\colafix-pwa\\colafix-pwa.csproj": {
       "version": "1.1.1",
       "restore": {
-        "projectUniqueName": "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj",
+        "projectUniqueName": "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\Colafix_PWA\\colafix-pwa\\colafix-pwa.csproj",
         "projectName": "colafix-pwa",
-        "projectPath": "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\colafix-pwa.csproj",
+        "projectPath": "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\Colafix_PWA\\colafix-pwa\\colafix-pwa.csproj",
         "packagesPath": "C:\\Users\\dperf\\.nuget\\packages\\",
-        "outputPath": "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\colafix-pwa\\colafix-pwa\\obj\\",
+        "outputPath": "E:\\Redir_Pasta\\Projetos\\Visual Studio 2019\\Projects\\Colafix_PWA\\colafix-pwa\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
